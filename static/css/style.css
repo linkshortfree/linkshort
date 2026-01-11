@@ -1,12 +1,12 @@
 :root {
-    --bg-color: #0d1117;
-    --card-bg: rgba(22, 27, 34, 0.7);
-    --primary-color: #58a6ff;
-    --accent-color: #d2a8ff;
-    --text-color: #e6edf3;
-    --text-sub: #7d8590;
-    --border-color: rgba(240, 246, 252, 0.1);
-    --glow-color: rgba(88, 166, 255, 0.15);
+    --bg-color: #f0f2f5;
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --primary-color: #007bff;
+    --accent-color: #6f42c1;
+    --text-color: #1c1e21;
+    --text-sub: #606770;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --glow-color: rgba(0, 123, 255, 0.1);
 }
 
 * {
@@ -32,7 +32,7 @@ body {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle at center, var(--glow-color) 0%, transparent 60%);
+    background: radial-gradient(circle at center, rgba(0, 123, 255, 0.15) 0%, transparent 60%);
     pointer-events: none;
     z-index: -1;
 }
@@ -74,7 +74,7 @@ body {
 h1 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #fff, var(--text-sub));
+    background: linear-gradient(135deg, #1c1e21, var(--text-sub));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -92,7 +92,7 @@ input[type="text"],
 textarea {
     width: 100%;
     padding: 1.2rem;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.9);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     color: var(--text-color);
@@ -123,7 +123,7 @@ textarea:focus {
     align-items: center;
     gap: 10px;
     margin-bottom: 2rem;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.9);
     padding: 0.5rem 1rem;
     border-radius: 12px;
 }
@@ -207,11 +207,12 @@ button:active {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(48, 54, 61, 0.5);
+    background: rgba(255, 255, 255, 0.9);
     padding: 1rem;
     border-radius: 12px;
     margin-top: 1rem;
     border: 1px solid var(--primary-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .link-box span {
