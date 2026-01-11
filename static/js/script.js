@@ -123,7 +123,9 @@ async function shortenUrl() {
     // Clear uploaded state after processing
     uploadedData = [];
     document.getElementById('fileStatus').innerText = "";
+    document.getElementById('fileStatus').style.display = "none";
     document.getElementById('fileInput').value = "";
+    document.getElementById('urlInput').placeholder = "Paste your long URL(s) here... (one per line for bulk)";
 }
 
 function addLinkToUI(shortUrl, originalUrl, qrGreeting) {
