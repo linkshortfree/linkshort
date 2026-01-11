@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkShort | Premium URL Shortener</title>
+    <title>Free URL Shortener | LinkShort - Custom, Fast & Secure</title>
+    <meta name="description"
+        content="The best free URL shortener to create short links. Add custom aliases, track clicks, and shorten your long URLs efficiently. No sign-up required.">
+    <meta name="keywords"
+        content="url shortener, free link shortener, custom url, shorten link, bitly alternative, linkshort">
+    <meta property="og:title" content="LinkShort - Premium Free URL Shortener">
+    <meta property="og:description" content="Shorten your links instantly with custom aliases. Fast, secure, and free.">
+    <meta property="og:type" content="website">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="background-glow"></div>
-    
+
     <div class="container">
         <header>
             <div class="logo">Link<span>Short</span></div>
@@ -19,7 +28,7 @@
             <div class="glass-card">
                 <h1>Shorten Your Links</h1>
                 <p class="subtitle">Premium, fast, and secure URL shortening service.</p>
-                
+
                 <div class="input-group">
                     <input type="text" id="urlInput" placeholder="Paste your long URL here..." autocomplete="off">
                 </div>
@@ -42,8 +51,14 @@
                         <button class="copy-btn" onclick="copyLink()">Copy</button>
                     </div>
                 </div>
-                
+
                 <div id="errorArea" class="error-message hidden"></div>
+            </div>
+
+            <!-- MONETIZATION: Ad Banner Area -->
+            <div class="ad-banner-container"
+                style="margin-top: 2rem; width: 100%; max-width: 728px; height: 90px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #7d8590;">
+                <span>📢 Space for Google AdSense / Banner Ad</span>
             </div>
         </main>
 
@@ -54,4 +69,5 @@
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
+
 </html>
