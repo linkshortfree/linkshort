@@ -47,12 +47,14 @@ body {
     width: 90%;
     max-width: 600px;
     text-align: center;
+    padding: 3rem 0;
 }
 
 .logo {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
     letter-spacing: -1px;
 }
 
