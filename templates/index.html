@@ -13,6 +13,8 @@
     <meta property="og:description" content="Shorten your links instantly with custom aliases. Fast, secure, and free.">
     <meta property="og:type" content="website">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 
@@ -31,26 +33,29 @@
                     <p class="subtitle">Premium, fast, and secure URL shortening service.</p>
 
                     <div class="input-group">
-                        <input type="text" id="urlInput" placeholder="Paste your long URL here..." autocomplete="off">
+                        <textarea id="urlInput" placeholder="Paste your long URL(s) here... (one per line for bulk)"
+                            autocomplete="off" rows="3"></textarea>
                     </div>
 
-                    <div class="options-toggle" onclick="toggleOptions()">
-                        <span>+ Add Custom Alias (Optional)</span>
+                    <div class="options-toggle" id="aliasToggle" onclick="toggleOptions()">
+                        <span>+ Add Custom Alias (Single Link Only)</span>
                     </div>
 
                     <div class="custom-options" id="customOptions">
-                        <div class="prefix">linkshort.com/</div>
+                        <div class="prefix">linkshort.live/</div>
                         <input type="text" id="aliasInput" placeholder="custom-word" maxlength="20">
                     </div>
 
-                    <button id="shortenBtn" onclick="shortenUrl()">Shorten URL</button>
+                    <button id="shortenBtn" onclick="shortenUrl()">Shorten Now</button>
 
                     <div id="resultArea" class="result-area hidden">
-                        <div class="success-message">✨ Your link is ready!</div>
-                        <div class="link-box">
-                            <span id="shortLink"></span>
-                            <button class="copy-btn" onclick="copyLink()">Copy</button>
+                        <div class="success-message">✨ Your links are ready!</div>
+                        <div id="linksList" class="links-list">
+                            <!-- Shortened links will appear here -->
                         </div>
+                        <button class="copy-btn"
+                            style="margin-top: 1rem; width: auto; background: rgba(88, 166, 255, 0.2);"
+                            onclick="copyAllLinks()">Copy All</button>
                     </div>
 
                     <div id="errorArea" class="error-message hidden"></div>

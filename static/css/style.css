@@ -88,7 +88,8 @@ h1 {
     margin-bottom: 1.5rem;
 }
 
-input[type="text"] {
+input[type="text"],
+textarea {
     width: 100%;
     padding: 1.2rem;
     background: rgba(0, 0, 0, 0.2);
@@ -99,9 +100,11 @@ input[type="text"] {
     font-family: inherit;
     transition: all 0.2s ease;
     outline: none;
+    resize: vertical;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+textarea:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 0 4px var(--glow-color);
 }
@@ -179,6 +182,25 @@ button:active {
 .result-area.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 1rem;
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.links-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.links-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
 }
 
 .link-box {
