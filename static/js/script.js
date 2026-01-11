@@ -13,16 +13,11 @@ async function shortenUrl() {
     const shortenBtn = document.getElementById('shortenBtn');
 
     const urls = urlInput.value.split('\n').map(u => u.trim()).filter(u => u !== '');
-    const customAlias = aliasInput.value.trim();
+    const rawAliases = aliasInput.value.split(',').map(a => a.trim()).filter(a => a !== '');
     const qrGreeting = qrGreetingInput.value.trim();
 
     if (urls.length === 0) {
         showError('Please paste at least one URL');
-        return;
-    }
-
-    if (urls.length > 1 && customAlias !== '') {
-        showError('Custom alias is only supported for single links');
         return;
     }
 
@@ -31,14 +26,17 @@ async function shortenUrl() {
     shortenBtn.innerText = 'Shortening...';
     linksList.innerHTML = '';
 
-    for (let url of urls) {
+    for (let i = 0; i < urls.length; i++) {
+        const url = urls[i];
+        const requestedAlias = rawAliases[i] || ""; // Use alias if provided, else empty for random
+
         try {
             const response = await fetch('/api/shorten', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     url: url,
-                    alias: urls.length === 1 ? customAlias : ""
+                    alias: requestedAlias
                 }),
             });
 
@@ -47,7 +45,7 @@ async function shortenUrl() {
                 const fullShortUrl = `${window.location.protocol}//${window.location.host}/${data.alias}`;
                 addLinkToUI(fullShortUrl, url, qrGreeting);
             } else {
-                addErrorToUI(data.error, url);
+                addErrorToUI(data.error || "Alias already taken", url);
             }
         } catch (error) {
             addErrorToUI("Server error", url);
@@ -136,7 +134,7 @@ function addErrorToUI(error, originalUrl) {
     const div = document.createElement('div');
     div.className = 'link-box';
     div.style.borderColor = '#ff7b72';
-    div.innerHTML = `<span style="color: #ff7b72">${error}</span><small>${originalUrl.substring(0, 20)}...</small>`;
+    div.innerHTML = `<span style="color: #ff7b72; font-size: 0.9rem;">${error}:</span><small style="color: var(--text-sub); margin-left: 5px;">${originalUrl.substring(0, 15)}...</small>`;
     linksList.appendChild(div);
 }
 
@@ -154,6 +152,10 @@ function copyIndividualLink(text, btn) {
 }
 
 function copyAllLinks() {
-    const links = Array.from(document.querySelectorAll('.link-box span')).map(s => s.innerText).join('\n');
+    const spans = Array.from(document.querySelectorAll('.link-box span'));
+    const links = spans
+        .filter(s => !s.style.color.includes('rgb(255, 123, 114)')) // exclude error text
+        .map(s => s.innerText)
+        .join('\n');
     if (links) { navigator.clipboard.writeText(links); alert('Copied all links!'); }
 }
