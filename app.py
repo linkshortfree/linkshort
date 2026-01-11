@@ -40,6 +40,21 @@ def redirect_to_url(alias):
     else:
         return render_template('404.html'), 404
 
+@app.route('/robots.txt')
+def robots():
+    return "User-agent: *\nDisallow: /api/\nSitemap: https://linkshort.live/sitemap.xml"
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://linkshort.live/</loc>
+    <lastmod>2026-01-12</lastmod>
+    <priority>1.0</priority>
+  </url>
+</urlset>""", {'Content-Type': 'application/xml'}
+
 if __name__ == '__main__':
     # Production configuration
     port = int(os.environ.get('PORT', 5001))
