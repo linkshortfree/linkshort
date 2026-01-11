@@ -18,38 +18,55 @@
 
 <body>
     <div class="background-glow"></div>
-    <div class="options-toggle" onclick="toggleOptions()">
-        <span>+ Add Custom Alias (Optional)</span>
-    </div>
 
-    <div class="custom-options" id="customOptions">
-        <div class="prefix">linkshort.com/</div>
-        <input type="text" id="aliasInput" placeholder="custom-word" maxlength="20">
-    </div>
+    <div class="main-grid">
+        <div class="container">
+            <header>
+                <div class="logo">Link<span>Short</span></div>
+            </header>
 
-    <button id="shortenBtn" onclick="shortenUrl()">Shorten URL</button>
+            <main>
+                <div class="glass-card">
+                    <h1>Shorten Your Links</h1>
+                    <p class="subtitle">Premium, fast, and secure URL shortening service.</p>
 
-    <div id="resultArea" class="result-area hidden">
-        <div class="success-message">✨ Your link is ready!</div>
-        <div class="link-box">
-            <span id="shortLink"></span>
-            <button class="copy-btn" onclick="copyLink()">Copy</button>
+                    <div class="input-group">
+                        <input type="text" id="urlInput" placeholder="Paste your long URL here..." autocomplete="off">
+                    </div>
+
+                    <div class="options-toggle" onclick="toggleOptions()">
+                        <span>+ Add Custom Alias (Optional)</span>
+                    </div>
+
+                    <div class="custom-options" id="customOptions">
+                        <div class="prefix">linkshort.com/</div>
+                        <input type="text" id="aliasInput" placeholder="custom-word" maxlength="20">
+                    </div>
+
+                    <button id="shortenBtn" onclick="shortenUrl()">Shorten URL</button>
+
+                    <div id="resultArea" class="result-area hidden">
+                        <div class="success-message">✨ Your link is ready!</div>
+                        <div class="link-box">
+                            <span id="shortLink"></span>
+                            <button class="copy-btn" onclick="copyLink()">Copy</button>
+                        </div>
+                    </div>
+
+                    <div id="errorArea" class="error-message hidden"></div>
+                </div>
+
+                <!-- MONETIZATION: Ad Banner Area -->
+                <div class="ad-banner-container"
+                    style="margin-top: 2rem; width: 100%; height: 90px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #7d8590;">
+                    <span>📢 Space for Google AdSense / Banner Ad</span>
+                </div>
+            </main>
+
+            <footer>
+                <p>&copy; 2026 LinkShort. Made with ❤️</p>
+            </footer>
         </div>
-    </div>
-
-    <div id="errorArea" class="error-message hidden"></div>
-    </div>
-
-    <!-- MONETIZATION: Ad Banner Area -->
-    <div class="ad-banner-container"
-        style="margin-top: 2rem; width: 100%; max-width: 728px; height: 90px; background: rgba(255,255,255,0.05); border: 1px dashed rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #7d8590;">
-        <span>📢 Space for Google AdSense / Banner Ad</span>
-    </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 LinkShort. Made with ❤️</p>
-    </footer>
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
