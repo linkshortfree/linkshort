@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkShort | Premium URL Shortener</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-glow"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">Link<span>Short</span></div>
+        </header>
+
+        <main>
+            <div class="glass-card">
+                <h1>Shorten Your Links</h1>
+                <p class="subtitle">Premium, fast, and secure URL shortening service.</p>
+                
+                <div class="input-group">
+                    <input type="text" id="urlInput" placeholder="Paste your long URL here..." autocomplete="off">
+                </div>
+
+                <div class="options-toggle" onclick="toggleOptions()">
+                    <span>+ Add Custom Alias (Optional)</span>
+                </div>
+
+                <div class="custom-options" id="customOptions">
+                    <div class="prefix">linkshort.com/</div>
+                    <input type="text" id="aliasInput" placeholder="custom-word" maxlength="20">
+                </div>
+
+                <button id="shortenBtn" onclick="shortenUrl()">Shorten URL</button>
+
+                <div id="resultArea" class="result-area hidden">
+                    <div class="success-message">✨ Your link is ready!</div>
+                    <div class="link-box">
+                        <span id="shortLink"></span>
+                        <button class="copy-btn" onclick="copyLink()">Copy</button>
+                    </div>
+                </div>
+                
+                <div id="errorArea" class="error-message hidden"></div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 LinkShort. Made with ❤️</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
