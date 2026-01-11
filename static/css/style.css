@@ -103,6 +103,35 @@ textarea {
     resize: vertical;
 }
 
+.file-upload-section {
+    margin: 1rem 0;
+    text-align: left;
+}
+
+.file-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 123, 255, 0.05);
+    border: 1px dashed var(--primary-color);
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.file-label:hover {
+    background: rgba(0, 123, 255, 0.1);
+}
+
+.file-status {
+    margin-top: 5px;
+    font-size: 0.8rem;
+    color: var(--text-sub);
+}
+
 input[type="text"]:focus,
 textarea:focus {
     border-color: var(--primary-color);

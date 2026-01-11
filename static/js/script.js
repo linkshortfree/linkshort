@@ -1,6 +1,52 @@
+let uploadedData = [];
+
 function toggleOptions() {
     const options = document.getElementById('customOptions');
     options.classList.toggle('show');
+}
+
+function handleFileUpload(input) {
+    const file = input.files[0];
+    const status = document.getElementById('fileStatus');
+    if (!file) return;
+
+    status.innerText = `Reading ${file.name}...`;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            const json = XLSX.utils.sheet_to_json(firstSheet);
+
+            uploadedData = json.map(row => {
+                // Try to find columns regardless of exact case
+                const findValue = (keys) => {
+                    const foundKey = Object.keys(row).find(k => keys.includes(k.toLowerCase().trim()));
+                    return foundKey ? row[foundKey] : "";
+                };
+
+                return {
+                    url: findValue(['url', 'link', 'original url', 'website']),
+                    alias: findValue(['alias', 'short name', 'custom name', 'slug']),
+                    greeting: findValue(['greeting', 'message', 'text', 'qr greeting'])
+                };
+            }).filter(item => item.url);
+
+            status.innerText = `✅ Loaded ${uploadedData.length} links from file. Click "Shorten Now" to process.`;
+            status.style.color = '#2da44e';
+
+            // Clear the text area to avoid confusion
+            document.getElementById('urlInput').value = "";
+            document.getElementById('urlInput').placeholder = "Links loaded from file!";
+        } catch (err) {
+            status.innerText = "❌ Error reading file. Use .xlsx or .csv";
+            status.style.color = '#cf222e';
+            console.error(err);
+        }
+    };
+    reader.readAsArrayBuffer(file);
 }
 
 async function shortenUrl() {
@@ -12,12 +58,32 @@ async function shortenUrl() {
     const errorArea = document.getElementById('errorArea');
     const shortenBtn = document.getElementById('shortenBtn');
 
-    const urls = urlInput.value.split('\n').map(u => u.trim()).filter(u => u !== '');
-    const rawAliases = aliasInput.value.split(',').map(a => a.trim()).filter(a => a !== '');
-    const rawGreetings = qrGreetingInput.value.split(',').map(g => g.trim()).filter(g => g !== '');
+    // Get UI data
+    const uiUrls = urlInput.value.split('\n').map(u => u.trim()).filter(u => u !== '');
+    const uiAliases = aliasInput.value.split(',').map(a => a.trim()).filter(a => a !== '');
+    const uiGreetings = qrGreetingInput.value.split(',').map(g => g.trim()).filter(g => g !== '');
 
-    if (urls.length === 0) {
-        showError('Please paste at least one URL');
+    let finalProcessList = [];
+
+    if (uiUrls.length > 0) {
+        // UI has priority for URLs
+        finalProcessList = uiUrls.map((url, i) => ({
+            url: url,
+            alias: uiAliases[i] || "",
+            greeting: uiGreetings[i] || ""
+        }));
+    } else if (uploadedData.length > 0) {
+        // File data fallback
+        finalProcessList = uploadedData.map((item, i) => ({
+            url: item.url,
+            // Priority: UI Input > File Input
+            alias: uiAliases[i] || item.alias || "",
+            greeting: uiGreetings[i] || item.greeting || ""
+        }));
+    }
+
+    if (finalProcessList.length === 0) {
+        showError('Please paste links or upload an Excel file');
         return;
     }
 
@@ -26,30 +92,26 @@ async function shortenUrl() {
     shortenBtn.innerText = 'Shortening...';
     linksList.innerHTML = '';
 
-    for (let i = 0; i < urls.length; i++) {
-        const url = urls[i];
-        const requestedAlias = rawAliases[i] || "";
-        const requestedGreeting = rawGreetings[i] || ""; // Use mapped greeting or empty
-
+    for (let item of finalProcessList) {
         try {
             const response = await fetch('/api/shorten', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    url: url,
-                    alias: requestedAlias
+                    url: item.url,
+                    alias: item.alias
                 }),
             });
 
             const data = await response.json();
             if (data.success) {
                 const fullShortUrl = `${window.location.protocol}//${window.location.host}/${data.alias}`;
-                addLinkToUI(fullShortUrl, url, requestedGreeting);
+                addLinkToUI(fullShortUrl, item.url, item.greeting);
             } else {
-                addErrorToUI(data.error || "Alias already taken", url);
+                addErrorToUI(data.error || "Error", item.url);
             }
         } catch (error) {
-            addErrorToUI("Server error", url);
+            addErrorToUI("Server error", item.url);
         }
     }
 
@@ -57,6 +119,11 @@ async function shortenUrl() {
     shortenBtn.innerText = 'Shorten Now';
     resultArea.classList.remove('hidden');
     resultArea.classList.add('visible');
+
+    // Clear uploaded state after processing
+    uploadedData = [];
+    document.getElementById('fileStatus').innerText = "";
+    document.getElementById('fileInput').value = "";
 }
 
 function addLinkToUI(shortUrl, originalUrl, qrGreeting) {
