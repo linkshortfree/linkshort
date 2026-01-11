@@ -25,16 +25,16 @@ body {
     align-items: flex-start;
     /* Changed from center to allow sidebars */
     overflow-x: hidden;
-    padding-top: 50px;
+    padding: 20px;
 }
 
 .main-grid {
-    display: flex;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 160px 1fr 160px;
+    gap: 30px;
     width: 100%;
     max-width: 1200px;
-    justify-content: center;
-    position: relative;
+    align-items: start;
 }
 
 .ad-sidebar {
@@ -51,6 +51,21 @@ body {
     color: var(--text-sub);
     font-size: 0.9rem;
     padding: 10px;
+    position: sticky;
+    top: 20px;
+}
+
+@media (max-width: 1000px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+        /* Stack everything on smaller screens */
+        gap: 20px;
+    }
+
+    .ad-sidebar {
+        display: none;
+        /* Hide sidebars to prevent breaking layout */
+    }
 }
 
 @media (max-width: 900px) {
@@ -62,7 +77,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 600px;
+    /* max-width removed to let grid handle it */
     text-align: center;
 }
 
