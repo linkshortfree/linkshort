@@ -22,62 +22,30 @@ body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    /* Changed from center to allow sidebars */
+    align-items: center;
     overflow-x: hidden;
-    padding: 20px;
+}
+
+.background-glow {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, var(--glow-color) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: -1;
 }
 
 .main-grid {
-    display: grid;
-    grid-template-columns: 160px 1fr 160px;
-    gap: 30px;
-    width: 100%;
-    max-width: 1200px;
-    align-items: start;
-}
-
-.ad-sidebar {
-    width: 160px;
-    height: 600px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px dashed rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    text-align: center;
-    color: var(--text-sub);
-    font-size: 0.9rem;
-    padding: 10px;
-    position: sticky;
-    top: 20px;
-}
-
-@media (max-width: 1000px) {
-    .main-grid {
-        grid-template-columns: 1fr;
-        /* Stack everything on smaller screens */
-        gap: 20px;
-    }
-
-    .ad-sidebar {
-        display: none;
-        /* Hide sidebars to prevent breaking layout */
-    }
-}
-
-@media (max-width: 900px) {
-    .ad-sidebar {
-        display: none;
-        /* Hide sidebars on mobile */
-    }
+    width: 100%;
 }
 
 .container {
-    width: 100%;
-    /* max-width removed to let grid handle it */
+    width: 90%;
+    max-width: 600px;
     text-align: center;
 }
 
@@ -101,10 +69,6 @@ body {
     border-radius: 24px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     transition: transform 0.3s ease;
-}
-
-.glass-card:hover {
-    transform: translateY(-5px);
 }
 
 h1 {
@@ -252,6 +216,10 @@ button:active {
 .error-message {
     color: #ff7b72;
     margin-top: 1rem;
+}
+
+.ad-sidebar {
+    display: none !important;
 }
 
 footer {
