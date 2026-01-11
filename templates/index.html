@@ -83,6 +83,20 @@
         </div>
     </div>
 
+    <!-- QR Modal -->
+    <div id="qrModal" class="modal-overlay hidden" onclick="closeModal(event)">
+        <div class="modal-content glass-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Your QR Code</h3>
+                <button class="close-modal-btn" onclick="closeModal()">×</button>
+            </div>
+            <div id="modalGreeting" class="qr-greeting-text"></div>
+            <div id="modalQrContent" class="modal-qr-body"></div>
+            <button id="modalDownloadBtn" class="download-btn" style="margin-top: 20px; width: 100%;">Download
+                QR</button>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
