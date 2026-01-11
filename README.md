@@ -1,8 +1,8 @@
-# 🚀 LinkShort - Premium URL Shortener
+# 🚀 LinkShort - Bulk URL Shortener & QR Code Generator
 
 ![LinkShort Logo](static/favicon.png)
 
-**LinkShort** is a modern, fast, and secure URL shortening application built with Python (Flask) and a premium glassmorphism UI. It supports bulk shortening, custom aliases, and is fully optimized for SEO and monetization.
+**LinkShort** is a modern, fast, and secure **Bulk URL Shortener & QR Code Generator** built with Python (Flask) and a premium light-mode UI. It is designed specifically for power users who need to manage dozens of links and generate branded QR codes with custom greetings and emojis.
 
 ## ✨ Features
 - **⚡️ Fast Shortening**: Instantly convert long URLs into short, shareable links.
