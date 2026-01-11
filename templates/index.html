@@ -48,11 +48,12 @@
 
                     <div class="options-toggle"
                         onclick="document.getElementById('qrGreetingGroup').classList.toggle('show')">
-                        <span>+ Add QR Greeting (e.g. Merry Christmas 🌹)</span>
+                        <span>+ Add QR Greeting (Comma-separated for bulk)</span>
                     </div>
 
                     <div class="custom-options" id="qrGreetingGroup">
-                        <input type="text" id="qrGreetingInput" placeholder="Enter your message here..." maxlength="40">
+                        <input type="text" id="qrGreetingInput" placeholder="e.g. Hello, Welcome, Thanks"
+                            maxlength="150">
                     </div>
 
                     <button id="shortenBtn" onclick="shortenUrl()">Shorten Now</button>

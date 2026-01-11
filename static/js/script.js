@@ -14,7 +14,7 @@ async function shortenUrl() {
 
     const urls = urlInput.value.split('\n').map(u => u.trim()).filter(u => u !== '');
     const rawAliases = aliasInput.value.split(',').map(a => a.trim()).filter(a => a !== '');
-    const qrGreeting = qrGreetingInput.value.trim();
+    const rawGreetings = qrGreetingInput.value.split(',').map(g => g.trim()).filter(g => g !== '');
 
     if (urls.length === 0) {
         showError('Please paste at least one URL');
@@ -28,7 +28,8 @@ async function shortenUrl() {
 
     for (let i = 0; i < urls.length; i++) {
         const url = urls[i];
-        const requestedAlias = rawAliases[i] || ""; // Use alias if provided, else empty for random
+        const requestedAlias = rawAliases[i] || "";
+        const requestedGreeting = rawGreetings[i] || ""; // Use mapped greeting or empty
 
         try {
             const response = await fetch('/api/shorten', {
@@ -43,7 +44,7 @@ async function shortenUrl() {
             const data = await response.json();
             if (data.success) {
                 const fullShortUrl = `${window.location.protocol}//${window.location.host}/${data.alias}`;
-                addLinkToUI(fullShortUrl, url, qrGreeting);
+                addLinkToUI(fullShortUrl, url, requestedGreeting);
             } else {
                 addErrorToUI(data.error || "Alias already taken", url);
             }
