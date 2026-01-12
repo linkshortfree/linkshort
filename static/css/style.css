@@ -280,7 +280,15 @@ button:active {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
     margin-left: 1rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: #f0f7ff;
+    color: var(--primary-color);
+    border: 1px solid rgba(0, 123, 255, 0.2);
+    box-shadow: none;
+}
+
+.copy-btn:hover {
+    background: var(--primary-color);
+    color: white;
 }
 
 .hidden {
@@ -345,22 +353,24 @@ footer {
 
 .qr-toggle,
 .download-btn {
-    background: rgba(255, 255, 255, 0.05);
+    background: #f8f9fa;
     border: 1px solid var(--border-color);
     padding: 0.5rem 0.8rem;
     border-radius: 8px;
-    color: var(--text-sub);
+    color: #1c1e21;
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s ease;
     margin-left: 0.5rem;
     width: auto;
+    box-shadow: none;
 }
 
 .qr-toggle:hover,
 .download-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-color);
+    background: #edf2f7;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .download-btn {
