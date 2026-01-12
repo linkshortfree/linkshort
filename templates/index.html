@@ -52,6 +52,11 @@
                         <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" style="display: none;"
                             onchange="handleFileUpload(this)">
                         <div id="fileStatus" class="file-status"></div>
+                        <div style="margin-top: 0.5rem;">
+                            <a href="#" onclick="downloadSampleTemplate(); return false;"
+                                style="font-size: 0.8rem; color: var(--primary-color); text-decoration: none;">📄
+                                Download Sample Template</a>
+                        </div>
                     </div>
 
                     <div class="options-toggle" id="aliasToggle" onclick="toggleOptions()">
