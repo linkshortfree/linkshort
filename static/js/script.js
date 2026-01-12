@@ -230,15 +230,77 @@ function copyAllLinks() {
     if (links) { navigator.clipboard.writeText(links); alert('Copied all links!'); }
 }
 
-function downloadSampleTemplate() {
-    const csvContent = "URL,Alias,Greeting\nhttps://google.com,google-home,Welcome to Google\nhttps://youtube.com,yt,Watch videos here";
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", "linkshort_template.csv");
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+async function downloadAllQRs() {
+    if (lastResults.length === 0) return;
+
+    const downloadBtn = document.getElementById('downloadAllQrsBtn');
+    const oldText = downloadBtn.innerText;
+    downloadBtn.innerText = "Zipping QRs...";
+    downloadBtn.disabled = true;
+
+    try {
+        const zip = new JSZip();
+
+        for (let item of lastResults) {
+            // Re-generate the QR canvas in memory for the zip
+            const canvas = await generateQRCanvasInMemory(item.shortUrl, item.greeting);
+            const dataUrl = canvas.toDataURL('image/png').split(',')[1];
+            // Name format: [index]-[alias].png
+            const fileName = `${item.index}-${item.alias || 'link'}.png`;
+            zip.file(fileName, dataUrl, { base64: true });
+        }
+
+        const content = await zip.generateAsync({ type: "blob" });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(content);
+        link.download = "linkshort-bulk-qrs.zip";
+        link.click();
+    } catch (err) {
+        console.error("Zip error:", err);
+        alert("Error generating zip file.");
+    }
+
+    downloadBtn.innerText = oldText;
+    downloadBtn.disabled = false;
+}
+
+// Helper to generate a canvas without appending to DOM
+async function generateQRCanvasInMemory(url, greeting) {
+    return new Promise((resolve) => {
+        const div = document.createElement('div');
+        const qrcode = new QRCode(div, {
+            text: url,
+            width: 200,
+            height: 200,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // QRCode library is sync but we wait for the canvas to be ready
+        setTimeout(() => {
+            const qrCanvas = div.querySelector('canvas');
+            const exportCanvas = document.createElement('canvas');
+            const ctx = exportCanvas.getContext('2d');
+            const qrSize = 200;
+            const padding = 20;
+            const textHeight = greeting ? 40 : 0;
+
+            exportCanvas.width = qrSize + (padding * 2);
+            exportCanvas.height = qrSize + textHeight + (padding * 2);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+            if (greeting) {
+                ctx.fillStyle = "#333333";
+                ctx.font = "bold 16px Outfit, sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText(greeting, exportCanvas.width / 2, padding + 20);
+            }
+
+            ctx.drawImage(qrCanvas, padding, padding + textHeight, qrSize, qrSize);
+            resolve(exportCanvas);
+        }, 50);
+    });
 }
