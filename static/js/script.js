@@ -230,6 +230,19 @@ function copyAllLinks() {
     if (links) { navigator.clipboard.writeText(links); alert('Copied all links!'); }
 }
 
+function downloadSampleTemplate() {
+    const csvContent = "URL,Alias,Greeting\nhttps://google.com,google-home,Welcome to Google\nhttps://youtube.com,yt,Watch videos here";
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "linkshort_template.csv");
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 async function downloadAllQRs() {
     if (lastResults.length === 0) return;
 
