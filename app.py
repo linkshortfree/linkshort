@@ -81,7 +81,11 @@ def redirect_to_url(alias):
 
 @app.route('/robots.txt')
 def robots():
-    return "User-agent: *\nDisallow: /api/\nSitemap: https://linkshort.live/sitemap.xml"
+    return "User-agent: *\nDisallow: /api/\nSitemap: https://linkshort.live/sitemap.xml", {'Content-Type': 'text/plain'}
+
+@app.route('/ads.txt')
+def ads_txt():
+    return "google.com, pub-5774199741984914, DIRECT, f08c47fec0942fa0", {'Content-Type': 'text/plain'}
 
 @app.route('/sitemap.xml')
 def sitemap():
