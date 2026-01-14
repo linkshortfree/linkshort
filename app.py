@@ -79,6 +79,10 @@ def redirect_to_url(alias):
     else:
         return render_template('404.html'), 404
 
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.png')
+
 @app.route('/robots.txt')
 def robots():
     return "User-agent: *\nDisallow: /api/\nSitemap: https://linkshort.live/sitemap.xml", {'Content-Type': 'text/plain'}
