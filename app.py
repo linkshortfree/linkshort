@@ -83,6 +83,10 @@ def redirect_to_url(alias):
 def favicon():
     return app.send_static_file('favicon.png')
 
+@app.route('/45c58908f0a24765961d10271034f89d.txt')
+def index_now():
+    return "45c58908f0a24765961d10271034f89d", {'Content-Type': 'text/plain'}
+
 @app.route('/robots.txt')
 def robots():
     return "User-agent: *\nDisallow: /api/\nSitemap: https://linkshort.live/sitemap.xml", {'Content-Type': 'text/plain'}
