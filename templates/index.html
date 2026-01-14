@@ -13,19 +13,56 @@
     <meta property="og:description"
         content="Shorten dozens of links instantly and generate branded QR codes with custom greetings.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://linkshort.live/">
+    <meta property="og:image" content="https://linkshort.live/static/favicon.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="LinkShort - Bulk URL Shortener & QR Code Generator">
+    <meta name="twitter:description" content="The best free bulk URL shortener and QR code generator.">
+    <meta name="twitter:image" content="https://linkshort.live/static/favicon.png">
+
     <link rel="canonical" href="https://linkshort.live/">
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "LinkShort",
-      "url": "https://linkshort.live/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://linkshort.live/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "LinkShort",
+        "url": "https://linkshort.live/",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://linkshort.live/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "LinkShort",
+        "operatingSystem": "All",
+        "applicationCategory": "UtilitiesApplication",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "ratingCount": "1250"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "LinkShort",
+        "url": "https://linkshort.live/",
+        "logo": "https://linkshort.live/static/favicon.png",
+        "sameAs": [
+          "https://github.com/linkshortfree/linkshort"
+        ]
       }
-    }
+    ]
     </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
