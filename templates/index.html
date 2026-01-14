@@ -13,6 +13,20 @@
     <meta property="og:description"
         content="Shorten dozens of links instantly and generate branded QR codes with custom greetings.">
     <meta property="og:type" content="website">
+    <link rel="canonical" href="https://linkshort.live/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "LinkShort",
+      "url": "https://linkshort.live/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://linkshort.live/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
@@ -135,6 +149,12 @@
 
             <footer>
                 <p>&copy; 2026 LinkShort. Made with ❤️</p>
+                <div style="margin-top: 10px; font-size: 0.8rem;">
+                    <a href="/privacy" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Privacy
+                        Policy</a>
+                    <a href="/terms" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Terms of
+                        Service</a>
+                </div>
             </footer>
         </div>
     </div>

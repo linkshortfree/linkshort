@@ -8,9 +8,48 @@ app = Flask(__name__)
 with app.app_context():
     init_db()
 
+@app.before_request
+def redirect_to_https_and_non_www():
+    """Redirects www to non-www and enforce https in production."""
+    urlparts = request.url.split('://', 1)
+    if len(urlparts) < 2: return
+    
+    protocol, rest = urlparts
+    domain_and_path = rest.split('/', 1)
+    domain = domain_and_path[0]
+    
+    # Only redirect in production environments (check for common production indicators)
+    is_production = os.environ.get('FLASK_ENV') != 'development' and not request.host.startswith('localhost') and not request.host.startswith('127.0.0.1')
+    
+    changed = False
+    new_protocol = protocol
+    new_domain = domain
+    
+    if is_production and protocol == 'http':
+        new_protocol = 'https'
+        changed = True
+        
+    if domain.startswith('www.'):
+        new_domain = domain[4:]
+        changed = True
+        
+    if changed:
+        new_url = f"{new_protocol}://{new_domain}"
+        if len(domain_and_path) > 1:
+            new_url += f"/{domain_and_path[1]}"
+        return redirect(new_url, code=301)
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
 
 @app.route('/api/shorten', methods=['POST'])
 def shorten_url():
@@ -50,8 +89,18 @@ def sitemap():
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://linkshort.live/</loc>
-    <lastmod>2026-01-12</lastmod>
+    <lastmod>2026-01-14</lastmod>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://linkshort.live/privacy</loc>
+    <lastmod>2026-01-14</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://linkshort.live/terms</loc>
+    <lastmod>2026-01-14</lastmod>
+    <priority>0.5</priority>
   </url>
 </urlset>""", {'Content-Type': 'application/xml'}
 
