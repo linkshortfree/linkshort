@@ -1,4 +1,5 @@
 let uploadedData = [];
+let lastResults = []; // Fixed: lastResults was not defined
 
 function toggleOptions() {
     const options = document.getElementById('customOptions');
@@ -91,8 +92,9 @@ async function shortenUrl() {
     shortenBtn.disabled = true;
     shortenBtn.innerText = 'Shortening...';
     linksList.innerHTML = '';
+    lastResults = [];
 
-    for (let item of finalProcessList) {
+    for (let [index, item] of finalProcessList.entries()) {
         try {
             const response = await fetch('/api/shorten', {
                 method: 'POST',
@@ -107,6 +109,12 @@ async function shortenUrl() {
             if (data.success) {
                 const fullShortUrl = `${window.location.protocol}//${window.location.host}/${data.alias}`;
                 addLinkToUI(fullShortUrl, item.url, item.greeting);
+                lastResults.push({
+                    shortUrl: fullShortUrl,
+                    alias: data.alias,
+                    greeting: item.greeting,
+                    index: index + 1
+                });
             } else {
                 addErrorToUI(data.error || "Error", item.url);
             }
@@ -133,10 +141,10 @@ function addLinkToUI(shortUrl, originalUrl, qrGreeting) {
     const div = document.createElement('div');
     div.className = 'link-box';
     div.innerHTML = `
-        <span title="${originalUrl}">${shortUrl}</span>
+        <span title="${originalUrl}" style="color: var(--accent-primary); font-weight: 500;">${shortUrl}</span>
         <div style="display: flex; gap: 8px; align-items: center;">
+            <button class="qr-toggle" style="background: rgba(139, 92, 246, 0.1); color: var(--accent-secondary); border: 1px solid rgba(139, 92, 246, 0.2);" onclick="openQrModal('${shortUrl}', '${qrGreeting}')">QR</button>
             <button class="copy-btn" onclick="copyIndividualLink('${shortUrl}', this)">Copy</button>
-            <button class="qr-toggle" onclick="openQrModal('${shortUrl}', '${qrGreeting}')">QR</button>
         </div>
     `;
     linksList.appendChild(div);
@@ -203,8 +211,9 @@ function addErrorToUI(error, originalUrl) {
     const linksList = document.getElementById('linksList');
     const div = document.createElement('div');
     div.className = 'link-box';
-    div.style.borderColor = '#ff7b72';
-    div.innerHTML = `<span style="color: #ff7b72; font-size: 0.9rem;">${error}:</span><small style="color: var(--text-sub); margin-left: 5px;">${originalUrl.substring(0, 15)}...</small>`;
+    div.style.borderColor = 'rgba(239, 68, 68, 0.2)';
+    div.style.background = 'rgba(239, 68, 68, 0.05)';
+    div.innerHTML = `<span style="color: var(--error); font-size: 0.9rem; font-weight: 500;">${error}:</span><small style="color: var(--text-secondary); margin-left: 8px; overflow: hidden; text-overflow: ellipsis;">${originalUrl.substring(0, 20)}...</small>`;
     linksList.appendChild(div);
 }
 

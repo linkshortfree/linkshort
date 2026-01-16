@@ -73,7 +73,8 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
     <meta name="msvalidate.01" content="492136868F8EBB3BD8CE3C0366258D3C" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap&font-display=swap"
+        rel="stylesheet">
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5774199741984914"
         crossorigin="anonymous"></script>
@@ -112,9 +113,9 @@
                         <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" style="display: none;"
                             onchange="handleFileUpload(this)">
                         <div id="fileStatus" class="file-status"></div>
-                        <div style="margin-top: 0.5rem;">
+                        <div style="margin-top: 0.75rem;">
                             <a href="#" onclick="downloadSampleTemplate(); return false;"
-                                style="font-size: 0.8rem; color: var(--primary-color); text-decoration: none;">📄
+                                style="font-size: 0.85rem; color: var(--accent-primary); text-decoration: none; border-bottom: 1px dashed var(--accent-primary);">📄
                                 Download Sample Template</a>
                         </div>
                     </div>
@@ -141,28 +142,30 @@
                     <button id="shortenBtn" onclick="shortenUrl()">Shorten Now</button>
 
                     <div id="resultArea" class="result-area hidden">
-                        <div class="success-message">✨ Your links are ready!</div>
+                        <div class="success-message"
+                            style="color: var(--success); font-weight: 600; margin-bottom: 1rem;">✨ Your links are
+                            ready!</div>
                         <div id="linksList" class="links-list">
                             <!-- Shortened links will appear here -->
                         </div>
-                        <div style="display: flex; gap: 10px; margin-top: 1.5rem; justify-content: center;">
-                            <button class="copy-btn" style="width: auto; background: #eef6ff;"
-                                onclick="copyAllLinks()">Copy All Links</button>
+                        <div style="display: flex; gap: 12px; margin-top: 2rem; justify-content: center;">
+                            <button class="copy-btn" style="flex: 1; margin: 0;" onclick="copyAllLinks()">Copy All
+                                Links</button>
                             <button id="downloadAllQrsBtn" class="copy-btn"
-                                style="width: auto; background: #fdf2f2; color: #cf222e; border-color: #f8d7da;"
+                                style="flex: 1; margin: 0; background: rgba(239, 68, 68, 0.1); color: var(--error); border-color: rgba(239, 68, 68, 0.2);"
                                 onclick="downloadAllQRs()">Download All QRs</button>
                         </div>
                     </div>
 
-                    <div id="errorArea" class="error-message hidden"></div>
+                    <div id="errorArea" class="error-message hidden" style="color: var(--error);"></div>
                 </div>
 
                 <!-- MONETIZATION: Ad Banner Area -->
-                <div class="ad-banner-container"
-                    style="margin-top: 2rem; width: 100%; min-height: 90px; display: flex; align-items: center; justify-content: center;">
+                <div class="ad-banner-container">
                     <!-- LinkShort_Responsive_Banner -->
-                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5774199741984914"
-                        data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <ins class="adsbygoogle" style="display:block; width: 100%; height: 100px;"
+                        data-ad-client="ca-pub-5774199741984914" data-ad-slot="1234567890" data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                     <script>
                         (adsbygoogle = window.adsbygoogle || []).push({});
                     </script>
@@ -170,30 +173,39 @@
             </main>
 
             <section class="seo-content"
-                style="margin-top: 5rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto; padding: 2rem; border-top: 1px solid var(--border-color);">
-                <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: var(--text-color);">Why choose our Bulk URL
+                style="margin-top: 5rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto; padding: 3rem; border-top: 1px solid var(--glass-border); background: rgba(30, 41, 59, 0.3); border-radius: 24px;">
+                <h2 style="font-size: 1.8rem; margin-bottom: 2rem; color: #fff; letter-spacing: -1px;">Why choose our
+                    Bulk URL
                     Shortener?</h2>
                 <div
-                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; color: var(--text-sub); line-height: 1.6;">
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; color: var(--text-secondary); line-height: 1.6;">
                     <div>
-                        <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">⚡️ Instant Bulk Shortening</h3>
+                        <h3
+                            style="color: var(--accent-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;">
+                            ⚡️ Instant Bulk</h3>
                         <p>Our tool allows you to shorten dozens of links at once. Simply paste your URLs or upload an
                             Excel/CSV file to manage your link campaigns instantly.</p>
                     </div>
                     <div>
-                        <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">🎨 Branded QR Codes</h3>
+                        <h3
+                            style="color: var(--accent-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;">
+                            🎨 Branded QR</h3>
                         <p>Generate unique QR codes for every link. Add personalized greetings and emojis to make your
                             QR codes stand out and increase scan rates.</p>
                     </div>
                     <div>
-                        <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">🏷️ Custom Bulk Aliases</h3>
+                        <h3
+                            style="color: var(--accent-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;">
+                            🏷️ Custom Aliases</h3>
                         <p>Take control of your branding with custom aliases. Map multiple names to multiple links in
                             one go using our comma-separated input system.</p>
                     </div>
                     <div>
-                        <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">🛡️ Secure & Reliable</h3>
+                        <h3
+                            style="color: var(--accent-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;">
+                            🛡️ Secure & Reliable</h3>
                         <p>LinkShort is built for speed and security. We ensure your links are always accessible and
-                            your data is handled efficiently on our high-performance infrastructure.</p>
+                            your data is handled efficiently.</p>
                     </div>
                 </div>
             </section>
