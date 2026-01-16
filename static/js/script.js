@@ -141,9 +141,9 @@ function addLinkToUI(shortUrl, originalUrl, qrGreeting) {
     const div = document.createElement('div');
     div.className = 'link-box';
     div.innerHTML = `
-        <span title="${originalUrl}" style="color: var(--accent-primary); font-weight: 500;">${shortUrl}</span>
+        <span title="${originalUrl}" style="color: var(--accent-secondary); font-weight: 500;">${shortUrl}</span>
         <div style="display: flex; gap: 8px; align-items: center;">
-            <button class="qr-toggle" style="background: rgba(139, 92, 246, 0.1); color: var(--accent-secondary); border: 1px solid rgba(139, 92, 246, 0.2);" onclick="openQrModal('${shortUrl}', '${qrGreeting}')">QR</button>
+            <button class="qr-toggle" style="background: rgba(61, 122, 77, 0.15); color: var(--accent-secondary); border: 1px solid rgba(61, 122, 77, 0.3);" onclick="openQrModal('${shortUrl}', '${qrGreeting}')">QR</button>
             <button class="copy-btn" onclick="copyIndividualLink('${shortUrl}', this)">Copy</button>
         </div>
     `;

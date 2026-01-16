@@ -1,16 +1,23 @@
 :root {
-    /* Sophisticated Color Palette */
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --accent-primary: #3b82f6;
-    --accent-secondary: #8b5cf6;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --glass-bg: rgba(30, 41, 59, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    --success: #10b981;
-    --error: #ef4444;
+    /* Green Earth Refined Palette */
+    --bg-primary: #11231a;
+    /* Deep Forest Earth */
+    --bg-secondary: #1a2e23;
+    --accent-primary: #3d7a4d;
+    /* Moss Green */
+    --accent-secondary: #97bc62;
+    /* Sage Green */
+    --text-primary: #f1f5f2;
+    /* Soft Off-White with green hint */
+    --text-secondary: #b1c7bc;
+    /* Muted Sage Text */
+    --glass-bg: rgba(26, 46, 35, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.7);
+    --success: #68a357;
+    /* Natural Green */
+    --error: #bc4a4a;
+    /* Earthy Red */
 }
 
 * {
@@ -38,8 +45,9 @@ body {
     width: 100%;
     height: 100%;
     background:
-        radial-gradient(circle at 0% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
+        radial-gradient(circle at 15% 15%, rgba(61, 122, 77, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(26, 46, 35, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(17, 35, 26, 0.2) 0%, transparent 60%);
     pointer-events: none;
     z-index: -1;
 }
@@ -73,6 +81,7 @@ body {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px rgba(61, 122, 77, 0.3));
 }
 
 .glass-card {
@@ -186,7 +195,7 @@ textarea:focus {
 
 .options-toggle {
     text-align: center;
-    color: var(--primary-color);
+    color: var(--accent-primary);
     cursor: pointer;
     font-size: 1rem;
     font-weight: 500;
@@ -195,6 +204,30 @@ textarea:focus {
     text-decoration: underline;
     text-underline-offset: 4px;
 }
+
+.csv-template-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--accent-secondary);
+    text-decoration: none;
+    padding: 8px 16px;
+    background: rgba(61, 122, 77, 0.15);
+    border-radius: 10px;
+    border: 1px solid rgba(61, 122, 77, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1.25rem;
+    font-weight: 500;
+}
+
+.csv-template-link:hover {
+    background: rgba(61, 122, 77, 0.25);
+    border-color: var(--accent-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
 
 .custom-options {
     display: none;
@@ -228,7 +261,7 @@ textarea:focus {
 button {
     width: 100%;
     padding: 1.25rem;
-    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, #2c5f2d 100%);
     border: none;
     border-radius: 12px;
     color: #fff;
@@ -237,12 +270,13 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: inherit;
-    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 10px 20px -5px rgba(17, 35, 26, 0.5);
 }
 
 button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 20px 30px -10px rgba(17, 35, 26, 0.6);
+    background: linear-gradient(135deg, #4d8b5c 0%, var(--accent-primary) 100%);
 }
 
 button:active {
