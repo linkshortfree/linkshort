@@ -155,21 +155,27 @@ textarea:focus {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: #f8f9fa;
-    border: 2px dashed #dee2e6;
-    padding: 0.8rem 1.5rem;
+    background: #2da44e;
+    /* Bright Green */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.8rem 1.8rem;
     border-radius: 50px;
-    color: var(--text-sub);
+    color: #000000;
+    /* Black text */
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 700;
+    /* Bolder text for visibility */
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(17, 35, 26, 0.3);
 }
 
 .file-label:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-    background: rgba(0, 123, 255, 0.02);
+    background: #34c759;
+    /* Lighter brighter green on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(17, 35, 26, 0.5);
+    border-color: rgba(0, 0, 0, 0.2);
 }
 
 .file-status {
