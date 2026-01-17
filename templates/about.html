@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | LinkShort - Bulk URL Shortener</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    <div class="main-grid">
+        <div class="container" style="text-align: left; max-width: 800px;">
+            <header style="text-align: center;">
+                <div class="logo"><a href="/" style="text-decoration: none; color: inherit;">Link<span>Short</span></a>
+                </div>
+            </header>
+
+            <main class="glass-card" style="padding: 3rem;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 1.5rem;">About LinkShort</h1>
+                <p style="margin-bottom: 1.5rem; line-height: 1.8; color: var(--text-secondary);">
+                    Welcome to <strong>LinkShort</strong>, your ultimate destination for efficient, reliable, and
+                    powerful bulk URL shortening and QR code generation. In an era where digital presence is paramount,
+                    we aim to provide tools that simplify your marketing campaigns and personal link management.
+                </p>
+
+                <h2 style="color: var(--accent-secondary); margin: 2rem 0 1rem;">Our Mission</h2>
+                <p style="margin-bottom: 1.5rem; line-height: 1.8; color: var(--text-secondary);">
+                    At LinkShort, our mission is to empower users with a seamless way to transform long, cumbersome URLs
+                    into clean, manageable, and trackable links. We believe that technology should be accessible to
+                    everyone, which is why we've built a platform that is completely free to use, without compromising
+                    on professional features.
+                </p>
+
+                <h2 style="color: var(--accent-secondary); margin: 2rem 0 1rem;">Why Choose Us?</h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 0.8rem;">📦 <strong>Bulk Processing:</strong> Shorten dozens of links in
+                        one go using our textarea or by uploading Excel/CSV files.</li>
+                    <li style="margin-bottom: 0.8rem;">🎨 <strong>Custom Branding:</strong> Personalize your links with
+                        custom aliases to reinforce your brand identity.</li>
+                    <li style="margin-bottom: 0.8rem;">📱 <strong>Branded QR Codes:</strong> Generate QR codes for every
+                        link, complete with custom greetings and emojis.</li>
+                    <li style="margin-bottom: 0.8rem;">🛡️ <strong>Safety First:</strong> We prioritize your security
+                        and ensure that all redirects are handled securely and efficiently.</li>
+                </ul>
+
+                <h2 style="color: var(--accent-secondary); margin: 2rem 0 1rem;">Our Technology</h2>
+                <p style="margin-bottom: 1.5rem; line-height: 1.8; color: var(--text-secondary);">
+                    LinkShort is built using modern web technologies to ensure speed and reliability. Our system
+                    utilizes a robust backend powered by Python and Flask, ensuring that your links are always live and
+                    your QR codes are generated instantly.
+                </p>
+            </main>
+
+            <footer style="margin-top: 3rem; text-align: center;">
+                <p>&copy; 2026 LinkShort. All rights reserved.</p>
+                <div style="margin-top: 10px; font-size: 0.8rem;">
+                    <a href="/" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Home</a>
+                    <a href="/about" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">About Us</a>
+                    <a href="/contact"
+                        style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Contact</a>
+                    <a href="/privacy" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Privacy
+                        Policy</a>
+                    <a href="/terms" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Terms of
+                        Service</a>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>

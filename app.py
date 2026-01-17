@@ -51,6 +51,14 @@ def privacy():
 def terms():
     return render_template('terms.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 @app.route('/api/shorten', methods=['POST'])
 def shorten_url():
     data = request.json
@@ -111,7 +119,17 @@ def sitemap():
   </url>
   <url>
     <loc>https://linkshort.live/terms</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-01-17</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://linkshort.live/about</loc>
+    <lastmod>2026-01-17</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://linkshort.live/contact</loc>
+    <lastmod>2026-01-17</lastmod>
     <priority>0.5</priority>
   </url>
 </urlset>""", {'Content-Type': 'application/xml'}

@@ -113,11 +113,25 @@
                         <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" style="display: none;"
                             onchange="handleFileUpload(this)">
                         <div id="fileStatus" class="file-status"></div>
-                        <div>
+                        <div style="margin-top: 1rem;">
                             <a href="#" onclick="downloadSampleTemplate(); return false;" class="csv-template-link">
                                 📄 Download Sample Template
                             </a>
                         </div>
+                    </div>
+
+                    <!-- Guidance Section -->
+                    <div
+                        style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border-radius: 16px; border: 1px solid var(--glass-border); text-align: left;">
+                        <h4 style="color: var(--accent-secondary); margin-bottom: 0.5rem; font-size: 1rem;">🚀 Quick
+                            Guide:</h4>
+                        <ul
+                            style="color: var(--text-secondary); font-size: 0.85rem; padding-left: 1.2rem; line-height: 1.6;">
+                            <li>Paste URLs (one per line) or upload a file.</li>
+                            <li>(Optional) Add custom aliases if you want branded links.</li>
+                            <li>(Optional) Add QR greetings for your generated QR codes.</li>
+                            <li>Click "Shorten Now" to get your magic links!</li>
+                        </ul>
                     </div>
 
                     <div class="options-toggle" id="aliasToggle" onclick="toggleOptions()">
@@ -184,28 +198,62 @@
                             style="color: var(--accent-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;">
                             ⚡️ Instant Bulk</h3>
                         <p>Our tool allows you to shorten dozens of links at once. Simply paste your URLs or upload an
-                            Excel/CSV file to manage your link campaigns instantly.</p>
+                            Excel/CSV file to manage your link campaigns instantly. Perfect for social media managers
+                            and marketers.</p>
                     </div>
                     <div>
                         <h3
                             style="color: var(--accent-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;">
                             🎨 Branded QR</h3>
                         <p>Generate unique QR codes for every link. Add personalized greetings and emojis to make your
-                            QR codes stand out and increase scan rates.</p>
+                            QR codes stand out and increase scan rates. Download all QR codes in a single ZIP file.</p>
                     </div>
                     <div>
                         <h3
                             style="color: var(--accent-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;">
                             🏷️ Custom Aliases</h3>
                         <p>Take control of your branding with custom aliases. Map multiple names to multiple links in
-                            one go using our comma-separated input system.</p>
+                            one go using our comma-separated input system. Create memorable links for your audience.</p>
                     </div>
                     <div>
                         <h3
                             style="color: var(--accent-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 10px;">
                             🛡️ Secure & Reliable</h3>
                         <p>LinkShort is built for speed and security. We ensure your links are always accessible and
-                            your data is handled efficiently.</p>
+                            your data is handled efficiently. Your privacy is our priority.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div style="margin-top: 4rem;">
+                    <h2 style="font-size: 1.8rem; margin-bottom: 2rem; color: #fff; letter-spacing: -1px;">Frequently
+                        Asked Questions</h2>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem; text-align: left;">
+                        <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border);">
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Is LinkShort free to use?
+                            </h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">Yes, LinkShort is 100% free.
+                                You can shorten as many links as you need and generate QR codes without any cost.</p>
+                        </div>
+                        <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border);">
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">How many links can I shorten
+                                at once?</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">You can paste dozens of links
+                                in the textarea or upload large Excel/CSV files for bulk processing. There is no hard
+                                limit on the number of links.</p>
+                        </div>
+                        <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border);">
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Do the links expire?</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">No, links created with
+                                LinkShort do not have an expiration date. They will remain active as long as our service
+                                is running.</p>
+                        </div>
+                        <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border);">
+                            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Can I track the clicks?</h4>
+                            <p style="color: var(--text-secondary); font-size: 0.95rem;">Currently, we focus on
+                                providing clean redirects and QR codes. We are working on adding analytics features in
+                                the near future.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -213,6 +261,9 @@
             <footer>
                 <p>&copy; 2026 LinkShort. Made with ❤️</p>
                 <div style="margin-top: 10px; font-size: 0.8rem;">
+                    <a href="/about" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">About Us</a>
+                    <a href="/contact"
+                        style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Contact</a>
                     <a href="/privacy" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Privacy
                         Policy</a>
                     <a href="/terms" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Terms of
