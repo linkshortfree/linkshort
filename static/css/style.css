@@ -157,8 +157,8 @@ textarea:focus {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: #2da44e;
-    /* Bright Green */
+    background: var(--accent-secondary);
+    /* Sage Green from theme */
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 0.8rem 1.8rem;
     border-radius: 50px;
@@ -173,8 +173,8 @@ textarea:focus {
 }
 
 .file-label:hover {
-    background: #34c759;
-    /* Lighter brighter green on hover */
+    background: #a8cd73;
+    /* Slightly lighter sage */
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(17, 35, 26, 0.5);
     border-color: rgba(0, 0, 0, 0.2);
