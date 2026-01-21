@@ -27,7 +27,7 @@ function toggleOptions() {
 function switchTab(mode) {
     const bulkContainer = document.getElementById('bulkContainer');
     const singleContainer = document.getElementById('singleContainer');
-    const tabBtns = document.querySelectorAll('.segment-btn');
+    const tabBtns = document.querySelectorAll('.tab-btn');
 
     // Sidebars for Unified QR Designer
     const singlePreview = document.getElementById('singlePreviewSide');
@@ -326,7 +326,7 @@ function addLinkToUI(shortUrl, originalUrl, qrGreeting) {
         </div>
         <div class="link-actions">
             <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" onclick="openQrModal('${shortUrl}', '${qrGreeting}')">🖼️ QR</button>
-            <button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;" onclick="copyIndividualLink('${shortUrl}', this)">📋 Copy</button>
+            <button class="saas-btn saas-btn-primary" style="padding: 6px 12px; font-size: 13px;" onclick="copyIndividualLink('${shortUrl}', this)">📋 Copy</button>
         </div>
     `;
     linksList.appendChild(div);

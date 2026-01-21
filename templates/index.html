@@ -4,247 +4,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkShort - Free Bulk Link Shortener & QR Code Generator</title>
-    <meta name="description"
-        content="Shorten hundreds of URLs and generate bulk QR codes instantly. Upload CSV or Excel files—no signup required for professional link management.">
-    <link rel="canonical" href="https://linkshort.live/">
+    <title>LinkShort | Master Designer</title>
+    <meta name="description" content="Professional link management and QR code toolkit.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
-
-    <!-- FAQ Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "LinkShort Master Designer",
-      "applicationCategory": "Productivity",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="background-glow"></div>
-    {% include 'partials/_navbar.html' %}
 
-    <main class="page-content tool-page">
-        <!-- Minimal Tool Header -->
-        <section class="tool-header">
-            <h1>Master Link & QR Designer</h1>
-            <p>The ultimate toolkit to shorten, brand, and track your links with professional QR codes.</p>
-            <div class="pill">✨ All-in-one Solution</div>
-        </section>
+    <!-- Navbar -->
+    <nav class="saas-navbar">
+        <a href="/" class="nav-brand">Link<span>Short</span></a>
+        <div class="nav-items">
+            <a href="/" class="nav-item active">Link & QR Designer</a>
+            <a href="/tools/utm-ab" class="nav-item">Marketing Toolkit</a>
+            <a href="/blog" class="nav-item">Blog</a>
+        </div>
+    </nav>
 
-        <section class="tool-ui-section" style="padding-top: 1rem;">
-            <!-- Console Card Wrapper -->
-            <div class="glass-card-premium console-card"
-                style="max-width: 1100px; margin: 0 auto; padding: 0; background: var(--bg-secondary); border: 1px solid var(--divider);">
+    <div class="page-wrapper">
 
-                <!-- Console Header with Tabs -->
-                <div class="console-header">
-                    <div
-                        style="font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="color: var(--accent-primary);">⚡</span> Workspace
-                    </div>
-                    <div class="segmented-control">
-                        <button class="segment-btn active" onclick="switchTab('bulk')">Bulk Designer</button>
-                        <button class="segment-btn" onclick="switchTab('single')">Single Link</button>
-                    </div>
+        <!-- Header -->
+        <header style="margin-bottom: 2rem;">
+            <h1 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Master Designer</h1>
+            <p style="color: var(--text-secondary); max-width: 600px;">Create shortened links and branded QR codes in
+                bulk. Professional grade tools for marketers.</p>
+        </header>
+
+        <!-- Main Workspace -->
+        <div class="saas-card">
+            <!-- Toolbar -->
+            <div class="saas-card-header">
+                <div class="tab-switcher">
+                    <button class="tab-btn active" onclick="switchTab('bulk')">Bulk Designer</button>
+                    <button class="tab-btn" onclick="switchTab('single')">Single Link</button>
                 </div>
+                <div style="font-size: 0.8rem; color: var(--text-tertiary);">✨ Auto-saving enabled</div>
+            </div>
 
-                <div class="dashboard-layout" style="padding: 2rem;">
-                    <div class="dashboard-grid" style="grid-template-columns: 1.5fr auto 1fr; gap: 0;">
+            <div class="saas-card-body">
+                <div class="dashboard-grid">
 
-                        <!-- LEFT COLUMN: INPUTS -->
-                        <div class="left-config-panel" style="padding-right: 2rem;">
-                            <!-- File Upload Area -->
-                            <div id="bulkContainer">
-                                <label for="fileInput" class="dropzone-minimal"
-                                    style="border: 1px dashed var(--divider); background: var(--surface-top);">
-                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📂</div>
-                                    <span style="font-weight: 500;">Upload CSV / Excel</span>
-                                </label>
-                                <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;"
-                                    onchange="handleFileUpload(this)">
-                                <div id="fileStatus" class="file-status"></div>
+                    <!-- LEFT: Configuration -->
+                    <div class="config-panel">
+                        <!-- File Upload -->
+                        <div id="bulkContainer">
+                            <label class="saas-label">Source Data</label>
+                            <label for="fileInput" class="dropzone-minimal"
+                                style="margin-bottom: 1.5rem; display: block;">
+                                <div style="font-size: 1.25rem; margin-bottom: 0.5rem; opacity: 0.7;">📂</div>
+                                <span style="font-weight: 500;">Drop CSV / Excel file here</span>
+                                <div style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.25rem;">or
+                                    click to browse</div>
+                            </label>
+                            <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;"
+                                onchange="handleFileUpload(this)">
+                            <div id="fileStatus" class="file-status"></div>
 
-                                <div class="input-group" style="margin-top: 1.5rem;">
-                                    <label class="input-label">Destination URLs</label>
-                                    <textarea id="urlInput" class="input-focus-ring"
-                                        placeholder="https://example.com/page1&#10;https://example.com/page2" rows="6"
-                                        oninput="updateLivePreview()"
-                                        style="background: var(--surface-top); border-color: var(--divider); resize: none;"></textarea>
-                                </div>
+                            <label class="saas-label">Or Paste URLs</label>
+                            <textarea id="urlInput" class="saas-textarea" rows="8"
+                                placeholder="https://example.com/page1&#10;https://example.com/page2"
+                                oninput="updateLivePreview()"></textarea>
+                        </div>
+
+                        <!-- Single Mode -->
+                        <div id="singleContainer" class="hidden">
+                            <div style="margin-bottom: 1.5rem;">
+                                <label class="saas-label">Destination URL</label>
+                                <input type="url" id="singleUrlInput" class="saas-input"
+                                    placeholder="https://example.com/very-long-link..." oninput="updateLivePreview()">
                             </div>
-
-                            <!-- Single Mode Input -->
-                            <div id="singleContainer" class="hidden">
-                                <div class="input-group">
-                                    <label class="input-label">Long URL</label>
-                                    <input type="url" id="singleUrlInput" class="input-focus-ring"
-                                        placeholder="https://example.com..." oninput="updateLivePreview()">
-                                </div>
-                                <div class="input-group" style="margin-top: 1rem;">
-                                    <label class="input-label">Custom Alias</label>
-                                    <div style="position: relative;">
-                                        <span
-                                            style="position: absolute; left: 12px; top: 12px; color: var(--text-muted); font-size: 0.9rem;">/</span>
-                                        <input type="text" id="singleAliasInput" class="input-focus-ring"
-                                            placeholder="my-link" style="padding-left: 24px;">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Alias Toggle -->
-                            <div style="margin-top: 1.5rem;">
-                                <div class="options-toggle" onclick="toggleOptions()">+ Configure Bulk Aliases</div>
-                                <div class="custom-options" id="customOptions">
-                                    <input type="text" id="aliasInput" class="input-focus-ring"
-                                        placeholder="alias1, alias2" style="margin-top: 0.5rem;">
-                                </div>
-                            </div>
-
-                            <hr style="border: 0; border-top: 1px solid var(--divider); margin: 2rem 0;">
-
-                            <!-- QR Customization Card (Moved to Left) -->
-                            <div class="control-panel" style="margin-bottom: 1.5rem;">
-                                <h4 style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-primary);">🎨 QR
-                                    Customization</h4>
-
-                                <div class="compact-row">
-                                    <div>
-                                        <label class="input-label" style="font-size: 0.8rem;">Color</label>
-                                        <div class="color-input-wrapper">
-                                            <input type="color" id="qrColor" value="#000000"
-                                                onchange="updateLivePreview()">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="input-label" style="font-size: 0.8rem;">Background</label>
-                                        <div class="color-input-wrapper">
-                                            <input type="color" id="qrBgColor" value="#ffffff"
-                                                onchange="updateLivePreview()">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="compact-row">
-                                    <div>
-                                        <label class="input-label" style="font-size: 0.8rem;">Size</label>
-                                        <select id="qrSizeSelect" class="compact-control input-focus-ring"
-                                            onchange="updateLivePreview()">
-                                            <option value="200">Small</option>
-                                            <option value="300" selected>Medium</option>
-                                            <option value="400">Large</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="input-label" style="font-size: 0.8rem;">Greeting Top</label>
-                                        <input type="text" id="qrGreetingInput" class="compact-control input-focus-ring"
-                                            placeholder="Scan Me!" oninput="updateLivePreview()">
-                                    </div>
+                            <div>
+                                <label class="saas-label">Custom Alias (Optional)</label>
+                                <div style="display: flex; align-items: center;">
+                                    <span
+                                        style="color: var(--text-tertiary); font-size: 0.9rem; margin-right: 8px;">linkshort.live/</span>
+                                    <input type="text" id="singleAliasInput" class="saas-input"
+                                        placeholder="my-custom-link">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- DIVIDER -->
-                        <div style="width: 1px; background: var(--divider); height: 100%;"></div>
-
-                        <!-- RIGHT COLUMN: DESIGN & PREVIEW -->
-                        <div class="right-design-panel sticky-preview" style="padding-left: 2rem;">
-
-                            <!-- Dynamic Live Preview -->
-                            <aside class="preview-sidebar hidden-initially" id="masterResultArea">
-                                <div id="singlePreviewSide" class="preview-card glass-card"
-                                    style="border: 1px solid var(--accent-primary);">
-                                    <h4
-                                        style="font-size: 0.9rem; color: var(--accent-primary); margin-bottom: 0.75rem; text-align: center;">
-                                        Live Preview</h4>
-                                    <div id="liveQrContainer"
-                                        style="background: white; padding: 1rem; border-radius: 12px; min-height: 180px; display: flex; align-items: center; justify-content: center;">
-                                        <div style="color: #cbd5e1; font-size: 0.8rem;">Preview loads here...</div>
-                                    </div>
-                                    <div id="liveQrGreeting"
-                                        style="margin-top: 0.5rem; font-weight: 700; text-align: center; font-size: 0.9rem;">
-                                    </div>
-                                </div>
-                            </aside>
-
-                            <!-- Primary Action (Moved to Right) -->
-                            <button id="shortenBtn" class="btn btn-primary" onclick="shortenUrl()"
-                                style="width: 100%; margin-top: 1.5rem; font-size: 1.1rem; padding: 1rem;">
-                                🚀 Generate Links
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Results Area (Hidden Initially) -->
-                    <div id="resultArea" class="result-area hidden" style="margin-top: 2rem;">
-                        <div class="glass-card" style="padding: 1.5rem; border: 1px solid var(--success);">
-                            <h4 style="color: var(--success); margin-bottom: 1.5rem;">✨ Success! Your links are ready.
-                            </h4>
-                            <div id="linksList" class="links-list" style="max-height: 300px; overflow-y: auto;"></div>
-
-                            <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
-                                <button class="btn btn-secondary" onclick="copyAllLinks()">📋 Copy Links</button>
-                                <button id="downloadAllQrsBtn" class="btn btn-secondary" onclick="downloadAllQRs()">🖼️
-                                    ZIP Download</button>
-                                <button id="downloadCsvBtn" class="btn btn-secondary" onclick="downloadResultsCSV()">📊
-                                    CSV Download</button>
+                        <!-- Bulk Aliases -->
+                        <div style="margin-top: 1.5rem;">
+                            <div style="font-size: 0.85rem; color: var(--accent-primary); cursor: pointer; font-weight: 500;"
+                                onclick="toggleOptions()">+ Configure Aliases</div>
+                            <div id="customOptions" class="hidden" style="margin-top: 0.75rem;">
+                                <label class="saas-label">Custom Aliases (Comma separated)</label>
+                                <input type="text" id="aliasInput" class="saas-input" placeholder="alias1, alias2">
                             </div>
                         </div>
                     </div>
 
-                    <div id="bulkProgressContainer" class="hidden" style="margin-top: 2rem;">
-                        <div class="progress-container">
-                            <div id="bulkProgressBar" class="progress-bar"></div>
+                    <!-- RIGHT: Preview & Settings -->
+                    <div class="settings-panel">
+                        <div
+                            style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.25rem;">
+                            <label class="saas-label" style="margin-bottom: 1rem;">QR Appearance</label>
+
+                            <!-- Preview Box -->
+                            <div id="masterResultArea" class="hidden-initially" style="margin-bottom: 1.5rem;">
+                                <div class="preview-box">
+                                    <div id="liveQrContainer">
+                                        <span style="color: #cbd5e1; font-size: 0.8rem;">Preview...</span>
+                                    </div>
+                                </div>
+                                <div id="liveQrGreeting"
+                                    style="text-align: center; margin-top: 0.5rem; font-weight: 600; font-size: 0.9rem; color: #333;">
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div>
+                                    <label class="saas-label">Color</label>
+                                    <input type="color" id="qrColor" value="#000000"
+                                        style="width: 100%; height: 36px; cursor: pointer;"
+                                        onchange="updateLivePreview()">
+                                </div>
+                                <div>
+                                    <label class="saas-label">Background</label>
+                                    <input type="color" id="qrBgColor" value="#ffffff"
+                                        style="width: 100%; height: 36px; cursor: pointer;"
+                                        onchange="updateLivePreview()">
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem;">
+                                <label class="saas-label">Size</label>
+                                <select id="qrSizeSelect" class="saas-select" onchange="updateLivePreview()">
+                                    <option value="200">Small (200px)</option>
+                                    <option value="300" selected>Medium (300px)</option>
+                                    <option value="400">Large (400px)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="saas-label">Greeting Text</label>
+                                <input type="text" id="qrGreetingInput" class="saas-input" placeholder="Scan Me!"
+                                    oninput="updateLivePreview()">
+                            </div>
                         </div>
-                        <p id="bulkProgressText" style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem;">
-                            Processing...</p>
+
+                        <!-- Generate Action -->
+                        <button id="shortenBtn" class="saas-btn saas-btn-primary" onclick="shortenUrl()"
+                            style="width: 100%; margin-top: 1.5rem; height: 44px; font-weight: 600;">
+                            Generate Links & QR
+                        </button>
                     </div>
-                    <div id="errorArea" class="error-message hidden" style="margin-top: 1rem;"></div>
 
                 </div>
             </div>
-        </section>
 
-        <!-- Simplified Footer Links / Explore -->
-        <section class="seo-content" id="instructions" style="margin-top: 4rem;">
-            <h2>Additional Tools</h2>
-            <div class="tools-grid" style="margin-top: 1.5rem;">
-                <a href="/tools/utm-ab" class="tool-card glass-card">
-                    <div class="tool-icon">📈</div>
-                    <h4>UTM Builder</h4>
-                    <p>Create professional campaign URLs.</p>
-                </a>
-                <a href="/tools/utm-ab#ab-test" class="tool-card glass-card">
-                    <div class="tool-icon">⚖️</div>
-                    <h4>A/B Testing</h4>
-                    <p>Split traffic & optimize conversions.</p>
-                </a>
+            <!-- Results Section (Hidden) -->
+            <div id="resultArea" class="hidden"
+                style="border-top: 1px solid var(--border-subtle); padding: 1.5rem; background: rgba(44, 167, 115, 0.05);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                    <h4 style="color: var(--success); font-size: 0.95rem;">🎉 Generation Complete</h4>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="saas-btn saas-btn-secondary" onclick="copyAllLinks()">Copy Links</button>
+                        <button class="saas-btn saas-btn-secondary" onclick="downloadAllQRs()">Download ZIP</button>
+                        <button class="saas-btn saas-btn-secondary" onclick="downloadResultsCSV()">Download CSV</button>
+                    </div>
+                </div>
+                <div id="linksList" class="links-list" style="max-height: 200px; overflow-y: auto;"></div>
             </div>
-        </section>
-    </main>
 
-    {% include 'partials/_footer.html' %}
+            <!-- Progress -->
+            <div id="bulkProgressContainer" class="hidden"
+                style="padding: 1.5rem; border-top: 1px solid var(--border-subtle);">
+                <div style="height: 4px; background: var(--border-subtle); border-radius: 2px; overflow: hidden;">
+                    <div id="bulkProgressBar"
+                        style="height: 100%; width: 0%; background: var(--accent-primary); transition: width 0.3s;">
+                    </div>
+                </div>
+                <p id="bulkProgressText"
+                    style="text-align: center; font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                    Processing...</p>
+            </div>
+            <div id="errorArea" class="error-message hidden"
+                style="padding: 1rem; color: var(--error); text-align: center;"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="saas-footer">
+        <div class="footer-links">
+            <a href="/about-us">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy-policy">Privacy</a>
+            <a href="/terms-of-service">Terms</a>
+        </div>
+        <p>&copy; 2026 LinkShort. Built for professionals.</p>
+    </footer>
 
     <!-- QR Modal -->
     <div id="qrModal" class="hidden"
-        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; align-items: center; justify-content: center;">
-        <div class="glass-card"
-            style="max-width: 400px; width: 90%; text-align: center; position: relative; padding: 2.5rem;">
+        style="position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+        <div class="saas-card" style="width: 400px; padding: 2rem; position: relative; text-align: center;">
             <button onclick="closeModal()"
                 style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
-            <h3 id="modalGreeting" style="margin-bottom: 1rem; color: var(--accent-primary);"></h3>
+            <h3 id="modalGreeting" style="margin-bottom: 1rem;"></h3>
             <div id="modalQrContent"
-                style="background: white; padding: 1.5rem; border-radius: 12px; display: inline-block; margin-bottom: 1.5rem;">
+                style="background: white; padding: 1rem; border-radius: 8px; display: inline-block; margin-bottom: 1.5rem;">
             </div>
-            <button id="modalDownloadBtn" class="btn btn-primary" style="width: 100%;">Download QR</button>
+            <button id="modalDownloadBtn" class="saas-btn saas-btn-primary" style="width: 100%;">Download QR</button>
         </div>
     </div>
 

@@ -4,225 +4,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UTM Builder & A/B Testing | LinkShort</title>
-    <meta name="description"
-        content="Professional UTM campaign builder and A/B link testing tool. Track campaigns and optimize conversions in one place.">
-    <link rel="canonical" href="https://linkshort.live/tools/utm-ab">
+    <title>LinkShort | Marketing Toolkit</title>
+    <meta name="description" content="Professional UTM builder and A/B testing tools.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="background-glow"></div>
-    {% include 'partials/_navbar.html' %}
 
-    <main class="page-content tool-page">
-        <!-- Shared Header -->
-        <section class="tool-header">
-            <div class="breadcrumb">
-                <a href="/">Link & QR Designer</a> <span>→</span> <span>Marketing Tools</span>
-            </div>
-            <h1>Marketing Toolkit</h1>
-            <p>Advanced tracking and optimization tools for professional marketers.</p>
+    <!-- Navbar -->
+    <nav class="saas-navbar">
+        <a href="/" class="nav-brand">Link<span>Short</span></a>
+        <div class="nav-items">
+            <a href="/" class="nav-item">Link & QR Designer</a>
+            <a href="/tools/utm-ab" class="nav-item active">Marketing Toolkit</a>
+            <a href="/blog" class="nav-item">Blog</a>
+        </div>
+    </nav>
 
-            <div class="tab-container" style="justify-content: center; margin-top: 2rem; border: none;">
-                <a href="#utm-builder" class="tab-btn active" onclick="scrollToSection('utm-builder'); return false;">📈
-                    UTM Builder</a>
-                <a href="#ab-testing" class="tab-btn" onclick="scrollToSection('ab-testing'); return false;">⚖️ A/B
-                    Testing</a>
-            </div>
-        </section>
+    <div class="page-wrapper">
+        <div style="max-width: 1000px; margin: 0 auto;">
 
-        <!-- UTM Builder Section -->
-        <section class="tool-ui-section" id="utm-builder" style="padding-top: 1rem;">
-            <div style="max-width: 1100px; margin: 0 auto;">
-                <h2 class="section-title" style="margin-bottom: 1.5rem; font-size: 1.5rem;">Professional UTM Builder
-                </h2>
+            <!-- Header -->
+            <header style="margin-bottom: 2.5rem; display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h1 style="font-size: 1.5rem; margin-bottom: 0.25rem;">Marketing Toolkit</h1>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">Track campaigns and optimize
+                        conversions.</p>
+                </div>
+                <!-- Tab Switcher (Page Anchor) -->
+                <div class="tab-switcher">
+                    <button class="tab-btn active" onclick="scrollToSection('utm-builder'); updateTabs(this)">UTM
+                        Builder</button>
+                    <button class="tab-btn" onclick="scrollToSection('ab-testing'); updateTabs(this)">A/B
+                        Testing</button>
+                </div>
+            </header>
 
-                <div class="dashboard-layout">
-                    <!-- Config Panel -->
-                    <div class="console-card" style="padding: 2rem;">
-                        <h4
-                            style="margin-bottom: 1.5rem; font-size: 0.95rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
-                            Configuration</h4>
+            <!-- UTM Builder -->
+            <section id="utm-builder" style="margin-bottom: 4rem;">
+                <div class="saas-card">
+                    <div class="saas-card-header">
+                        <span style="font-weight: 600;">📈 UTM Builder</span>
+                    </div>
+                    <div class="saas-card-body">
+                        <div class="dashboard-grid">
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-                            <div style="grid-column: span 2;">
-                                <label class="input-label">Website URL *</label>
-                                <input type="text" id="targetUrl" class="input-focus-ring"
-                                    placeholder="https://example.com" oninput="generateUtm()"
-                                    style="background: var(--surface-top);">
-                            </div>
+                            <!-- Left: Form -->
+                            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                <div>
+                                    <label class="saas-label">Website URL</label>
+                                    <input type="text" id="targetUrl" class="saas-input"
+                                        placeholder="https://example.com" oninput="generateUtm()">
+                                </div>
 
-                            <!-- Source & Medium with Presets -->
-                            <div style="grid-column: span 2;">
-                                <label class="input-label">Campaign Source *</label>
-                                <input type="text" id="utmSource" class="input-focus-ring"
-                                    placeholder="google, newsletter, facebook" oninput="generateUtm()"
-                                    style="background: var(--surface-top);">
-                                <div class="presets-row"
-                                    style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div>
+                                        <label class="saas-label">Source</label>
+                                        <input type="text" id="utmSource" class="saas-input" placeholder="google"
+                                            oninput="generateUtm()">
+                                    </div>
+                                    <div>
+                                        <label class="saas-label">Medium</label>
+                                        <input type="text" id="utmMedium" class="saas-input" placeholder="cpc"
+                                            oninput="generateUtm()">
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                                     <button class="pill-btn"
                                         onclick="setUtmPreset('utmSource', 'google')">Google</button>
                                     <button class="pill-btn"
                                         onclick="setUtmPreset('utmSource', 'facebook')">Facebook</button>
-                                    <button class="pill-btn"
-                                        onclick="setUtmPreset('utmSource', 'newsletter')">Newsletter</button>
-                                    <button class="pill-btn"
-                                        onclick="setUtmPreset('utmSource', 'linkedin')">LinkedIn</button>
-                                </div>
-                            </div>
-
-                            <div style="grid-column: span 2;">
-                                <label class="input-label">Campaign Medium *</label>
-                                <input type="text" id="utmMedium" class="input-focus-ring"
-                                    placeholder="cpc, email, social" oninput="generateUtm()"
-                                    style="background: var(--surface-top);">
-                                <div class="presets-row"
-                                    style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                                    <button class="pill-btn" onclick="setUtmPreset('utmMedium', 'cpc')">CPC</button>
                                     <button class="pill-btn" onclick="setUtmPreset('utmMedium', 'email')">Email</button>
                                     <button class="pill-btn"
                                         onclick="setUtmPreset('utmMedium', 'social')">Social</button>
-                                    <button class="pill-btn" onclick="setUtmPreset('utmMedium', 'video')">Video</button>
+                                </div>
+
+                                <div>
+                                    <label class="saas-label">Campaign Name</label>
+                                    <input type="text" id="utmName" class="saas-input" placeholder="summer_sale"
+                                        oninput="generateUtm()">
                                 </div>
                             </div>
 
-                            <!-- Core Parameters -->
-                            <div>
-                                <label class="input-label">Campaign Name *</label>
-                                <input type="text" id="utmName" class="input-focus-ring" placeholder="summer_sale"
-                                    oninput="generateUtm()" style="background: var(--surface-top);">
-                            </div>
-                            <div>
-                                <label class="input-label">Campaign ID (utm_id)</label>
-                                <input type="text" id="utmId" class="input-focus-ring" placeholder="12345"
-                                    oninput="generateUtm()" style="background: var(--surface-top);">
-                            </div>
-
-                            <div>
-                                <label class="input-label">Campaign Term</label>
-                                <input type="text" id="utmTerm" class="input-focus-ring" placeholder="running+shoes"
-                                    oninput="generateUtm()" style="background: var(--surface-top);">
-                            </div>
-                            <div>
-                                <label class="input-label">Campaign Content</label>
-                                <input type="text" id="utmContent" class="input-focus-ring" placeholder="logolink"
-                                    oninput="generateUtm()" style="background: var(--surface-top);">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Result Sidebar -->
-                    <aside class="preview-sidebar hidden-initially" id="utmResultArea">
-                        <div class="preview-card console-card"
-                            style="border: 1px solid var(--accent-primary); padding: 1.5rem;">
-                            <div
-                                style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                                <span class="pulse-indicator"></span>
-                                <h3 style="margin: 0; font-size: 1.1rem; color: var(--accent-primary);">Campaign URL
-                                    Ready</h3>
-                            </div>
-                            <div id="finalUtmUrl"
-                                style="word-break: break-all; font-family: monospace; background: var(--bg-dark); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid var(--divider); font-size: 0.85rem; color: var(--text-secondary);">
-                                Fill in the fields...
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                                <button onclick="copyUtm()" class="copy-btn" style="width: 100%; margin: 0;">Copy
-                                    URL</button>
-                                <button onclick="shortenUtm()" class="btn btn-primary"
-                                    style="width: 100%; margin: 0;">Shorten URL</button>
-                                <button onclick="resetUtmForm()" class="btn btn-secondary"
-                                    style="width: 100%; margin: 0; border-color: var(--divider);">Reset Form</button>
-                            </div>
-                        </div>
-                    </aside>
-                </div>
-            </div>
-        </section>
-
-        <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 4rem 0;">
-
-        <!-- A/B Testing Section -->
-        <section class="tool-ui-section" id="ab-testing" style="padding-top: 1rem;">
-            <div style="max-width: 1100px; margin: 0 auto;">
-                <h2 class="section-title" style="margin-bottom: 1.5rem; font-size: 1.5rem;">A/B Link Testing</h2>
-
-                <div class="dashboard-layout">
-                    <div class="console-card" style="padding: 2rem;">
-                        <h4
-                            style="margin-bottom: 1.5rem; font-size: 0.95rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
-                            Test Configuration</h4>
-
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
-                            <div>
-                                <label class="input-label">Test Name *</label>
-                                <input type="text" id="abTestName" class="input-focus-ring"
-                                    placeholder="Summer Campaign Split Test" style="background: var(--surface-top);">
-                            </div>
-                            <div>
-                                <label class="input-label">Variant A URL *</label>
-                                <input type="text" id="variantA" class="input-focus-ring"
-                                    placeholder="https://example.com/landing-a" style="background: var(--surface-top);">
-                            </div>
-                            <div>
-                                <label class="input-label">Variant B URL *</label>
-                                <input type="text" id="variantB" class="input-focus-ring"
-                                    placeholder="https://example.com/landing-b" style="background: var(--surface-top);">
-                            </div>
-                            <div>
+                            <!-- Right: Preview -->
+                            <div id="utmResultArea" class="hidden-initially">
                                 <div
-                                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                    <label class="input-label" style="margin: 0;">Traffic Split</label>
-                                    <span id="splitVal" style="font-weight: 700; color: var(--accent-primary);">50% A /
-                                        50% B</span>
+                                    style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.5rem;">
+                                    <label class="saas-label"
+                                        style="color: var(--accent-primary); margin-bottom: 1rem;">Generated URL</label>
+                                    <div id="finalUtmUrl" class="result-box"
+                                        style="background: var(--surface-card); min-height: 80px; margin-bottom: 1rem;">
+                                        Fill in fields to generate...
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                                        <button onclick="copyUtm()" class="saas-btn saas-btn-secondary"
+                                            style="width: 100%;">Copy URL</button>
+                                        <button onclick="shortenUtm()" class="saas-btn saas-btn-primary"
+                                            style="width: 100%;">Shorten & Track</button>
+                                        <button onclick="resetUtmForm()" class="saas-btn"
+                                            style="width: 100%; color: var(--text-tertiary);">Reset</button>
+                                    </div>
                                 </div>
-                                <input type="range" id="trafficSplit" min="0" max="100" value="50"
-                                    oninput="document.getElementById('splitVal').innerText = this.value + '% A / ' + (100-this.value) + '% B'">
                             </div>
-                            <button id="startAbBtn" onclick="createABTest()" class="btn btn-primary"
-                                style="margin-top: 1rem; width: 100%;">Create Split Link</button>
+
                         </div>
                     </div>
-
-                    <aside class="preview-sidebar hidden-initially" id="abResultArea">
-                        <div class="preview-card console-card"
-                            style="border: 1px solid var(--success); padding: 1.5rem;">
-                            <div
-                                style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                                <span class="pulse-indicator" style="background: var(--success);"></span>
-                                <h3 style="margin: 0; font-size: 1.1rem; color: var(--success);">Test Created!</h3>
-                            </div>
-                            <div id="finalAbUrl"
-                                style="word-break: break-all; font-family: monospace; background: var(--bg-dark); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center; border: 1px solid var(--glass-border); color: var(--text-primary); font-weight: 700;">
-                            </div>
-                            <button onclick="copyAbUrl()" class="copy-btn" style="width: 100%;">Copy Test Link</button>
-                        </div>
-                    </aside>
                 </div>
-            </div>
-        </section>
+            </section>
 
-    </main>
+            <!-- A/B Testing -->
+            <section id="ab-testing">
+                <div class="saas-card">
+                    <div class="saas-card-header">
+                        <span style="font-weight: 600;">⚖️ A/B Link Testing</span>
+                    </div>
+                    <div class="saas-card-body">
+                        <div class="dashboard-grid">
 
-    {% include 'partials/_footer.html' %}
+                            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                <div>
+                                    <label class="saas-label">Test Name</label>
+                                    <input type="text" id="abTestName" class="saas-input"
+                                        placeholder="Landing Page Test">
+                                </div>
+                                <div>
+                                    <label class="saas-label">Variant A</label>
+                                    <input type="text" id="variantA" class="saas-input"
+                                        placeholder="https://site.com/home-a">
+                                </div>
+                                <div>
+                                    <label class="saas-label">Variant B</label>
+                                    <input type="text" id="variantB" class="saas-input"
+                                        placeholder="https://site.com/home-b">
+                                </div>
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                        <label class="saas-label">Traffic Split</label>
+                                        <span id="splitVal"
+                                            style="font-size: 0.85rem; font-weight: 600; color: var(--accent-primary);">50%
+                                            / 50%</span>
+                                    </div>
+                                    <input type="range" id="trafficSplit" min="0" max="100" value="50"
+                                        style="width: 100%; accent-color: var(--accent-primary);"
+                                        oninput="document.getElementById('splitVal').innerText = this.value + '% A / ' + (100-this.value) + '% B'">
+                                </div>
+                                <button id="startAbBtn" onclick="createABTest()" class="saas-btn saas-btn-primary"
+                                    style="justify-content: center;">Create Split Link</button>
+                            </div>
+
+                            <div id="abResultArea" class="hidden-initially">
+                                <div
+                                    style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.5rem; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                                    <div style="text-align: center; margin-bottom: 1rem;">
+                                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚀</div>
+                                        <h3 style="font-size: 1rem;">Test Created</h3>
+                                    </div>
+                                    <div id="finalAbUrl" class="result-box"
+                                        style="margin-bottom: 1rem; text-align: center;"></div>
+                                    <button onclick="copyAbUrl()" class="saas-btn saas-btn-secondary"
+                                        style="width: 100%;">Copy Link</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="saas-footer">
+        <div class="footer-links">
+            <a href="/about-us">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy-policy">Privacy</a>
+        </div>
+        <p>&copy; 2026 LinkShort.</p>
+    </footer>
+
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
-        // Simple smooth scroll script for internal tabs
         function scrollToSection(id) {
             document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-            // Update active tab visual
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
         }
-
-        // On load, check hash to scroll
-        if (window.location.hash) {
-            const id = window.location.hash.substring(1);
-            if (document.getElementById(id)) {
-                setTimeout(() => scrollToSection(id), 100);
-            }
+        function updateTabs(btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
     </script>
 </body>
