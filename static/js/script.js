@@ -1,5 +1,23 @@
 let uploadedData = [];
-let lastResults = []; // Fixed: lastResults was not defined
+let lastResults = [];
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if there's a pending URL from UTM Builder
+    const pending = localStorage.getItem('pendingShorten');
+    if (pending) {
+        const bulkContainer = document.getElementById('bulkContainer');
+        if (bulkContainer) {
+            const urlInput = document.getElementById('urlInput');
+            if (urlInput) {
+                urlInput.value = pending;
+                localStorage.removeItem('pendingShorten');
+                if (typeof updateLivePreview === 'function') updateLivePreview();
+                showToast("UTM Link loaded! Ready to shorten.");
+            }
+        }
+    }
+});
 
 function toggleOptions() {
     const options = document.getElementById('customOptions');
@@ -539,11 +557,60 @@ function handleBulkQrUpload(input) {
             status.style.color = '#10b981';
             btn.disabled = false;
         } catch (err) {
-            status.innerText = "❌ Error reading file.";
-            status.style.color = '#ef4444';
+            status.innerText = "❌ Error reading file. Use .xlsx or .csv";
+            status.style.color = '#cf222e';
         }
     };
     reader.readAsArrayBuffer(file);
+}
+
+// UTM Builder Logic
+function generateUtm() {
+    const baseUrl = document.getElementById('targetUrl')?.value.trim();
+    const source = document.getElementById('utmSource')?.value.trim();
+    const medium = document.getElementById('utmMedium')?.value.trim();
+    const name = document.getElementById('utmName')?.value.trim();
+    const term = document.getElementById('utmTerm')?.value.trim();
+    const content = document.getElementById('utmContent')?.value.trim();
+    const resultDisplay = document.getElementById('finalUtmUrl');
+
+    if (!baseUrl) {
+        if (resultDisplay) resultDisplay.innerText = "Enter a Website URL to begin...";
+        return;
+    }
+
+    try {
+        let url = new URL(baseUrl.startsWith('http') ? baseUrl : 'https://' + baseUrl);
+        if (source) url.searchParams.set('utm_source', source);
+        if (medium) url.searchParams.set('utm_medium', medium);
+        if (name) url.searchParams.set('utm_campaign', name);
+        if (term) url.searchParams.set('utm_term', term);
+        if (content) url.searchParams.set('utm_content', content);
+
+        if (resultDisplay) resultDisplay.innerText = url.toString();
+    } catch (e) {
+        if (resultDisplay) resultDisplay.innerText = "Invalid Website URL";
+    }
+}
+
+async function copyUtm() {
+    const url = document.getElementById('finalUtmUrl')?.innerText;
+    if (url && (url.startsWith('https://') || url.startsWith('http://'))) {
+        await navigator.clipboard.writeText(url);
+        showToast("UTM URL copied to clipboard!");
+    } else {
+        showToast("Please generate a valid URL first", "error");
+    }
+}
+
+function shortenUtm() {
+    const url = document.getElementById('finalUtmUrl')?.innerText;
+    if (url && (url.startsWith('https://') || url.startsWith('http://'))) {
+        localStorage.setItem('pendingShorten', url);
+        window.location.href = '/tools/bulk';
+    } else {
+        showToast("Please generate a valid URL first", "error");
+    }
 }
 
 async function generateBulkQRs() {
@@ -625,16 +692,18 @@ async function createABTest() {
             alert(data.error || 'Error creating test');
         }
     } catch (err) {
-        alert('Server error');
+        showToast('Server error during A/B test creation', 'error');
     }
     btn.disabled = false;
     btn.innerText = 'Start A/B Test';
 }
 
 function copyAbUrl() {
-    const url = document.getElementById('finalAbUrl').innerText;
-    navigator.clipboard.writeText(url);
-    alert('Copied A/B link!');
+    const url = document.getElementById('finalAbUrl')?.innerText;
+    if (url) {
+        navigator.clipboard.writeText(url);
+        showToast('A/B Test link copied!');
+    }
 }
 
 // Contact Form Logic
