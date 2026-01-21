@@ -59,6 +59,39 @@ def about():
 def contact():
     return render_template('contact.html')
 
+@app.route('/blog')
+def blog():
+    posts = [
+        {
+            'slug': 'benefits-of-url-shortening',
+            'title': 'The Hidden Benefits of URL Shortening for Modern Marketing',
+            'excerpt': 'Discover how concise links can transform your click-through rates and brand perception.',
+            'date': 'Jan 20, 2026'
+        },
+        {
+            'slug': 'qr-code-marketing-guide',
+            'title': 'The Ultimate Guide to QR Code Marketing in 2026',
+            'excerpt': 'Learn how to leverage branded QR codes to bridge the gap between physical and digital worlds.',
+            'date': 'Jan 18, 2026'
+        },
+        {
+            'slug': 'building-brand-trust-with-links',
+            'title': 'Building Brand Trust: Why Custom Aliases Matter',
+            'excerpt': 'How custom brand links can increase user trust and improve your security profile.',
+            'date': 'Jan 15, 2026'
+        }
+    ]
+    return render_template('blog.html', posts=posts)
+
+@app.route('/blog/<slug>')
+def blog_post(slug):
+    # For a real app, this would come from a DB or markdown files.
+    # To keep it simple and SEO friendly, we'll use templates named after slugs.
+    try:
+        return render_template(f'blog/{slug}.html')
+    except:
+        return render_template('404.html'), 404
+
 @app.route('/api/shorten', methods=['POST'])
 def shorten_url():
     data = request.json
@@ -131,6 +164,11 @@ def sitemap():
     <loc>https://linkshort.live/contact</loc>
     <lastmod>2026-01-17</lastmod>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://linkshort.live/blog</loc>
+    <lastmod>2026-01-21</lastmod>
+    <priority>0.8</priority>
   </url>
 </urlset>""", {'Content-Type': 'application/xml'}
 
