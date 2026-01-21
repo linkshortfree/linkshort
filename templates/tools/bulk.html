@@ -11,6 +11,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How many links can I shorten at once?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can shorten up to 500 links in a single request for free, without an account."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Can I generate QR codes for my shortened links?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, LinkShort automatically generates a customizable QR code for every link you shorten."
+        }
+      }]
+    }
+    </script>
 </head>
 
 <body>
@@ -33,7 +56,13 @@
             <div class="dashboard-layout">
                 <div class="glass-card">
                     <div class="input-group">
-                        <label class="input-label">Paste URLs (one per line)</label>
+                        <label class="input-label">
+                            Paste URLs (one per line)
+                            <span class="tooltip-container">ⓘ
+                                <span class="tooltip-text">Enter one URL per line. We'll shorten all of them at
+                                    once.</span>
+                            </span>
+                        </label>
                         <textarea id="urlInput" placeholder="https://example.com/page1&#10;https://example.com/page2"
                             rows="6" oninput="updateLivePreview()"></textarea>
                     </div>
@@ -54,7 +83,12 @@
                         <div id="fileStatus" class="file-status"></div>
                     </div>
 
-                    <div class="options-toggle" onclick="toggleOptions()">+ Custom Aliases</div>
+                    <div class="options-toggle" onclick="toggleOptions()">+ Custom Aliases
+                        <span class="tooltip-container">ⓘ
+                            <span class="tooltip-text">Optional: Enter nicknames for your links, comma-separated (e.g.
+                                sale, guide).</span>
+                        </span>
+                    </div>
                     <div class="custom-options" id="customOptions">
                         <span class="prefix">linkshort.live/</span>
                         <input type="text" id="aliasInput" placeholder="alias1, alias2">

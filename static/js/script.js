@@ -145,7 +145,7 @@ async function shortenUrl() {
 
     errorArea.classList.add('hidden');
     shortenBtn.disabled = true;
-    shortenBtn.innerText = 'Shortening...';
+    shortenBtn.innerHTML = '<span class="spinner"></span>Shortening...';
 
     if (progressContainer) {
         progressContainer.classList.remove('hidden');
@@ -495,7 +495,7 @@ async function createABTest() {
     }
 
     btn.disabled = true;
-    btn.innerText = 'Creating...';
+    btn.innerHTML = '<span class="spinner"></span>Creating...';
 
     try {
         const response = await fetch('/api/ab/create', {
@@ -534,7 +534,7 @@ async function submitContact(event) {
     const status = document.getElementById('contactStatus');
 
     btn.disabled = true;
-    btn.innerText = 'Sending...';
+    btn.innerHTML = '<span class="spinner"></span>Sending...';
 
     try {
         const response = await fetch('/api/contact', {
