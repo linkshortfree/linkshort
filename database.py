@@ -20,6 +20,16 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS ab_tests (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            url_a TEXT NOT NULL,
+            url_b TEXT NOT NULL,
+            split INTEGER DEFAULT 50,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
     conn.commit()
     conn.close()
 
@@ -77,3 +87,21 @@ def get_original_url(alias):
     if url:
         return url['original_url']
     return None
+
+def create_ab_test(test_id, name, url_a, url_b, split=50):
+    conn = get_db_connection()
+    try:
+        conn.execute('INSERT INTO ab_tests (id, name, url_a, url_b, split) VALUES (?, ?, ?, ?, ?)',
+                     (test_id, name, url_a, url_b, split))
+        conn.commit()
+        return True
+    except:
+        return False
+    finally:
+        conn.close()
+
+def get_ab_test(test_id):
+    conn = get_db_connection()
+    test = conn.execute('SELECT * FROM ab_tests WHERE id = ?', (test_id,)).fetchone()
+    conn.close()
+    return test

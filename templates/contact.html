@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -41,7 +42,13 @@
                     <label class="input-label">Message *</label>
                     <textarea id="contactMessage" placeholder="Your message..." rows="5" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+
+                <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                    style="margin-bottom: 1.5rem;"></div>
+
+                <button type="submit" id="submitContactBtn" class="btn btn-primary" style="width: 100%;">Send
+                    Message</button>
+                <div id="contactStatus" style="margin-top: 1rem; text-align: center; font-size: 0.9rem;"></div>
             </form>
 
             <div id="contactSuccess" class="hidden"
@@ -63,13 +70,9 @@
 
     {% include 'partials/_footer.html' %}
 
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script>
-        function handleContactSubmit(e) {
-            e.preventDefault();
-            // In production, this would send to a backend or service like Formspree
-            document.getElementById('contactForm').style.display = 'none';
-            document.getElementById('contactSuccess').classList.remove('hidden');
-        }
+        document.getElementById('contactForm').onsubmit = submitContact;
     </script>
 </body>
 

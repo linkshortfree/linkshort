@@ -134,14 +134,36 @@ async function shortenUrl() {
         return;
     }
 
+    if (finalProcessList.length > 500) {
+        showError('Max 500 links per request');
+        return;
+    }
+
+    const progressContainer = document.getElementById('bulkProgressContainer');
+    const progressBar = document.getElementById('bulkProgressBar');
+    const progressText = document.getElementById('bulkProgressText');
+
     errorArea.classList.add('hidden');
     shortenBtn.disabled = true;
     shortenBtn.innerText = 'Shortening...';
+
+    if (progressContainer) {
+        progressContainer.classList.remove('hidden');
+        progressBar.style.width = '0%';
+        progressText.innerText = `Processing 0 of ${finalProcessList.length}...`;
+    }
+
     linksList.innerHTML = '';
     lastResults = [];
 
     for (let [index, item] of finalProcessList.entries()) {
         try {
+            if (progressContainer) {
+                const percent = Math.round(((index + 1) / finalProcessList.length) * 100);
+                progressBar.style.width = `${percent}%`;
+                progressText.innerText = `Processing ${index + 1} of ${finalProcessList.length}...`;
+            }
+
             const response = await fetch('/api/shorten', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -167,6 +189,10 @@ async function shortenUrl() {
         } catch (error) {
             addErrorToUI("Server error", item.url);
         }
+    }
+
+    if (progressContainer) {
+        setTimeout(() => progressContainer.classList.add('hidden'), 2000);
     }
 
     shortenBtn.disabled = false;
@@ -371,4 +397,82 @@ async function generateQRCanvasInMemory(url, greeting) {
             resolve(exportCanvas);
         }, 50);
     });
+}
+
+// A/B Testing Logic
+async function createABTest() {
+    const name = document.getElementById('abTestName').value.trim();
+    const urlA = document.getElementById('variantA').value.trim();
+    const urlB = document.getElementById('variantB').value.trim();
+    const split = document.getElementById('trafficSplit').value;
+    const btn = document.getElementById('startAbBtn');
+
+    if (!name || !urlA || !urlB) {
+        alert('Please fill in all fields');
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = 'Creating...';
+
+    try {
+        const response = await fetch('/api/ab/create', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, url_a: urlA, url_b: urlB, split })
+        });
+        const data = await response.json();
+        if (data.success) {
+            const finalUrl = `${window.location.protocol}//${window.location.host}/ab/${data.test_id}`;
+            document.getElementById('abResultArea').classList.remove('hidden');
+            document.getElementById('finalAbUrl').innerText = finalUrl;
+        } else {
+            alert(data.error || 'Error creating test');
+        }
+    } catch (err) {
+        alert('Server error');
+    }
+    btn.disabled = false;
+    btn.innerText = 'Start A/B Test';
+}
+
+function copyAbUrl() {
+    const url = document.getElementById('finalAbUrl').innerText;
+    navigator.clipboard.writeText(url);
+    alert('Copied A/B link!');
+}
+
+// Contact Form Logic
+async function submitContact(event) {
+    if (event) event.preventDefault();
+    const name = document.getElementById('contactName').value;
+    const email = document.getElementById('contactEmail').value;
+    const message = document.getElementById('contactMessage').value;
+    const btn = document.getElementById('submitContactBtn');
+    const status = document.getElementById('contactStatus');
+
+    btn.disabled = true;
+    btn.innerText = 'Sending...';
+
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, message })
+        });
+        const data = await response.json();
+        if (data.success) {
+            status.innerText = data.message;
+            status.style.color = '#10b981';
+            document.getElementById('contactForm').reset();
+        } else {
+            status.innerText = data.error || 'Error sending message';
+            status.style.color = '#ef4444';
+        }
+    } catch (err) {
+        status.innerText = 'Server error';
+        status.style.color = '#ef4444';
+    }
+    btn.disabled = false;
+    btn.innerText = 'Send Message';
 }

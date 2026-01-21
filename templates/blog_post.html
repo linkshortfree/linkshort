@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | Blog | LinkShort</title>
+    <meta name="description"
+        content="Read {{ title }} on LinkShort Blog. Marketing tips, link management, and QR code guides.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    {% include 'partials/_navbar.html' %}
+
+    <main class="page-content static-page">
+        <article class="glass-card" style="padding: 3rem; max-width: 800px; margin: 0 auto;">
+            <div class="blog-content">
+                {{ content | safe }}
+            </div>
+
+            <div style="margin-top: 3rem; display: flex; gap: 1rem;">
+                <a href="/blog" class="btn btn-secondary">← Back to Blog</a>
+                <a href="/" class="btn btn-secondary">Back to Home</a>
+            </div>
+        </article>
+    </main>
+
+    {% include 'partials/_footer.html' %}
+</body>
+
+</html>

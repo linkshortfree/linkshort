@@ -1,8 +1,18 @@
-from flask import Flask, render_template, request, redirect, jsonify
-from database import init_db, create_short_url, get_original_url
+from flask import Flask, render_template, request, redirect, jsonify, make_response
+from database import init_db, create_short_url, get_original_url, create_ab_test, get_ab_test
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import os
+import random
+import markdown
 
 app = Flask(__name__)
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://",
+)
 
 with app.app_context():
     init_db()
@@ -91,22 +101,39 @@ def tools_bulk_qr():
 # === BLOG ===
 @app.route('/blog')
 def blog():
-    posts = [
-        {'slug': 'benefits-of-url-shortening', 'title': 'The Hidden Benefits of URL Shortening for Modern Marketing', 'excerpt': 'Discover how concise links can transform your click-through rates and brand perception.', 'date': 'Jan 20, 2026'},
-        {'slug': 'qr-code-marketing-guide', 'title': 'The Ultimate Guide to QR Code Marketing in 2026', 'excerpt': 'Learn how to leverage branded QR codes to bridge the gap between physical and digital worlds.', 'date': 'Jan 18, 2026'},
-        {'slug': 'building-brand-trust-with-links', 'title': 'Building Brand Trust: Why Custom Aliases Matter', 'excerpt': 'How custom brand links can increase user trust and improve your security profile.', 'date': 'Jan 15, 2026'}
-    ]
+    posts_dir = os.path.join(app.root_path, 'posts')
+    posts = []
+    if os.path.exists(posts_dir):
+        for filename in os.listdir(posts_dir):
+            if filename.endswith('.md'):
+                slug = filename[:-3]
+                with open(os.path.join(posts_dir, filename), 'r') as f:
+                    content = f.read()
+                    # Simple metadata parsing (expecting Title: ... on first line)
+                    lines = content.split('\n')
+                    title = lines[0].replace('Title:', '').strip() if lines[0].startswith('Title:') else slug.replace('-', ' ').title()
+                    excerpt = lines[2].strip() if len(lines) > 2 else "Read more about " + title
+                    date = lines[1].replace('Date:', '').strip() if len(lines) > 1 and lines[1].startswith('Date:') else "Jan 22, 2026"
+                    posts.append({'slug': slug, 'title': title, 'excerpt': excerpt, 'date': date})
     return render_template('blog.html', posts=posts)
 
 @app.route('/blog/<slug>')
 def blog_post(slug):
-    try:
-        return render_template(f'blog/{slug}.html')
-    except:
-        return render_template('404.html'), 404
+    posts_dir = os.path.join(app.root_path, 'posts')
+    post_path = os.path.join(posts_dir, f'{slug}.md')
+    if os.path.exists(post_path):
+        with open(post_path, 'r') as f:
+            content = f.read()
+            html_content = markdown.markdown(content)
+            # Extract title for SEO
+            lines = content.split('\n')
+            title = lines[0].replace('Title:', '').strip() if lines[0].startswith('Title:') else slug.replace('-', ' ').title()
+            return render_template('blog_post.html', content=html_content, title=title)
+    return render_template('404.html'), 404
 
 # === API ===
 @app.route('/api/shorten', methods=['POST'])
+@limiter.limit("10 per minute")
 def shorten_url():
     data = request.json
     original_url = data.get('url')
@@ -120,6 +147,76 @@ def shorten_url():
         return jsonify({'success': True, 'alias': alias})
     else:
         return jsonify({'error': 'Alias already exists. Please choose another.'}), 409
+
+@app.route('/api/bulk-shorten', methods=['POST'])
+@limiter.limit("5 per minute")
+def bulk_shorten():
+    data = request.json
+    urls = data.get('urls', [])
+    if not urls or not isinstance(urls, list):
+        return jsonify({'error': 'URLs list is required'}), 400
+    
+    if len(urls) > 500:
+        return jsonify({'error': 'Max 500 links per request'}), 400
+
+    results = []
+    for item in urls:
+        url = item.get('url')
+        alias = item.get('alias')
+        if url:
+            if not url.startswith(('http://', 'https://')):
+                url = 'https://' + url
+            short_alias = create_short_url(url, alias)
+            results.append({'url': url, 'alias': short_alias})
+    
+    return jsonify({'success': True, 'results': results})
+
+@app.route('/api/ab/create', methods=['POST'])
+def api_create_ab_test():
+    data = request.json
+    name = data.get('name')
+    url_a = data.get('url_a')
+    url_b = data.get('url_b')
+    split = int(data.get('split', 50))
+    
+    if not all([name, url_a, url_b]):
+        return jsonify({'error': 'Missing required fields'}), 400
+        
+    test_id = f"ab_{random.getrandbits(32):x}"
+    if create_ab_test(test_id, name, url_a, url_b, split):
+        return jsonify({'success': True, 'test_id': test_id})
+    return jsonify({'error': 'Failed to create test'}), 500
+
+@app.route('/api/contact', methods=['POST'])
+@limiter.limit("3 per minute")
+def api_contact():
+    data = request.json
+    # In a real app, verify reCAPTCHA here
+    # For now, just simulated success
+    return jsonify({'success': True, 'message': 'Thank you! We will get back to you soon.'})
+
+@app.route('/ab/<test_id>')
+def ab_redirect(test_id):
+    test = get_ab_test(test_id)
+    if not test:
+        return render_template('404.html'), 404
+    
+    # Check for existing variant in cookies
+    cookie_name = f'ab_test_{test_id}'
+    assigned_variant = request.cookies.get(cookie_name)
+    
+    if not assigned_variant:
+        # 0-99 scale
+        if random.randint(0, 99) < test['split']:
+            assigned_variant = 'a'
+        else:
+            assigned_variant = 'b'
+            
+    target_url = test['url_a'] if assigned_variant == 'a' else test['url_b']
+    
+    response = make_response(redirect(target_url))
+    response.set_cookie(cookie_name, assigned_variant, max_age=30*24*60*60) # 30 days
+    return response
 
 @app.route('/<alias>')
 def redirect_to_url(alias):
