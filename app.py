@@ -7,6 +7,7 @@ import random
 import markdown
 import json
 import urllib.request
+import threading
 
 app = Flask(__name__)
 limiter = Limiter(
@@ -52,8 +53,8 @@ def ping_index_now():
     except Exception as e:
         print(f"IndexNow Ping Failed: {e}")
 
-# Ping on startup
-ping_index_now()
+# Ping in background on startup
+threading.Thread(target=ping_index_now, daemon=True).start()
 
 @app.before_request
 def redirect_to_https_and_non_www():
