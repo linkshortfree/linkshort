@@ -41,69 +41,82 @@
         </section>
 
         <section class="tool-ui-section" style="padding-top: 1rem;">
-            <div class="glass-card-premium" style="max-width: 1100px; margin: 0 auto; padding: 0;">
+            <!-- Console Card Wrapper -->
+            <div class="glass-card-premium console-card"
+                style="max-width: 1100px; margin: 0 auto; padding: 0; background: var(--bg-secondary); border: 1px solid var(--divider);">
 
-                <!-- Header Tabs -->
-                <div class="tab-container"
-                    style="padding: 0 1.5rem; margin-top: 1.5rem; margin-bottom: 0; border: none;">
-                    <button class="tab-btn active" onclick="switchTab('bulk')">📦 Bulk Designer</button>
-                    <button class="tab-btn" onclick="switchTab('single')">🔗 Single Designer</button>
+                <!-- Console Header with Tabs -->
+                <div class="console-header">
+                    <div
+                        style="font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--accent-primary);">⚡</span> Workspace
+                    </div>
+                    <div class="segmented-control">
+                        <button class="segment-btn active" onclick="switchTab('bulk')">Bulk Designer</button>
+                        <button class="segment-btn" onclick="switchTab('single')">Single Link</button>
+                    </div>
                 </div>
 
                 <div class="dashboard-layout" style="padding: 2rem;">
-                    <div class="dashboard-grid">
+                    <div class="dashboard-grid" style="grid-template-columns: 1.5fr auto 1fr; gap: 0;">
 
                         <!-- LEFT COLUMN: INPUTS -->
-                        <div class="left-config-panel">
+                        <div class="left-config-panel" style="padding-right: 2rem;">
                             <!-- File Upload Area -->
                             <div id="bulkContainer">
-                                <label for="fileInput" class="dropzone-minimal">
+                                <label for="fileInput" class="dropzone-minimal"
+                                    style="border: 1px dashed var(--divider); background: var(--surface-top);">
                                     <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📂</div>
-                                    <span style="font-weight: 500;">Click to upload CSV / Excel</span>
-                                    <div style="font-size: 0.8rem; margin-top: 0.25rem; opacity: 0.7;">or drag and drop
-                                        here</div>
+                                    <span style="font-weight: 500;">Upload CSV / Excel</span>
                                 </label>
                                 <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;"
                                     onchange="handleFileUpload(this)">
                                 <div id="fileStatus" class="file-status"></div>
 
                                 <div class="input-group" style="margin-top: 1.5rem;">
-                                    <label class="input-label">Paste URLs (One per line)</label>
+                                    <label class="input-label">Destination URLs</label>
                                     <textarea id="urlInput" class="input-focus-ring"
                                         placeholder="https://example.com/page1&#10;https://example.com/page2" rows="6"
                                         oninput="updateLivePreview()"
-                                        style="background: rgba(0,0,0,0.2); border-color: var(--glass-border);"></textarea>
+                                        style="background: var(--surface-top); border-color: var(--divider); resize: none;"></textarea>
                                 </div>
                             </div>
 
                             <!-- Single Mode Input -->
                             <div id="singleContainer" class="hidden">
                                 <div class="input-group">
-                                    <label class="input-label">Enter Long URL</label>
+                                    <label class="input-label">Long URL</label>
                                     <input type="url" id="singleUrlInput" class="input-focus-ring"
-                                        placeholder="https://example.com/very-long-link..."
-                                        oninput="updateLivePreview()">
+                                        placeholder="https://example.com..." oninput="updateLivePreview()">
                                 </div>
-                                <div class="input-group">
-                                    <label class="input-label">Custom Alias (Optional)</label>
-                                    <input type="text" id="singleAliasInput" class="input-focus-ring"
-                                        placeholder="my-custom-link">
+                                <div class="input-group" style="margin-top: 1rem;">
+                                    <label class="input-label">Custom Alias</label>
+                                    <div style="position: relative;">
+                                        <span
+                                            style="position: absolute; left: 12px; top: 12px; color: var(--text-muted); font-size: 0.9rem;">/</span>
+                                        <input type="text" id="singleAliasInput" class="input-focus-ring"
+                                            placeholder="my-link" style="padding-left: 24px;">
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Alias Toggle -->
                             <div style="margin-top: 1.5rem;">
-                                <div class="options-toggle" onclick="toggleOptions()">+ Add Custom Aliases (Bulk)</div>
+                                <div class="options-toggle" onclick="toggleOptions()"
+                                    style="font-size: 0.9rem; color: var(--accent-primary);">+ Configure Bulk Aliases
+                                </div>
                                 <div class="custom-options" id="customOptions">
-                                    <span class="prefix">linkshort.live/</span>
                                     <input type="text" id="aliasInput" class="input-focus-ring"
-                                        placeholder="alias1, alias2">
+                                        placeholder="alias1, alias2" style="margin-top: 0.5rem;">
                                 </div>
                             </div>
                         </div>
 
+                        <!-- DIVIDER -->
+                        <div style="width: 1px; background: var(--divider); height: 100%;"></div>
+
                         <!-- RIGHT COLUMN: DESIGN & PREVIEW -->
-                        <div class="right-design-panel">
+                        <div class="right-design-panel" style="padding-left: 2rem;">
                             <!-- QR Customization Card -->
                             <div class="control-panel" style="margin-bottom: 1.5rem;">
                                 <h4 style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-primary);">🎨 QR

@@ -27,7 +27,7 @@ function toggleOptions() {
 function switchTab(mode) {
     const bulkContainer = document.getElementById('bulkContainer');
     const singleContainer = document.getElementById('singleContainer');
-    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabBtns = document.querySelectorAll('.segment-btn');
 
     // Sidebars for Unified QR Designer
     const singlePreview = document.getElementById('singlePreviewSide');
@@ -615,7 +615,7 @@ function shortenUtm() {
     const url = document.getElementById('finalUtmUrl')?.innerText;
     if (url && (url.startsWith('https://') || url.startsWith('http://'))) {
         localStorage.setItem('pendingShorten', url);
-        window.location.href = '/tools/bulk';
+        window.location.href = '/';
     } else {
         showToast("Please generate a valid URL first", "error");
     }

@@ -1,21 +1,39 @@
 :root {
-    /* Brand Colors */
-    --bg-primary: #0F1720;
-    --surface-top: #111826;
-    --surface-bottom: #1A2430;
-    --accent-primary: #00A676;
-    --accent-secondary: #7FD9A8;
-    --text-primary: #E6EDF3;
-    --text-secondary: #9AA6B2;
-    --text-muted: #586573;
+    /* === Professional SaaS Palette (Slate based) === */
+    --bg-dark: #020617;
+    /* Slate 950 */
+    --bg-secondary: #0f172a;
+    /* Slate 900 */
+    --glass-border: rgba(51, 65, 85, 0.6);
+    /* Slate 700 */
 
-    /* Semantic Colors */
-    --success: #00C98A;
-    --error: #FF5A5F;
-    --divider: rgba(255, 255, 255, 0.04);
+    --surface-top: #1e293b;
+    /* Slate 800 */
+    --surface-bottom: #0f172a;
+    /* Slate 900 */
+
+    /* Branding */
+    --accent-primary: #3b82f6;
+    /* Blue 500 - Professional/Trust */
+    --accent-glow: rgba(59, 130, 246, 0.3);
+
+    --text-primary: #f8fafc;
+    /* Slate 50 */
+    --text-secondary: #94a3b8;
+    /* Slate 400 */
+    --text-muted: #64748b;
+    /* Slate 500 */
+
+    --success: #10b981;
+    /* Emerald 500 */
+    --error: #ef4444;
+    /* Red 500 */
+
+    --card-radius: 12px;
+    --divider: #334155;
+    /* Slate 700 */
 
     /* Radii & Units */
-    --card-radius: 12px;
     --input-radius: 12px;
     --btn-radius: 12px;
     --gap-base: 8px;
@@ -790,7 +808,7 @@ small {
 .pill {
     display: inline-flex;
     padding: 4px 12px;
-    background: rgba(0, 166, 118, 0.1);
+    background: var(--accent-glow);
     color: var(--accent-primary);
     border-radius: 50px;
     font-size: 12px;
@@ -837,7 +855,7 @@ small {
 .input-focus-ring:focus {
     outline: none;
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 0 3px var(--accent-glow);
     transition: all 0.2s ease;
 }
 

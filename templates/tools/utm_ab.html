@@ -42,19 +42,25 @@
 
                 <div class="dashboard-layout">
                     <!-- Config Panel -->
-                    <div class="glass-card">
+                    <div class="console-card" style="padding: 2rem;">
+                        <h4
+                            style="margin-bottom: 1.5rem; font-size: 0.95rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
+                            Configuration</h4>
+
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                             <div style="grid-column: span 2;">
                                 <label class="input-label">Website URL *</label>
                                 <input type="text" id="targetUrl" class="input-focus-ring"
-                                    placeholder="https://example.com" oninput="generateUtm()">
+                                    placeholder="https://example.com" oninput="generateUtm()"
+                                    style="background: var(--surface-top);">
                             </div>
 
                             <!-- Source & Medium with Presets -->
                             <div style="grid-column: span 2;">
                                 <label class="input-label">Campaign Source *</label>
                                 <input type="text" id="utmSource" class="input-focus-ring"
-                                    placeholder="google, newsletter, facebook" oninput="generateUtm()">
+                                    placeholder="google, newsletter, facebook" oninput="generateUtm()"
+                                    style="background: var(--surface-top);">
                                 <div class="presets-row"
                                     style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
                                     <button class="pill-btn"
@@ -71,7 +77,8 @@
                             <div style="grid-column: span 2;">
                                 <label class="input-label">Campaign Medium *</label>
                                 <input type="text" id="utmMedium" class="input-focus-ring"
-                                    placeholder="cpc, email, social" oninput="generateUtm()">
+                                    placeholder="cpc, email, social" oninput="generateUtm()"
+                                    style="background: var(--surface-top);">
                                 <div class="presets-row"
                                     style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
                                     <button class="pill-btn" onclick="setUtmPreset('utmMedium', 'cpc')">CPC</button>
@@ -86,30 +93,31 @@
                             <div>
                                 <label class="input-label">Campaign Name *</label>
                                 <input type="text" id="utmName" class="input-focus-ring" placeholder="summer_sale"
-                                    oninput="generateUtm()">
+                                    oninput="generateUtm()" style="background: var(--surface-top);">
                             </div>
                             <div>
                                 <label class="input-label">Campaign ID (utm_id)</label>
                                 <input type="text" id="utmId" class="input-focus-ring" placeholder="12345"
-                                    oninput="generateUtm()">
+                                    oninput="generateUtm()" style="background: var(--surface-top);">
                             </div>
 
                             <div>
                                 <label class="input-label">Campaign Term</label>
                                 <input type="text" id="utmTerm" class="input-focus-ring" placeholder="running+shoes"
-                                    oninput="generateUtm()">
+                                    oninput="generateUtm()" style="background: var(--surface-top);">
                             </div>
                             <div>
                                 <label class="input-label">Campaign Content</label>
                                 <input type="text" id="utmContent" class="input-focus-ring" placeholder="logolink"
-                                    oninput="generateUtm()">
+                                    oninput="generateUtm()" style="background: var(--surface-top);">
                             </div>
                         </div>
                     </div>
 
                     <!-- Result Sidebar -->
                     <aside class="preview-sidebar hidden-initially" id="utmResultArea">
-                        <div class="preview-card glass-card-premium" style="border: 1px solid var(--accent-primary);">
+                        <div class="preview-card console-card"
+                            style="border: 1px solid var(--accent-primary); padding: 1.5rem;">
                             <div
                                 style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
                                 <span class="pulse-indicator"></span>
@@ -117,7 +125,7 @@
                                     Ready</h3>
                             </div>
                             <div id="finalUtmUrl"
-                                style="word-break: break-all; font-family: monospace; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid var(--glass-border); font-size: 0.85rem; color: var(--text-secondary);">
+                                style="word-break: break-all; font-family: monospace; background: var(--bg-dark); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid var(--divider); font-size: 0.85rem; color: var(--text-secondary);">
                                 Fill in the fields...
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 0.75rem;">
@@ -126,7 +134,7 @@
                                 <button onclick="shortenUtm()" class="btn btn-primary"
                                     style="width: 100%; margin: 0;">Shorten URL</button>
                                 <button onclick="resetUtmForm()" class="btn btn-secondary"
-                                    style="width: 100%; margin: 0;">Reset Form</button>
+                                    style="width: 100%; margin: 0; border-color: var(--divider);">Reset Form</button>
                             </div>
                         </div>
                     </aside>
@@ -142,22 +150,26 @@
                 <h2 class="section-title" style="margin-bottom: 1.5rem; font-size: 1.5rem;">A/B Link Testing</h2>
 
                 <div class="dashboard-layout">
-                    <div class="glass-card">
+                    <div class="console-card" style="padding: 2rem;">
+                        <h4
+                            style="margin-bottom: 1.5rem; font-size: 0.95rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
+                            Test Configuration</h4>
+
                         <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
                             <div>
                                 <label class="input-label">Test Name *</label>
                                 <input type="text" id="abTestName" class="input-focus-ring"
-                                    placeholder="Summer Campaign Split Test">
+                                    placeholder="Summer Campaign Split Test" style="background: var(--surface-top);">
                             </div>
                             <div>
                                 <label class="input-label">Variant A URL *</label>
                                 <input type="text" id="variantA" class="input-focus-ring"
-                                    placeholder="https://example.com/landing-a">
+                                    placeholder="https://example.com/landing-a" style="background: var(--surface-top);">
                             </div>
                             <div>
                                 <label class="input-label">Variant B URL *</label>
                                 <input type="text" id="variantB" class="input-focus-ring"
-                                    placeholder="https://example.com/landing-b">
+                                    placeholder="https://example.com/landing-b" style="background: var(--surface-top);">
                             </div>
                             <div>
                                 <div
@@ -175,14 +187,15 @@
                     </div>
 
                     <aside class="preview-sidebar hidden-initially" id="abResultArea">
-                        <div class="preview-card glass-card-premium" style="border: 1px solid var(--success);">
+                        <div class="preview-card console-card"
+                            style="border: 1px solid var(--success); padding: 1.5rem;">
                             <div
                                 style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
                                 <span class="pulse-indicator" style="background: var(--success);"></span>
                                 <h3 style="margin: 0; font-size: 1.1rem; color: var(--success);">Test Created!</h3>
                             </div>
                             <div id="finalAbUrl"
-                                style="word-break: break-all; font-family: monospace; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center; border: 1px solid var(--glass-border); color: var(--text-primary); font-weight: 700;">
+                                style="word-break: break-all; font-family: monospace; background: var(--bg-dark); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center; border: 1px solid var(--glass-border); color: var(--text-primary); font-weight: 700;">
                             </div>
                             <button onclick="copyAbUrl()" class="copy-btn" style="width: 100%;">Copy Test Link</button>
                         </div>
