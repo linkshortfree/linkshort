@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, make_response
+from flask import Flask, render_template, request, redirect, jsonify, make_response, url_for
 from database import init_db, create_short_url, get_original_url, create_ab_test, get_ab_test
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -134,8 +134,9 @@ def tools_qr():
     return render_template('tools/qr.html')
 
 @app.route('/tools/bulk-qr')
-def tools_bulk_qr():
-    return render_template('tools/bulk_qr.html')
+def bulk_qr_tool():
+    # Consolidated into qr tool
+    return redirect(url_for('tools_qr'), code=301)
 
 # === BLOG ===
 @app.route('/blog')
@@ -290,7 +291,6 @@ def sitemap():
         {'loc': '/tools/bulk', 'priority': '1.0'},
         {'loc': '/tools/utm', 'priority': '0.9'},
         {'loc': '/tools/qr', 'priority': '0.9'},
-        {'loc': '/tools/bulk-qr', 'priority': '0.9'},
         {'loc': '/blog', 'priority': '0.8'},
         {'loc': '/about-us', 'priority': '0.6'},
         {'loc': '/contact', 'priority': '0.6'},

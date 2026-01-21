@@ -11,16 +11,28 @@ function switchTab(mode) {
     const singleContainer = document.getElementById('singleContainer');
     const tabBtns = document.querySelectorAll('.tab-btn');
 
+    // Sidebars for Unified QR Designer
+    const singlePreview = document.getElementById('singlePreviewSide');
+    const bulkProgress = document.getElementById('bulkProgressSide');
+
     tabBtns.forEach(btn => btn.classList.remove('active'));
 
     if (mode === 'bulk') {
-        bulkContainer.classList.remove('hidden');
-        singleContainer.classList.add('hidden');
-        tabBtns[0].classList.add('active');
+        if (bulkContainer) bulkContainer.classList.remove('hidden');
+        if (singleContainer) singleContainer.classList.add('hidden');
+
+        if (bulkProgress) bulkProgress.classList.remove('hidden');
+        if (singlePreview) singlePreview.classList.add('hidden');
+
+        tabBtns.forEach(btn => { if (btn.innerText.includes('Bulk')) btn.classList.add('active'); });
     } else {
-        bulkContainer.classList.add('hidden');
-        singleContainer.classList.remove('hidden');
-        tabBtns[1].classList.add('active');
+        if (bulkContainer) bulkContainer.classList.add('hidden');
+        if (singleContainer) singleContainer.classList.remove('hidden');
+
+        if (bulkProgress) bulkProgress.classList.add('hidden');
+        if (singlePreview) singlePreview.classList.remove('hidden');
+
+        tabBtns.forEach(btn => { if (btn.innerText.includes('Single')) btn.classList.add('active'); });
     }
 }
 
@@ -659,4 +671,42 @@ async function submitContact(event) {
     }
     btn.disabled = false;
     btn.innerText = 'Send Message';
+}
+// Unified QR Generator Logic
+let qrInstance = null;
+
+function generateSingleQR() {
+    const link = document.getElementById('singleUrlInput').value.trim();
+    const size = parseInt(document.getElementById('qrSizeSelect').value);
+    const container = document.getElementById('singleQrContainer');
+    const downloadBtn = document.getElementById('downloadSingleQrBtn');
+
+    if (!container) return; // Not on the QR page
+
+    if (!link) {
+        container.innerHTML = '<div style="color: #64748b; font-size: 0.9rem; margin-top: 100px;">Enter a link to generate</div>';
+        if (downloadBtn) downloadBtn.style.display = 'none';
+        return;
+    }
+
+    container.innerHTML = '';
+    qrInstance = new QRCode(container, {
+        text: link,
+        width: size,
+        height: size,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+    if (downloadBtn) downloadBtn.style.display = 'block';
+}
+
+function downloadSingleQR() {
+    const canvas = document.querySelector('#singleQrContainer canvas');
+    if (canvas) {
+        const link = document.createElement('a');
+        link.download = 'linkshort-qr.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
 }
