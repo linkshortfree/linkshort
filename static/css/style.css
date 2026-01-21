@@ -880,9 +880,17 @@ small {
 /* === DASHBOARD LAYOUT (Redesign) === */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.2fr auto 1fr;
     gap: 2rem;
     align-items: start;
+    position: relative;
+}
+
+.sticky-preview {
+    position: sticky;
+    top: 6rem;
+    /* Adjust based on Navbar height */
+    height: fit-content;
 }
 
 @media (max-width: 900px) {
@@ -952,13 +960,11 @@ small {
     color: var(--accent-primary);
 }
 
-/* Action Bar */
+/* Action Bar (Refactored) */
 .action-bar {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--glass-border);
+    margin-top: 1.5rem;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 

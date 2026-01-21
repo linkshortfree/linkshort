@@ -102,22 +102,16 @@
 
                             <!-- Alias Toggle -->
                             <div style="margin-top: 1.5rem;">
-                                <div class="options-toggle" onclick="toggleOptions()"
-                                    style="font-size: 0.9rem; color: var(--accent-primary);">+ Configure Bulk Aliases
-                                </div>
+                                <div class="options-toggle" onclick="toggleOptions()">+ Configure Bulk Aliases</div>
                                 <div class="custom-options" id="customOptions">
                                     <input type="text" id="aliasInput" class="input-focus-ring"
                                         placeholder="alias1, alias2" style="margin-top: 0.5rem;">
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- DIVIDER -->
-                        <div style="width: 1px; background: var(--divider); height: 100%;"></div>
+                            <hr style="border: 0; border-top: 1px solid var(--divider); margin: 2rem 0;">
 
-                        <!-- RIGHT COLUMN: DESIGN & PREVIEW -->
-                        <div class="right-design-panel" style="padding-left: 2rem;">
-                            <!-- QR Customization Card -->
+                            <!-- QR Customization Card (Moved to Left) -->
                             <div class="control-panel" style="margin-bottom: 1.5rem;">
                                 <h4 style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-primary);">🎨 QR
                                     Customization</h4>
@@ -156,6 +150,13 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- DIVIDER -->
+                        <div style="width: 1px; background: var(--divider); height: 100%;"></div>
+
+                        <!-- RIGHT COLUMN: DESIGN & PREVIEW -->
+                        <div class="right-design-panel sticky-preview" style="padding-left: 2rem;">
 
                             <!-- Dynamic Live Preview -->
                             <aside class="preview-sidebar hidden-initially" id="masterResultArea">
@@ -173,15 +174,13 @@
                                     </div>
                                 </div>
                             </aside>
-                        </div>
-                    </div>
 
-                    <!-- Floating Action Bar -->
-                    <div class="action-bar">
-                        <button id="shortenBtn" class="btn btn-primary" onclick="shortenUrl()"
-                            style="min-width: 200px;">
-                            🚀 Generate Links & QR
-                        </button>
+                            <!-- Primary Action (Moved to Right) -->
+                            <button id="shortenBtn" class="btn btn-primary" onclick="shortenUrl()"
+                                style="width: 100%; margin-top: 1.5rem; font-size: 1.1rem; padding: 1rem;">
+                                🚀 Generate Links
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Results Area (Hidden Initially) -->
