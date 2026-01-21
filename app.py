@@ -59,6 +59,10 @@ def about():
 def contact():
     return render_template('contact.html')
 
+@app.route('/utm-builder')
+def utm_builder():
+    return render_template('utm_builder.html')
+
 @app.route('/blog')
 def blog():
     posts = [
@@ -169,6 +173,11 @@ def sitemap():
     <loc>https://linkshort.live/blog</loc>
     <lastmod>2026-01-21</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://linkshort.live/utm-builder</loc>
+    <lastmod>2026-01-21</lastmod>
+    <priority>0.9</priority>
   </url>
 </urlset>""", {'Content-Type': 'application/xml'}
 

@@ -50,6 +50,17 @@ function handleFileUpload(input) {
     reader.readAsArrayBuffer(file);
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if there's a pending URL from UTM Builder
+    const pendingUrl = localStorage.getItem('pendingShorten');
+    if (pendingUrl) {
+        document.getElementById('urlInput').value = pendingUrl;
+        localStorage.removeItem('pendingShorten');
+        // Optionally trigger shortening automatically
+        // shortenUrl(); 
+    }
+});
+
 async function shortenUrl() {
     const urlInput = document.getElementById('urlInput');
     const aliasInput = document.getElementById('aliasInput');
