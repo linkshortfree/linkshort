@@ -613,6 +613,19 @@ function shortenUtm() {
     }
 }
 
+function resetUtmForm() {
+    const fields = ['targetUrl', 'utmSource', 'utmMedium', 'utmName', 'utmTerm', 'utmContent'];
+    fields.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+
+    const resultDisplay = document.getElementById('finalUtmUrl');
+    if (resultDisplay) resultDisplay.innerText = "Enter a Website URL to begin...";
+
+    showToast("Form cleared!");
+}
+
 async function generateBulkQRs() {
     if (bulkQrUrls.length === 0) return;
     if (bulkQrUrls.length > 500) {
