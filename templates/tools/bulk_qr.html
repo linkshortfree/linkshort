@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -48,8 +47,6 @@
                         <div id="bulkQrFileStatus" style="margin-top: 1rem; color: var(--text-secondary);"></div>
                     </div>
 
-                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                        style="margin-bottom: 1.5rem;"></div>
 
                     <button id="generateBulkQrBtn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;"
                         onclick="generateBulkQRs()" disabled>Generate & Download ZIP</button>
