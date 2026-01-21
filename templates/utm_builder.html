@@ -25,67 +25,81 @@
             </header>
 
             <main>
-                <div class="glass-card">
-                    <h1>Campaign UTM Builder</h1>
-                    <p class="subtitle">Generate trackable URLs for your marketing campaigns in seconds.</p>
+                <div class="dashboard-layout">
+                    <!-- Left: Form Area -->
+                    <div class="glass-card">
+                        <h1 style="text-align: left;">Campaign UTM Builder</h1>
+                        <p class="subtitle" style="margin-left: 0; text-align: left;">Generate trackable URLs for your
+                            marketing campaigns in seconds.</p>
 
-                    <div
-                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; text-align: left; margin-bottom: 2rem;">
-                        <div style="grid-column: span 2;">
-                            <label
-                                style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">Website
-                                URL *</label>
-                            <input type="text" id="targetUrl" placeholder="https://example.com" oninput="generateUtm()">
-                        </div>
-                        <div>
-                            <label
-                                style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">Campaign
-                                Source *</label>
-                            <input type="text" id="utmSource" placeholder="google, facebook, newsletter"
-                                oninput="generateUtm()">
-                        </div>
-                        <div>
-                            <label
-                                style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">Campaign
-                                Medium *</label>
-                            <input type="text" id="utmMedium" placeholder="cpc, social, email" oninput="generateUtm()">
-                        </div>
-                        <div>
-                            <label
-                                style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">Campaign
-                                Name *</label>
-                            <input type="text" id="utmName" placeholder="summer_sale, launch_2026"
-                                oninput="generateUtm()">
-                        </div>
-                        <div>
-                            <label
-                                style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">Campaign
-                                Term</label>
-                            <input type="text" id="utmTerm" placeholder="running+shoes" oninput="generateUtm()">
-                        </div>
-                        <div style="grid-column: span 2;">
-                            <label
-                                style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">Campaign
-                                Content</label>
-                            <input type="text" id="utmContent" placeholder="logolink, textlink" oninput="generateUtm()">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; text-align: left;">
+                            <div style="grid-column: span 2;">
+                                <label
+                                    style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.85rem;">Website
+                                    URL *</label>
+                                <input type="text" id="targetUrl" placeholder="https://example.com"
+                                    oninput="generateUtm()">
+                            </div>
+                            <div>
+                                <label
+                                    style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.85rem;">Campaign
+                                    Source *</label>
+                                <input type="text" id="utmSource" placeholder="google, facebook, newsletter"
+                                    oninput="generateUtm()">
+                            </div>
+                            <div>
+                                <label
+                                    style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.85rem;">Campaign
+                                    Medium *</label>
+                                <input type="text" id="utmMedium" placeholder="cpc, social, email"
+                                    oninput="generateUtm()">
+                            </div>
+                            <div>
+                                <label
+                                    style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.85rem;">Campaign
+                                    Name *</label>
+                                <input type="text" id="utmName" placeholder="summer_sale, launch_2026"
+                                    oninput="generateUtm()">
+                            </div>
+                            <div>
+                                <label
+                                    style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.85rem;">Campaign
+                                    Term</label>
+                                <input type="text" id="utmTerm" placeholder="running+shoes" oninput="generateUtm()">
+                            </div>
+                            <div style="grid-column: span 2;">
+                                <label
+                                    style="display: block; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.85rem;">Campaign
+                                    Content</label>
+                                <input type="text" id="utmContent" placeholder="logolink, textlink"
+                                    oninput="generateUtm()">
+                            </div>
                         </div>
                     </div>
 
-                    <div id="utmResultContainer"
-                        style="margin-top: 2rem; padding: 2rem; background: rgba(15, 23, 42, 0.4); border-radius: 16px; border: 1px solid var(--glass-border); text-align: left;">
-                        <h4 style="color: var(--accent-primary); margin-bottom: 1rem;">Generated Campaign URL</h4>
-                        <div id="finalUtmUrl"
-                            style="word-break: break-all; color: var(--text-primary); font-family: monospace; font-size: 0.95rem; min-height: 2.5rem; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--glass-border); margin-bottom: 1.5rem;">
-                            Fill in the fields above...
+                    <!-- Right: Sticky Preview Sidebar -->
+                    <aside class="preview-sidebar">
+                        <div class="preview-card glass-card" id="utmPreviewCard">
+                            <div
+                                style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center;">
+                                <span class="pulse-indicator"></span>
+                                <h3 style="font-size: 1.1rem; margin: 0;">Generated URL Preview</h3>
+                            </div>
+
+                            <div id="finalUtmUrl"
+                                style="word-break: break-all; color: var(--text-primary); font-family: monospace; font-size: 0.95rem; min-height: 5rem; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--glass-border); margin-bottom: 1.5rem; text-align: left;">
+                                Fill in the fields on the left...
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <button onclick="copyUtm()" class="copy-btn"
+                                    style="width: 100%; margin: 0; padding: 1.25rem;">Copy Campaign URL</button>
+                                <button onclick="shortenUtm()" class="copy-btn"
+                                    style="width: 100%; margin: 0; padding: 1.25rem; background: rgba(16, 185, 129, 0.1); border-color: var(--accent-primary);">Shorten
+                                    this URL</button>
+                            </div>
                         </div>
-                        <div style="display: flex; gap: 12px;">
-                            <button onclick="copyUtm()" class="copy-btn" style="flex: 1; margin: 0; padding: 1rem;">Copy
-                                URL</button>
-                            <button onclick="shortenUtm()" class="copy-btn"
-                                style="flex: 1; margin: 0; padding: 1rem; background: rgba(16, 185, 129, 0.1); border-color: var(--accent-primary);">Shorten
-                                Link</button>
-                        </div>
-                    </div>
+                    </aside>
                 </div>
 
                 <div class="seo-content" style="margin-top: 5rem;">

@@ -56,10 +56,45 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pendingUrl) {
         document.getElementById('urlInput').value = pendingUrl;
         localStorage.removeItem('pendingShorten');
-        // Optionally trigger shortening automatically
-        // shortenUrl(); 
+        updateLivePreview();
     }
 });
+
+function updateLivePreview() {
+    const urlInput = document.getElementById('urlInput');
+    const qrGreetingInput = document.getElementById('qrGreetingInput');
+    const container = document.getElementById('liveQrContainer');
+    const greetingDisplay = document.getElementById('liveQrGreeting');
+    const downloadBtn = document.getElementById('liveDownloadBtn');
+    const previewCard = document.getElementById('livePreviewCard');
+
+    const firstUrl = urlInput.value.split('\n')[0].trim();
+    const greeting = qrGreetingInput.value.split(',')[0].trim();
+
+    if (!firstUrl) {
+        container.innerHTML = '<div style="color: #64748b; font-size: 0.85rem; margin-top: 80px;">Design your link to see preview</div>';
+        greetingDisplay.innerText = '';
+        downloadBtn.style.display = 'none';
+        previewCard.classList.add('empty');
+        return;
+    }
+
+    container.innerHTML = '';
+    greetingDisplay.innerText = greeting;
+    downloadBtn.style.display = 'block';
+    previewCard.classList.remove('empty');
+
+    new QRCode(container, {
+        text: firstUrl,
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    downloadBtn.onclick = () => downloadQR(firstUrl, greeting);
+}
 
 async function shortenUrl() {
     const urlInput = document.getElementById('urlInput');
