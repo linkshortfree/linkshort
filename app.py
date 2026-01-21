@@ -130,13 +130,14 @@ def utm_builder_redirect():
     return redirect('/tools/utm', code=301)
 
 @app.route('/tools/qr')
-def tools_qr():
-    return render_template('tools/qr.html')
+def tools_qr_redirect():
+    # Consolidated into Master Designer
+    return redirect(url_for('tools_bulk'), code=301)
 
 @app.route('/tools/bulk-qr')
-def bulk_qr_tool():
-    # Consolidated into qr tool
-    return redirect(url_for('tools_qr'), code=301)
+def bulk_qr_tool_redirect():
+    # Consolidated into Master Designer
+    return redirect(url_for('tools_bulk'), code=301)
 
 # === BLOG ===
 @app.route('/blog')
@@ -290,7 +291,6 @@ def sitemap():
         {'loc': '/', 'priority': '1.0'},
         {'loc': '/tools/bulk', 'priority': '1.0'},
         {'loc': '/tools/utm', 'priority': '0.9'},
-        {'loc': '/tools/qr', 'priority': '0.9'},
         {'loc': '/blog', 'priority': '0.8'},
         {'loc': '/about-us', 'priority': '0.6'},
         {'loc': '/contact', 'priority': '0.6'},

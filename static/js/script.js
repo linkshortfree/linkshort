@@ -472,15 +472,14 @@ async function downloadAllQRs() {
 
 // Helper to generate a canvas without appending to DOM
 async function generateQRCanvasInMemory(url, greeting) {
-    const qrColor = document.getElementById('qrColor')?.value || "#000000";
-    const qrBgColor = document.getElementById('qrBgColor')?.value || "#ffffff";
+    const selectedSize = parseInt(document.getElementById('qrSizeSelect')?.value || document.getElementById('qrSize')?.value || 300);
 
     return new Promise((resolve) => {
         const div = document.createElement('div');
         const qrcode = new QRCode(div, {
             text: url,
-            width: 200,
-            height: 200,
+            width: selectedSize,
+            height: selectedSize,
             colorDark: qrColor,
             colorLight: qrBgColor,
             correctLevel: QRCode.CorrectLevel.H
@@ -491,9 +490,9 @@ async function generateQRCanvasInMemory(url, greeting) {
             const qrCanvas = div.querySelector('canvas');
             const exportCanvas = document.createElement('canvas');
             const ctx = exportCanvas.getContext('2d');
-            const qrSize = 200;
-            const padding = 20;
-            const textHeight = greeting ? 40 : 0;
+            const qrSize = selectedSize;
+            const padding = Math.round(selectedSize * 0.05); // Dynamic padding
+            const textHeight = greeting ? Math.round(selectedSize * 0.15) : 0;
 
             exportCanvas.width = qrSize + (padding * 2);
             exportCanvas.height = qrSize + textHeight + (padding * 2);
