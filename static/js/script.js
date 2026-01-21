@@ -71,6 +71,9 @@ function updateLivePreview() {
     const firstUrl = urlInput.value.split('\n')[0].trim();
     const greeting = qrGreetingInput.value.split(',')[0].trim();
 
+    const qrColor = document.getElementById('qrColor').value || "#000000";
+    const qrBgColor = document.getElementById('qrBgColor').value || "#ffffff";
+
     if (!firstUrl) {
         container.innerHTML = '<div style="color: #64748b; font-size: 0.85rem; margin-top: 80px;">Design your link to see preview</div>';
         greetingDisplay.innerText = '';
@@ -88,8 +91,8 @@ function updateLivePreview() {
         text: firstUrl,
         width: 200,
         height: 200,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
+        colorDark: qrColor,
+        colorLight: qrBgColor,
         correctLevel: QRCode.CorrectLevel.H
     });
 
@@ -179,6 +182,7 @@ async function shortenUrl() {
                 addLinkToUI(fullShortUrl, item.url, item.greeting);
                 lastResults.push({
                     shortUrl: fullShortUrl,
+                    originalUrl: item.url,
                     alias: data.alias,
                     greeting: item.greeting,
                     index: index + 1
@@ -196,7 +200,7 @@ async function shortenUrl() {
     }
 
     shortenBtn.disabled = false;
-    shortenBtn.innerText = 'Shorten Now';
+    shortenBtn.innerText = 'Process & Generate';
     resultArea.classList.remove('hidden');
     resultArea.classList.add('visible');
 
@@ -228,6 +232,9 @@ function openQrModal(url, greeting) {
     const qrBody = document.getElementById('modalQrContent');
     const downloadBtn = document.getElementById('modalDownloadBtn');
 
+    const qrColor = document.getElementById('qrColor').value || "#000000";
+    const qrBgColor = document.getElementById('qrBgColor').value || "#ffffff";
+
     qrBody.innerHTML = '';
     greetingText.innerText = greeting || '';
 
@@ -235,8 +242,8 @@ function openQrModal(url, greeting) {
         text: url,
         width: 200,
         height: 200,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
+        colorDark: qrColor,
+        colorLight: qrBgColor,
         correctLevel: QRCode.CorrectLevel.H
     });
 
@@ -244,8 +251,21 @@ function openQrModal(url, greeting) {
     modal.classList.remove('hidden');
 }
 
-function closeModal(event) {
+function closeModal() {
     document.getElementById('qrModal').classList.add('hidden');
+}
+
+function downloadResultsCSV() {
+    if (lastResults.length === 0) return;
+    let csv = "Index,Long URL,Short URL,Alias,Greeting\n";
+    lastResults.forEach(item => {
+        csv += `${item.index},"${item.originalUrl}","${item.shortUrl}","${item.alias}","${item.greeting}"\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `linkshort_results_${new Date().getTime()}.csv`;
+    link.click();
 }
 
 function downloadQR(url, greeting) {
@@ -328,6 +348,7 @@ async function downloadAllQRs() {
     if (lastResults.length === 0) return;
 
     const downloadBtn = document.getElementById('downloadAllQrsBtn');
+    if (!downloadBtn) return;
     const oldText = downloadBtn.innerText;
     downloadBtn.innerText = "Zipping QRs...";
     downloadBtn.disabled = true;
@@ -360,14 +381,17 @@ async function downloadAllQRs() {
 
 // Helper to generate a canvas without appending to DOM
 async function generateQRCanvasInMemory(url, greeting) {
+    const qrColor = document.getElementById('qrColor')?.value || "#000000";
+    const qrBgColor = document.getElementById('qrBgColor')?.value || "#ffffff";
+
     return new Promise((resolve) => {
         const div = document.createElement('div');
         const qrcode = new QRCode(div, {
             text: url,
             width: 200,
             height: 200,
-            colorDark: "#000000",
-            colorLight: "#ffffff",
+            colorDark: qrColor,
+            colorLight: qrBgColor,
             correctLevel: QRCode.CorrectLevel.H
         });
 

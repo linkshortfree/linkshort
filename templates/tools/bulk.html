@@ -150,37 +150,38 @@
 
                 <aside class="preview-sidebar">
                     <div class="preview-card glass-card" id="livePreviewCard">
-                        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
-                            <span class="pulse-indicator"></span>
-                            <h3 style="margin: 0;">Live QR Preview</h3>
-                        </div>
-                        <div id="liveQrContainer"
-                            style="background: white; padding: 1.5rem; border-radius: 12px; min-height: 200px;">
-                            <div style="color: #64748b; font-size: 0.85rem; margin-top: 80px;">Paste a link to preview
-                            </div>
-                        </div>
-                        <div id="liveQrGreeting" style="margin-top: 1rem; font-weight: 700;"></div>
-                        <button class="copy-btn" id="liveDownloadBtn"
-                            style="margin-top: 1rem; width: 100%; display: none;">Download Preview</button>
+                        <h3 style="margin: 0;">Live QR Preview</h3>
+                        <span class="tooltip-container">ⓘ
+                            <span class="tooltip-text">Showing preview for the first link in your list.</span>
+                        </span>
                     </div>
+                    <div id="liveQrContainer"
+                        style="background: white; padding: 1.5rem; border-radius: 12px; min-height: 200px;">
+                        <div style="color: #64748b; font-size: 0.85rem; margin-top: 80px;">Paste a link to preview
+                        </div>
+                    </div>
+                    <div id="liveQrGreeting" style="margin-top: 1rem; font-weight: 700;"></div>
+                    <button class="copy-btn" id="liveDownloadBtn"
+                        style="margin-top: 1rem; width: 100%; display: none;">Download Preview</button>
+            </div>
 
-                    <div id="resultArea" class="result-area hidden">
-                        <div class="glass-card" style="padding: 1.5rem;">
-                            <div style="color: var(--success); font-weight: 700; margin-bottom: 1rem;">✨ Links Ready!
-                            </div>
-                            <div id="linksList" class="links-list"></div>
-                            <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem;">
-                                <button class="copy-btn" onclick="copyAllLinks()">Copy All Links</button>
-                                <button class="copy-btn" onclick="downloadAllQRs()"
-                                    style="background: rgba(239, 68, 68, 0.1); color: var(--error);">Download All QR
-                                    (ZIP)</button>
-                                <button class="copy-btn" onclick="downloadResultsCSV()"
-                                    style="background: rgba(16, 185, 129, 0.1); color: var(--accent-primary);">Download
-                                    CSV</button>
-                            </div>
-                        </div>
+            <div id="resultArea" class="result-area hidden">
+                <div class="glass-card" style="padding: 1.5rem;">
+                    <div style="color: var(--success); font-weight: 700; margin-bottom: 1rem;">✨ Links Ready!
                     </div>
-                </aside>
+                    <div id="linksList" class="links-list"></div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem;">
+                        <button class="copy-btn" onclick="copyAllLinks()">Copy All Links</button>
+                        <button id="downloadAllQrsBtn" class="copy-btn" onclick="downloadAllQRs()"
+                            style="background: rgba(239, 68, 68, 0.1); color: var(--error);">Download All QR
+                            (ZIP)</button>
+                        <button id="downloadCsvBtn" class="copy-btn" onclick="downloadResultsCSV()"
+                            style="background: rgba(16, 185, 129, 0.1); color: var(--accent-primary);">Download
+                            CSV</button>
+                    </div>
+                </div>
+            </div>
+            </aside>
             </div>
         </section>
 
@@ -225,6 +226,21 @@
     </main>
 
     {% include 'partials/_footer.html' %}
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+        <div class="glass-card"
+            style="max-width: 400px; width: 90%; text-align: center; position: relative; padding: 2.5rem;">
+            <button onclick="closeModal()"
+                style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h3 id="modalGreeting" style="margin-bottom: 1rem; color: var(--accent-primary);"></h3>
+            <div id="modalQrContent"
+                style="background: white; padding: 1.5rem; border-radius: 12px; display: inline-block; margin-bottom: 1.5rem;">
+            </div>
+            <button id="modalDownloadBtn" class="btn btn-primary" style="width: 100%;">Download QR</button>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
