@@ -570,8 +570,12 @@ function generateUtm() {
     const source = document.getElementById('utmSource')?.value.trim();
     const medium = document.getElementById('utmMedium')?.value.trim();
     const name = document.getElementById('utmName')?.value.trim();
+    const id = document.getElementById('utmId')?.value.trim();
     const term = document.getElementById('utmTerm')?.value.trim();
     const content = document.getElementById('utmContent')?.value.trim();
+    const platform = document.getElementById('utmPlatform')?.value.trim();
+    const creative = document.getElementById('utmCreative')?.value.trim();
+    const tactic = document.getElementById('utmTactic')?.value.trim();
     const resultDisplay = document.getElementById('finalUtmUrl');
 
     if (!baseUrl) {
@@ -584,8 +588,12 @@ function generateUtm() {
         if (source) url.searchParams.set('utm_source', source);
         if (medium) url.searchParams.set('utm_medium', medium);
         if (name) url.searchParams.set('utm_campaign', name);
+        if (id) url.searchParams.set('utm_id', id);
         if (term) url.searchParams.set('utm_term', term);
         if (content) url.searchParams.set('utm_content', content);
+        if (platform) url.searchParams.set('utm_source_platform', platform);
+        if (creative) url.searchParams.set('utm_creative_format', creative);
+        if (tactic) url.searchParams.set('utm_marketing_tactic', tactic);
 
         if (resultDisplay) resultDisplay.innerText = url.toString();
     } catch (e) {
@@ -614,7 +622,7 @@ function shortenUtm() {
 }
 
 function resetUtmForm() {
-    const fields = ['targetUrl', 'utmSource', 'utmMedium', 'utmName', 'utmTerm', 'utmContent'];
+    const fields = ['targetUrl', 'utmSource', 'utmMedium', 'utmName', 'utmId', 'utmTerm', 'utmContent', 'utmPlatform', 'utmCreative', 'utmTactic'];
     fields.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
@@ -624,6 +632,15 @@ function resetUtmForm() {
     if (resultDisplay) resultDisplay.innerText = "Enter a Website URL to begin...";
 
     showToast("Form cleared!");
+}
+
+function setUtmPreset(inputId, value) {
+    const input = document.getElementById(inputId);
+    if (input) {
+        input.value = value;
+        generateUtm();
+        showToast(`Set ${inputId.replace('utm', '')} to ${value}`);
+    }
 }
 
 async function generateBulkQRs() {

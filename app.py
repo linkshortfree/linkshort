@@ -118,8 +118,12 @@ def tools_bulk():
     return render_template('tools/bulk.html')
 
 @app.route('/tools/utm')
-def tools_utm():
+def utm_builder():
     return render_template('tools/utm.html')
+
+@app.route('/tools/ab-testing')
+def ab_testing():
+    return render_template('tools/ab_testing.html')
 
 @app.route('/tools/utm-ab')
 def tools_utm_ab_redirect():
@@ -291,6 +295,7 @@ def sitemap():
         {'loc': '/', 'priority': '1.0'},
         {'loc': '/tools/bulk', 'priority': '1.0'},
         {'loc': '/tools/utm', 'priority': '0.9'},
+        {'loc': '/tools/ab-testing', 'priority': '0.9'}, # Added ab-testing
         {'loc': '/blog', 'priority': '0.8'},
         {'loc': '/about-us', 'priority': '0.6'},
         {'loc': '/contact', 'priority': '0.6'},

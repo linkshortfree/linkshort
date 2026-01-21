@@ -33,7 +33,7 @@
         </section>
 
         <section class="tool-ui-section" id="utm-builder">
-            <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">1. UTM Link Builder</h2>
+            <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Professional Logic</h2>
             <div class="dashboard-layout">
                 <div class="glass-card">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
@@ -41,25 +41,77 @@
                             <label class="input-label">Website URL *</label>
                             <input type="text" id="targetUrl" placeholder="https://example.com" oninput="generateUtm()">
                         </div>
-                        <div>
+
+                        <!-- Source & Medium with Presets -->
+                        <div style="grid-column: span 2;">
                             <label class="input-label">Campaign Source *</label>
-                            <input type="text" id="utmSource" placeholder="google, facebook" oninput="generateUtm()">
+                            <input type="text" id="utmSource" placeholder="google, newsletter, facebook"
+                                oninput="generateUtm()">
+                            <div class="presets-row"
+                                style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="pill-btn" onclick="setUtmPreset('utmSource', 'google')">Google</button>
+                                <button class="pill-btn"
+                                    onclick="setUtmPreset('utmSource', 'facebook')">Facebook</button>
+                                <button class="pill-btn"
+                                    onclick="setUtmPreset('utmSource', 'newsletter')">Newsletter</button>
+                                <button class="pill-btn" onclick="setUtmPreset('utmSource', 'twitter')">Twitter</button>
+                                <button class="pill-btn"
+                                    onclick="setUtmPreset('utmSource', 'linkedin')">LinkedIn</button>
+                            </div>
                         </div>
-                        <div>
+
+                        <div style="grid-column: span 2;">
                             <label class="input-label">Campaign Medium *</label>
-                            <input type="text" id="utmMedium" placeholder="cpc, social, email" oninput="generateUtm()">
+                            <input type="text" id="utmMedium" placeholder="cpc, email, social" oninput="generateUtm()">
+                            <div class="presets-row"
+                                style="margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="pill-btn" onclick="setUtmPreset('utmMedium', 'cpc')">CPC</button>
+                                <button class="pill-btn" onclick="setUtmPreset('utmMedium', 'email')">Email</button>
+                                <button class="pill-btn" onclick="setUtmPreset('utmMedium', 'social')">Social</button>
+                                <button class="pill-btn" onclick="setUtmPreset('utmMedium', 'video')">Video</button>
+                                <button class="pill-btn"
+                                    onclick="setUtmPreset('utmMedium', 'affiliate')">Affiliate</button>
+                            </div>
                         </div>
+
+                        <!-- Core Parameters -->
                         <div>
                             <label class="input-label">Campaign Name *</label>
                             <input type="text" id="utmName" placeholder="summer_sale" oninput="generateUtm()">
                         </div>
                         <div>
+                            <label class="input-label">Campaign ID (utm_id)</label>
+                            <input type="text" id="utmId" placeholder="12345" oninput="generateUtm()">
+                        </div>
+
+                        <div>
                             <label class="input-label">Campaign Term</label>
                             <input type="text" id="utmTerm" placeholder="running+shoes" oninput="generateUtm()">
                         </div>
-                        <div style="grid-column: span 2;">
+                        <div>
                             <label class="input-label">Campaign Content</label>
-                            <input type="text" id="utmContent" placeholder="logolink, textlink" oninput="generateUtm()">
+                            <input type="text" id="utmContent" placeholder="logolink" oninput="generateUtm()">
+                        </div>
+
+                        <!-- Professional GA4 Parameters -->
+                        <div
+                            style="grid-column: span 2; border-top: 1px solid var(--glass-border); padding-top: 1.5rem; margin-top: 0.5rem;">
+                            <h4 style="margin-bottom: 1rem; color: var(--accent-primary);">Advanced GA4 Parameters</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div>
+                                    <label class="input-label">Source Platform</label>
+                                    <input type="text" id="utmPlatform" placeholder="Search Ads"
+                                        oninput="generateUtm()">
+                                </div>
+                                <div>
+                                    <label class="input-label">Creative Format</label>
+                                    <input type="text" id="utmCreative" placeholder="Display" oninput="generateUtm()">
+                                </div>
+                                <div style="grid-column: span 2;">
+                                    <label class="input-label">Marketing Tactic</label>
+                                    <input type="text" id="utmTactic" placeholder="Remarketing" oninput="generateUtm()">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,61 +123,18 @@
                             <h3 style="margin: 0;">Generated URL</h3>
                         </div>
                         <div id="finalUtmUrl"
-                            style="word-break: break-all; font-family: monospace; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; min-height: 5rem; margin-bottom: 1.5rem;">
+                            style="word-break: break-all; font-family: monospace; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; min-height: 5rem; margin-bottom: 1.5rem; border: 1px solid var(--glass-border); font-size: 0.9rem;">
                             Fill in the fields on the left...
                         </div>
-                        <button onclick="copyUtm()" class="copy-btn" style="width: 100%; margin-bottom: 0.5rem;">Copy
-                            URL</button>
-                        <button onclick="shortenUtm()" class="btn btn-primary"
-                            style="width: 100%; margin-bottom: 0.5rem;">Shorten this
-                            URL</button>
-                        <button onclick="resetUtmForm()" class="btn btn-secondary"
-                            style="width: 100%; border: 1px dashed var(--glass-border);">Clear Form</button>
-                    </div>
-                </aside>
-            </div>
-        </section>
-
-        <!-- A/B TESTING SECTION -->
-        <section class="tool-ui-section" id="ab-testing"
-            style="margin-top: 5rem; border-top: 1px solid var(--glass-border); padding-top: 5rem;">
-            <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">2. A/B Link Testing</h2>
-            <div class="dashboard-layout">
-                <div class="glass-card">
-                    <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
-                        <div>
-                            <label class="input-label">Test Name *</label>
-                            <input type="text" id="abTestName" placeholder="Summer Campaign Test">
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <button onclick="copyUtm()" class="copy-btn" style="width: 100%; margin: 0;">Copy Campaign
+                                URL</button>
+                            <button onclick="shortenUtm()" class="btn btn-primary"
+                                style="width: 100%; margin: 0;">Shorten this URL</button>
+                            <button onclick="resetUtmForm()" class="btn btn-secondary"
+                                style="width: 100%; border: 1px dashed var(--glass-border); margin: 0;">Clear All
+                                Fields</button>
                         </div>
-                        <div>
-                            <label class="input-label">Variant A URL *</label>
-                            <input type="text" id="variantA" placeholder="https://example.com/landing-a">
-                        </div>
-                        <div>
-                            <label class="input-label">Variant B URL *</label>
-                            <input type="text" id="variantB" placeholder="https://example.com/landing-b">
-                        </div>
-                        <div>
-                            <label class="input-label">Traffic Split (Variant A %)</label>
-                            <input type="range" id="trafficSplit" min="0" max="100" value="50"
-                                oninput="document.getElementById('splitVal').innerText = this.value + '% A / ' + (100-this.value) + '% B'">
-                            <p id="splitVal" style="text-align: center; margin-top: 0.5rem; font-weight: 500;">50% A /
-                                50% B</p>
-                        </div>
-                        <button id="startAbBtn" onclick="createABTest()" class="btn btn-primary"
-                            style="margin-top: 1rem;">Start A/B Test</button>
-                    </div>
-                </div>
-
-                <aside class="preview-sidebar">
-                    <div id="abResultArea" class="preview-card glass-card hidden">
-                        <h3 style="margin-bottom: 1rem;">A/B Test Link Ready!</h3>
-                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">Share this
-                            link to split traffic between variants A and B.</p>
-                        <div id="finalAbUrl"
-                            style="word-break: break-all; font-family: monospace; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                        </div>
-                        <button onclick="copyAbUrl()" class="copy-btn" style="width: 100%;">Copy A/B Link</button>
                     </div>
                 </aside>
             </div>

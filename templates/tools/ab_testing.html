@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium A/B Link Testing Tool | LinkShort</title>
+    <meta name="description"
+        content="Split traffic between link variants and test your campaign performance. Professional A/B link testing—free and no signup required.">
+    <link rel="canonical" href="https://linkshort.live/tools/ab-testing">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    {% include 'partials/_navbar.html' %}
+
+    <main class="page-content tool-page">
+        <section class="tool-header">
+            <div class="breadcrumb">
+                <a href="/">Home</a> <span>→</span> <a href="/">Tools</a> <span>→</span> <span>A/B Testing</span>
+            </div>
+            <h1>Premium A/B Link Testing</h1>
+            <p>Split traffic between two URLs to optimize your conversion rates.</p>
+            <div class="pill">✨ Real-time Traffic Split</div>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/" class="btn btn-secondary">← Back to Home</a>
+                <a href="/tools/utm" class="btn btn-secondary">UTM Builder</a>
+            </div>
+        </section>
+
+        <section class="tool-ui-section" id="ab-testing">
+            <div class="dashboard-layout">
+                <div class="glass-card">
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                        <div>
+                            <label class="input-label">Test Name *</label>
+                            <input type="text" id="abTestName" placeholder="Summer Campaign Split Test">
+                        </div>
+                        <div>
+                            <label class="input-label">Variant A URL *</label>
+                            <input type="text" id="variantA" placeholder="https://example.com/landing-a">
+                        </div>
+                        <div>
+                            <label class="input-label">Variant B URL *</label>
+                            <input type="text" id="variantB" placeholder="https://example.com/landing-b">
+                        </div>
+                        <div>
+                            <div
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <label class="input-label" style="margin: 0;">Traffic Split (Variant A %)</label>
+                                <span id="splitVal" style="font-weight: 700; color: var(--accent-primary);">50% A / 50%
+                                    B</span>
+                            </div>
+                            <input type="range" id="trafficSplit" min="0" max="100" value="50"
+                                oninput="document.getElementById('splitVal').innerText = this.value + '% A / ' + (100-this.value) + '% B'">
+                        </div>
+                        <button id="startAbBtn" onclick="createABTest()" class="btn btn-primary"
+                            style="margin-top: 1rem; width: 100%;">Create A/B Test Link</button>
+                    </div>
+                </div>
+
+                <aside class="preview-sidebar">
+                    <div id="abResultArea" class="preview-card glass-card hidden">
+                        <div
+                            style="display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+                            <span class="pulse-indicator"></span>
+                            <h3 style="margin: 0;">A/B Test Ready</h3>
+                        </div>
+                        <p
+                            style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; text-align: center;">
+                            Share this link to split traffic between variants A and B.</p>
+                        <div id="finalAbUrl"
+                            style="word-break: break-all; font-family: monospace; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; text-align: center; border: 1px solid var(--glass-border);">
+                        </div>
+                        <button onclick="copyAbUrl()" class="copy-btn" style="width: 100%;">Copy A/B Test Link</button>
+                    </div>
+
+                    <div class="glass-card" style="margin-top: 1.5rem; padding: 1.5rem;">
+                        <h4 style="margin-bottom: 0.75rem;">How it works</h4>
+                        <ul
+                            style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1rem; line-height: 1.6;">
+                            <li>Traffic is split based on your selected percentage.</li>
+                            <li>A single link handles the redirection automatically.</li>
+                            <li>Perfect for testing landing page variants.</li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="seo-content" style="margin-top: 5rem;">
+            <h2>Why use A/B Link Testing?</h2>
+            <p>A/B testing (also known as split testing) allows you to compare two versions of a webpage to see which
+                one performs better. By splitting your audience, you can gather data on user behavior and conversion
+                rates.</p>
+
+            <div class="seo-grid" style="margin-top: 2rem;">
+                <div class="seo-item glass-card">
+                    <h4>Conversion Optimization</h4>
+                    <p>Direct small groups of traffic to different variants and scale what works.</p>
+                </div>
+                <div class="seo-item glass-card">
+                    <h4>Data-Driven Decisions</h4>
+                    <p>Stop guessing and start using real data to improve your marketing ROI.</p>
+                </div>
+                <div class="seo-item glass-card">
+                    <h4>Risk Mitigation</h4>
+                    <p>Test major changes on a small segment before rolling out to everyone.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'partials/_footer.html' %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
