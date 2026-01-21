@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bulk URL Shortener + QR Generator | LinkShort</title>
     <meta name="description"
-        content="Paste or upload links to shorten them and generate custom QR codes — color, logo, and size options included.">
+        content="Bulk shorten URLs and generate QRs—upload CSV/Excel for instant results. Free, no signup.">
+    <link rel="canonical" href="https://linkshort.live/tools/bulk">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
@@ -21,6 +22,7 @@
             <h1>Bulk URL Shortener + QR Designer</h1>
             <p>Shorten hundreds of links and generate custom QR codes. No signup required.</p>
             <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/" class="btn btn-secondary">← Back to Home</a>
                 <a href="#" onclick="downloadSampleTemplate(); return false;" class="btn btn-secondary">Download Sample
                     CSV</a>
                 <a href="#instructions" class="btn btn-secondary">How to Use</a>
@@ -150,8 +152,26 @@
                 <li>Agencies managing client link portfolios</li>
             </ul>
 
-            <div style="margin-top: 2rem;">
-                <a href="/" class="btn btn-secondary">← Back to Home</a>
+            <div class="explore-other-tools"
+                style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
+                <h3>Explore Other Tools</h3>
+                <div class="tools-grid" style="margin-top: 1.5rem;">
+                    <a href="/tools/utm" class="tool-card glass-card">
+                        <div class="tool-icon">📈</div>
+                        <h4>UTM Builder</h4>
+                        <p>Create trackable campaign URLs with UTM parameters.</p>
+                    </a>
+                    <a href="/tools/qr" class="tool-card glass-card">
+                        <div class="tool-icon">📱</div>
+                        <h4>QR Generator</h4>
+                        <p>Generate custom QR codes for any URL.</p>
+                    </a>
+                    <a href="/tools/bulk-qr" class="tool-card glass-card">
+                        <div class="tool-icon">📦</div>
+                        <h4>Bulk QR Generator</h4>
+                        <p>Upload CSV and download QR codes as ZIP.</p>
+                    </a>
+                </div>
             </div>
         </section>
     </main>

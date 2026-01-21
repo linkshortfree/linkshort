@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | LinkShort Tools</title>
     <meta name="description"
-        content="LinkShort offers professional bulk URL shortener, custom QR codes, UTM builder, A/B link testing, and more — no signup required.">
+        content="Free bulk URL shortener, UTM builder, QR generator, and more—no signup needed for professional link management.">
+    <link rel="canonical" href="https://linkshort.live/">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
@@ -24,11 +25,11 @@
             <div class="hero-container">
                 <div class="hero-text">
                     <h1>The Professional Link Management Toolkit</h1>
-                    <p class="hero-subtitle">Shorten links, generate custom QR codes, and build UTM campaigns — in bulk,
+                    <p class="hero-subtitle">Shorten links, generate QR codes, and build UTM campaigns — in bulk,
                         instantly. No signup required.</p>
                     <div class="hero-buttons">
-                        <a href="/tools/bulk" class="btn btn-primary">Try Bulk Link + QR</a>
-                        <a href="#tools" class="btn btn-secondary">Explore Tools</a>
+                        <a href="/tools/bulk" class="btn btn-primary">Open Bulk Shortener</a>
+                        <a href="/tools/utm" class="btn btn-secondary">Open UTM Builder</a>
                     </div>
                 </div>
                 <div class="hero-visual">
@@ -59,23 +60,33 @@
             </div>
         </section>
 
-        <!-- FEATURED TOOLS -->
+        <!-- TOOL HUB - ALL TOOLS -->
         <section class="tools-section" id="tools">
             <div class="section-container">
-                <h2 class="section-title">Featured Tools</h2>
-                <div class="tools-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <h2 class="section-title">All Tools</h2>
+                <div class="tools-grid">
                     <a href="/tools/bulk" class="tool-card glass-card">
                         <div class="tool-icon">📦</div>
-                        <h3>Bulk Link + QR Designer</h3>
-                        <p>Shorten hundreds of links instantly. Generate custom QR codes with color, logo, and size
-                            options. Download as ZIP.</p>
+                        <h3>Bulk URL Shortener</h3>
+                        <p>Shorten hundreds of links instantly. Download QR codes. Upload Excel.</p>
                         <span class="tool-cta">Open Tool →</span>
                     </a>
-                    <a href="/tools/utm-ab" class="tool-card glass-card">
+                    <a href="/tools/utm" class="tool-card glass-card">
                         <div class="tool-icon">📈</div>
-                        <h3>UTM Builder & A/B Testing</h3>
-                        <p>Create trackable campaign links with UTM parameters. Test multiple link variants with A/B
-                            testing.</p>
+                        <h3>UTM Builder</h3>
+                        <p>Create trackable campaign links with UTM parameters. Bulk support with CSV export.</p>
+                        <span class="tool-cta">Open Tool →</span>
+                    </a>
+                    <a href="/tools/qr" class="tool-card glass-card">
+                        <div class="tool-icon">📱</div>
+                        <h3>QR Generator</h3>
+                        <p>Generate custom QR codes for any URL. Choose size and colors. Download in PNG.</p>
+                        <span class="tool-cta">Open Tool →</span>
+                    </a>
+                    <a href="/tools/bulk-qr" class="tool-card glass-card">
+                        <div class="tool-icon">📦</div>
+                        <h3>Bulk QR Generator</h3>
+                        <p>Upload CSV with URLs to generate multiple QR codes. Download as ZIP.</p>
                         <span class="tool-cta">Open Tool →</span>
                     </a>
                 </div>
@@ -126,6 +137,45 @@
                     <div class="feature-item"><span class="feature-icon">🎯</span>
                         <h4>Marketing Ready</h4>
                         <p>UTM builder and A/B testing included.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADVANCED FEATURES -->
+        <section class="advanced-features-section">
+            <div class="section-container">
+                <h2 class="section-title">Advanced Features</h2>
+                <div class="advanced-features-grid">
+                    <div class="advanced-feature-item glass-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h4>Bulk Processing Engine</h4>
+                        <p>Process up to 500 URLs in a single request with our optimized engine.</p>
+                    </div>
+                    <div class="advanced-feature-item glass-card">
+                        <div class="feature-icon">📲</div>
+                        <h4>Dynamic QR Codes</h4>
+                        <p>Customize colors, sizes, and download in high-resolution PNG format.</p>
+                    </div>
+                    <div class="advanced-feature-item glass-card">
+                        <div class="feature-icon">📊</div>
+                        <h4>CSV/Excel Upload</h4>
+                        <p>Upload your spreadsheets directly. We auto-detect URL columns.</p>
+                    </div>
+                    <div class="advanced-feature-item glass-card">
+                        <div class="feature-icon">📁</div>
+                        <h4>ZIP Downloads</h4>
+                        <p>Download all QR codes as a single ZIP file, named and organized.</p>
+                    </div>
+                    <div class="advanced-feature-item glass-card">
+                        <div class="feature-icon">✨</div>
+                        <h4>Custom Greetings</h4>
+                        <p>Add branded aliases to make your links memorable and trustworthy.</p>
+                    </div>
+                    <div class="advanced-feature-item glass-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h4>Secure Gateway</h4>
+                        <p>All redirects pass through our secure, HTTPS-only infrastructure.</p>
                     </div>
                 </div>
             </div>

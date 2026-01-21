@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator | LinkShort</title>
-    <meta name="description"
-        content="Generate high-resolution QR codes for any link. Download as PNG. Free, no signup.">
+    <meta name="description" content="Generate custom QR codes for any URL—download in PNG. Free, no signup.">
+    <link rel="canonical" href="https://linkshort.live/tools/qr">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
@@ -20,6 +20,9 @@
         <section class="tool-header">
             <h1>QR Code Generator</h1>
             <p>Generate a high-resolution QR code for any link instantly.</p>
+            <div style="margin-top: 1rem;">
+                <a href="/" class="btn btn-secondary">← Back to Home</a>
+            </div>
         </section>
 
         <section class="tool-ui-section">
@@ -68,6 +71,28 @@
                 <li>Product packaging</li>
                 <li>Event check-ins</li>
             </ul>
+
+            <div class="explore-other-tools"
+                style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
+                <h3>Explore Other Tools</h3>
+                <div class="tools-grid" style="margin-top: 1.5rem;">
+                    <a href="/tools/bulk" class="tool-card glass-card">
+                        <div class="tool-icon">📦</div>
+                        <h4>Bulk URL Shortener</h4>
+                        <p>Shorten hundreds of links instantly.</p>
+                    </a>
+                    <a href="/tools/utm" class="tool-card glass-card">
+                        <div class="tool-icon">📈</div>
+                        <h4>UTM Builder</h4>
+                        <p>Create trackable campaign URLs.</p>
+                    </a>
+                    <a href="/tools/bulk-qr" class="tool-card glass-card">
+                        <div class="tool-icon">📦</div>
+                        <h4>Bulk QR Generator</h4>
+                        <p>Upload CSV and download QR codes as ZIP.</p>
+                    </a>
+                </div>
+            </div>
         </section>
     </main>
 
