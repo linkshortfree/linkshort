@@ -399,6 +399,88 @@ async function generateQRCanvasInMemory(url, greeting) {
     });
 }
 
+// Bulk QR Tool Logic (standardized)
+let bulkQrUrls = [];
+
+function handleBulkQrUpload(input) {
+    const file = input.files[0];
+    const status = document.getElementById('bulkQrFileStatus');
+    const btn = document.getElementById('generateBulkQrBtn');
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+            const json = XLSX.utils.sheet_to_json(firstSheet);
+
+            bulkQrUrls = json.map(row => {
+                const urlKey = Object.keys(row).find(k => ['url', 'link', 'website'].includes(k.toLowerCase().trim()));
+                return urlKey ? row[urlKey] : null;
+            }).filter(u => u);
+
+            status.innerText = `✅ Found ${bulkQrUrls.length} URLs. Ready to generate.`;
+            status.style.color = '#10b981';
+            btn.disabled = false;
+        } catch (err) {
+            status.innerText = "❌ Error reading file.";
+            status.style.color = '#ef4444';
+        }
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+async function generateBulkQRs() {
+    if (bulkQrUrls.length === 0) return;
+    if (bulkQrUrls.length > 500) {
+        alert("Max 500 URLs per request.");
+        return;
+    }
+    const btn = document.getElementById('generateBulkQrBtn');
+    const container = document.getElementById('bulkQrProgressContainer');
+    const progressBar = document.getElementById('bulkQrProgressBar');
+    const progressText = document.getElementById('bulkQrProgressText');
+
+    btn.disabled = true;
+    btn.innerText = "Generating...";
+
+    if (container) {
+        container.classList.remove('hidden');
+        progressBar.style.width = '0%';
+    }
+
+    const zip = new JSZip();
+
+    for (let i = 0; i < bulkQrUrls.length; i++) {
+        if (container) {
+            const percent = Math.round(((i + 1) / bulkQrUrls.length) * 100);
+            progressBar.style.width = `${percent}%`;
+            progressText.innerText = `Generating ${i + 1} of ${bulkQrUrls.length}...`;
+        }
+
+        const canvas = await generateQRCanvasInMemory(bulkQrUrls[i]);
+        const dataUrl = canvas.toDataURL('image/png').split(',')[1];
+        zip.file(`qr-${i + 1}.png`, dataUrl, { base64: true });
+    }
+
+    if (progressText) progressText.innerText = "Creating ZIP...";
+    const content = await zip.generateAsync({ type: "blob" });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(content);
+    link.download = "linkshort-bulk-qrs.zip";
+    link.click();
+
+    btn.disabled = false;
+    btn.innerText = "Generate & Download ZIP";
+    if (progressText) progressText.innerText = "✅ Download started!";
+
+    if (container) {
+        setTimeout(() => container.classList.add('hidden'), 3000);
+    }
+}
+
 // A/B Testing Logic
 async function createABTest() {
     const name = document.getElementById('abTestName').value.trim();
