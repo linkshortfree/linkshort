@@ -1,40 +1,26 @@
 <!-- Global Navbar -->
 <nav class="main-navbar" role="navigation" aria-label="Main navigation">
     <div class="navbar-container">
+        <!-- Logo -> Root (Link & QR Designer) -->
         <a href="/" class="navbar-logo">Link<span>Short</span></a>
 
         <div class="navbar-links">
-            <a href="/" class="nav-link">Home</a>
-
-            <div class="nav-dropdown">
-                <button class="nav-link dropdown-trigger" aria-haspopup="true" aria-expanded="false">Tools <span
-                        class="dropdown-arrow">▾</span></button>
-                <div class="dropdown-menu" role="menu">
-                    <a href="/tools/bulk" class="dropdown-item" role="menuitem">🏛️ Master Link & QR Designer</a>
-                    <a href="/tools/utm" class="dropdown-item" role="menuitem">📈 UTM Builder</a>
-                </div>
-            </div>
-
-            <a href="/#features" class="nav-link">Features</a>
+            <a href="/" class="nav-link">Link & QR Designer</a>
+            <a href="/tools/utm-ab" class="nav-link">UTM Builder</a>
+            <a href="/tools/utm-ab#ab-test" class="nav-link">A/B Testing</a>
             <a href="/blog" class="nav-link">Blog</a>
         </div>
-
-        <a href="/tools/bulk" class="navbar-cta">Open Bulk Shortener</a>
 
         <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu">☰</button>
     </div>
 
     <div class="mobile-menu hidden">
-        <a href="/">Home</a>
-        <a href="/tools/bulk">Master Link & QR Designer</a>
-        <a href="/tools/utm">UTM Builder</a>
-        <a href="/tools/ab-testing">A/B Testing</a>
-        <a href="/#features">Features</a>
+        <a href="/">Link & QR Designer</a>
+        <a href="/tools/utm-ab">UTM Builder</a>
+        <a href="/tools/utm-ab#ab-test">A/B Testing</a>
         <a href="/blog">Blog</a>
         <a href="/about-us">About Us</a>
         <a href="/contact">Contact</a>
-        <a href="/privacy-policy">Privacy Policy</a>
-        <a href="/terms-of-service">Terms of Service</a>
     </div>
 </nav>
 

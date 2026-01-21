@@ -113,35 +113,40 @@ def terms_redirect():
     return redirect('/terms-of-service', code=301)
 
 # === TOOL ROUTES ===
+# === TOOL ROUTES ===
+@app.route('/tools/utm-ab')
+def tools_utm_ab():
+    return render_template('tools/utm_ab.html')
+
 @app.route('/tools/bulk')
 def tools_bulk():
-    return render_template('tools/bulk.html')
+    # Deprecated: Redirect to Homepage (Master Designer)
+    return redirect('/', code=301)
 
 @app.route('/tools/utm')
 def utm_builder():
-    return render_template('tools/utm.html')
+    return redirect('/tools/utm-ab', code=301)
 
 @app.route('/tools/ab-testing')
 def ab_testing():
-    return render_template('tools/ab_testing.html')
+    return redirect('/tools/utm-ab#ab-test', code=301)
 
-@app.route('/tools/utm-ab')
+@app.route('/tools/utm-ab-redirect')
 def tools_utm_ab_redirect():
-    return redirect('/tools/utm', code=301)
+    # Handle any legacy potential conflict
+    return redirect('/tools/utm-ab', code=301)
 
 @app.route('/utm-builder')
 def utm_builder_redirect():
-    return redirect('/tools/utm', code=301)
+    return redirect('/tools/utm-ab', code=301)
 
 @app.route('/tools/qr')
 def tools_qr_redirect():
-    # Consolidated into Master Designer
-    return redirect(url_for('tools_bulk'), code=301)
+    return redirect('/', code=301)
 
 @app.route('/tools/bulk-qr')
 def bulk_qr_tool_redirect():
-    # Consolidated into Master Designer
-    return redirect(url_for('tools_bulk'), code=301)
+    return redirect('/', code=301)
 
 # === BLOG ===
 @app.route('/blog')

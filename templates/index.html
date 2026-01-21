@@ -4,202 +4,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkShort | Professional Bulk Link Management & QR Tools</title>
+    <title>LinkShort - Free Bulk Link Shortener & QR Code Generator</title>
     <meta name="description"
-        content="Free professional toolkit to shorten URLs in bulk, generate custom QR codes, and build UTM campaigns. No signup required. Fast, secure, and marketing-ready.">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://linkshort.live/">
-    <meta property="og:title" content="LinkShort | Professional Bulk Link Management & QR Tools">
-    <meta property="og:description"
-        content="Free professional toolkit to shorten URLs in bulk, generate custom QR codes, and build UTM campaigns. No signup required. Fast, secure, and marketing-ready.">
-    <meta property="og:image" content="https://linkshort.live/static/og-image.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://linkshort.live/">
-    <meta property="twitter:title" content="LinkShort Tools">
-    <meta property="twitter:description" content="Free professional bulk link tools. No signup needed.">
-    <meta property="twitter:image" content="https://linkshort.live/static/og-image.png">
-
+        content="Shorten hundreds of URLs and generate bulk QR codes instantly. Upload CSV or Excel files—no signup required for professional link management.">
     <link rel="canonical" href="https://linkshort.live/">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5774199741984914"
-        crossorigin="anonymous"></script>
+
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "LinkShort Master Designer",
+      "applicationCategory": "Productivity",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
 </head>
 
 <body>
     <div class="background-glow"></div>
     {% include 'partials/_navbar.html' %}
 
-    <main class="page-content">
-        <!-- HERO -->
-        <section class="hero-section">
-            <div class="hero-container">
-                <div class="hero-text">
-                    <div class="hero-pill">✨ No signup required</div>
-                    <h1>The Professional Link Management Toolkit</h1>
-                    <p class="hero-subtitle">Shorten links, generate QR codes, and build UTM campaigns — in bulk,
-                        instantly with premium precision.</p>
-                    <div class="hero-buttons">
-                        <a href="/tools/bulk" class="btn btn-primary">Open Bulk Shortener</a>
-                        <a href="#tools" class="btn btn-secondary">Explore Tools</a>
-                    </div>
+    <main class="page-content tool-page">
+        <!-- Minimal Tool Header -->
+        <section class="tool-header">
+            <h1>Master Link & QR Designer</h1>
+            <p>The ultimate toolkit to shorten, brand, and track your links with professional QR codes.</p>
+            <div class="pill">✨ All-in-one Solution</div>
+        </section>
+
+        <section class="tool-ui-section" style="padding-top: 1rem;">
+            <div class="glass-card-premium" style="max-width: 1100px; margin: 0 auto; padding: 0;">
+
+                <!-- Header Tabs -->
+                <div class="tab-container"
+                    style="padding: 0 1.5rem; margin-top: 1.5rem; margin-bottom: 0; border: none;">
+                    <button class="tab-btn active" onclick="switchTab('bulk')">📦 Bulk Designer</button>
+                    <button class="tab-btn" onclick="switchTab('single')">🔗 Single Designer</button>
                 </div>
-                <div class="hero-visual">
-                    <div class="hero-mockup glass-card">
-                        <div style="padding: 1.25rem; border-bottom: 1px solid var(--divider);">
-                            <div style="display: flex; gap: 8px;">
-                                <span
-                                    style="width: 10px; height: 10px; background: #FF5F56; border-radius: 50%;"></span>
-                                <span
-                                    style="width: 10px; height: 10px; background: #FFBD2E; border-radius: 50%;"></span>
-                                <span
-                                    style="width: 10px; height: 10px; background: #27C93F; border-radius: 50%;"></span>
+
+                <div class="dashboard-layout" style="padding: 2rem;">
+                    <div class="dashboard-grid">
+
+                        <!-- LEFT COLUMN: INPUTS -->
+                        <div class="left-config-panel">
+                            <!-- File Upload Area -->
+                            <div id="bulkContainer">
+                                <label for="fileInput" class="dropzone-minimal">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📂</div>
+                                    <span style="font-weight: 500;">Click to upload CSV / Excel</span>
+                                    <div style="font-size: 0.8rem; margin-top: 0.25rem; opacity: 0.7;">or drag and drop
+                                        here</div>
+                                </label>
+                                <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;"
+                                    onchange="handleFileUpload(this)">
+                                <div id="fileStatus" class="file-status"></div>
+
+                                <div class="input-group" style="margin-top: 1.5rem;">
+                                    <label class="input-label">Paste URLs (One per line)</label>
+                                    <textarea id="urlInput" class="input-focus-ring"
+                                        placeholder="https://example.com/page1&#10;https://example.com/page2" rows="6"
+                                        oninput="updateLivePreview()"
+                                        style="background: rgba(0,0,0,0.2); border-color: var(--glass-border);"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Single Mode Input -->
+                            <div id="singleContainer" class="hidden">
+                                <div class="input-group">
+                                    <label class="input-label">Enter Long URL</label>
+                                    <input type="url" id="singleUrlInput" class="input-focus-ring"
+                                        placeholder="https://example.com/very-long-link..."
+                                        oninput="updateLivePreview()">
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-label">Custom Alias (Optional)</label>
+                                    <input type="text" id="singleAliasInput" class="input-focus-ring"
+                                        placeholder="my-custom-link">
+                                </div>
+                            </div>
+
+                            <!-- Alias Toggle -->
+                            <div style="margin-top: 1.5rem;">
+                                <div class="options-toggle" onclick="toggleOptions()">+ Add Custom Aliases (Bulk)</div>
+                                <div class="custom-options" id="customOptions">
+                                    <span class="prefix">linkshort.live/</span>
+                                    <input type="text" id="aliasInput" class="input-focus-ring"
+                                        placeholder="alias1, alias2">
+                                </div>
                             </div>
                         </div>
-                        <div style="padding: 2.5rem; text-align: left;">
-                            <div
-                                style="background: rgba(0,0,0,0.3); padding: 12px 16px; border-radius: 8px; margin-bottom: 1.5rem; font-family: monospace; font-size: 13px; color: var(--text-muted); border: 1px solid var(--divider);">
-                                https://example.com/marketing/campaign-2024-deals...
+
+                        <!-- RIGHT COLUMN: DESIGN & PREVIEW -->
+                        <div class="right-design-panel">
+                            <!-- QR Customization Card -->
+                            <div class="control-panel" style="margin-bottom: 1.5rem;">
+                                <h4 style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-primary);">🎨 QR
+                                    Customization</h4>
+
+                                <div class="compact-row">
+                                    <div>
+                                        <label class="input-label" style="font-size: 0.8rem;">Color</label>
+                                        <div class="color-input-wrapper">
+                                            <input type="color" id="qrColor" value="#000000"
+                                                onchange="updateLivePreview()">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="input-label" style="font-size: 0.8rem;">Background</label>
+                                        <div class="color-input-wrapper">
+                                            <input type="color" id="qrBgColor" value="#ffffff"
+                                                onchange="updateLivePreview()">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="compact-row">
+                                    <div>
+                                        <label class="input-label" style="font-size: 0.8rem;">Size</label>
+                                        <select id="qrSizeSelect" class="compact-control input-focus-ring"
+                                            onchange="updateLivePreview()">
+                                            <option value="200">Small</option>
+                                            <option value="300" selected>Medium</option>
+                                            <option value="400">Large</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="input-label" style="font-size: 0.8rem;">Greeting Top</label>
+                                        <input type="text" id="qrGreetingInput" class="compact-control input-focus-ring"
+                                            placeholder="Scan Me!" oninput="updateLivePreview()">
+                                    </div>
+                                </div>
                             </div>
-                            <div
-                                style="text-align: center; color: var(--accent-primary); font-size: 1.5rem; margin-bottom: 1.5rem;">
-                                ↓</div>
-                            <div
-                                style="background: var(--accent-primary); color: #fff; padding: 14px; border-radius: 8px; font-weight: 700; text-align: center; font-size: 15px; box-shadow: 0 10px 20px -5px rgba(0, 166, 118, 0.4);">
-                                linkshort.live/campaign-deals
+
+                            <!-- Dynamic Live Preview -->
+                            <aside class="preview-sidebar hidden-initially" id="masterResultArea">
+                                <div id="singlePreviewSide" class="preview-card glass-card"
+                                    style="border: 1px solid var(--accent-primary);">
+                                    <h4
+                                        style="font-size: 0.9rem; color: var(--accent-primary); margin-bottom: 0.75rem; text-align: center;">
+                                        Live Preview</h4>
+                                    <div id="liveQrContainer"
+                                        style="background: white; padding: 1rem; border-radius: 12px; min-height: 180px; display: flex; align-items: center; justify-content: center;">
+                                        <div style="color: #cbd5e1; font-size: 0.8rem;">Preview loads here...</div>
+                                    </div>
+                                    <div id="liveQrGreeting"
+                                        style="margin-top: 0.5rem; font-weight: 700; text-align: center; font-size: 0.9rem;">
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+
+                    <!-- Floating Action Bar -->
+                    <div class="action-bar">
+                        <button id="shortenBtn" class="btn btn-primary" onclick="shortenUrl()"
+                            style="min-width: 200px;">
+                            🚀 Generate Links & QR
+                        </button>
+                    </div>
+
+                    <!-- Results Area (Hidden Initially) -->
+                    <div id="resultArea" class="result-area hidden" style="margin-top: 2rem;">
+                        <div class="glass-card" style="padding: 1.5rem; border: 1px solid var(--success);">
+                            <h4 style="color: var(--success); margin-bottom: 1.5rem;">✨ Success! Your links are ready.
+                            </h4>
+                            <div id="linksList" class="links-list" style="max-height: 300px; overflow-y: auto;"></div>
+
+                            <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                                <button class="btn btn-secondary" onclick="copyAllLinks()">📋 Copy Links</button>
+                                <button id="downloadAllQrsBtn" class="btn btn-secondary" onclick="downloadAllQRs()">🖼️
+                                    ZIP Download</button>
+                                <button id="downloadCsvBtn" class="btn btn-secondary" onclick="downloadResultsCSV()">📊
+                                    CSV Download</button>
                             </div>
                         </div>
                     </div>
+
+                    <div id="bulkProgressContainer" class="hidden" style="margin-top: 2rem;">
+                        <div class="progress-container">
+                            <div id="bulkProgressBar" class="progress-bar"></div>
+                        </div>
+                        <p id="bulkProgressText" style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem;">
+                            Processing...</p>
+                    </div>
+                    <div id="errorArea" class="error-message hidden" style="margin-top: 1rem;"></div>
+
                 </div>
             </div>
         </section>
 
-        <!-- TOOL HUB -->
-        <section class="tools-section" id="tools">
-            <div class="section-container">
-                <h2 class="section-title">Professional Toolkit</h2>
-
-                <div class="filter-bar">
-                    <button class="filter-btn active" onclick="filterTools('all', this)">All Tools</button>
-                    <button class="filter-btn" onclick="filterTools('shortener', this)">Shorteners</button>
-                    <button class="filter-btn" onclick="filterTools('qr', this)">QR Tools</button>
-                    <button class="filter-btn" onclick="filterTools('marketing', this)">Marketing</button>
-                </div>
-
-                <div class="tools-grid" id="toolsGrid">
-                    <a href="/tools/bulk" class="tool-card glass-card" data-category="shortener qr">
-                        <div class="tool-icon">🏛️</div>
-                        <h3>Master Link & QR Designer</h3>
-                        <p>The all-in-one power tool to shorten links in bulk and generate custom QR codes instantly.
-                        </p>
-                        <span class="tool-cta">Open Designer →</span>
-                    </a>
-                    <a href="/tools/utm" class="tool-card glass-card">
-                        <div class="tool-icon">📈</div>
-                        <h4>Professional UTM Builder</h4>
-                        <p>Generate GA4-ready trackable campaign links in seconds.</p>
-                        <span class="btn btn-primary" style="margin-top: auto; width: 100%;">Build UTM Link</span>
-                    </a>
-
-                    <a href="/tools/ab-testing" class="tool-card glass-card">
-                        <div class="tool-icon">⚖️</div>
-                        <h4>A/B Link Testing</h4>
-                        <p>Split traffic between variants to optimize conversions.</p>
-                        <span class="btn btn-primary" style="margin-top: auto; width: 100%;">Start Split Test</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- HOW IT WORKS -->
-        <section class="how-it-works-section">
-            <div class="section-container">
-                <center>
-                    <h2 class="section-title">The Workflow</h2>
-                </center>
-                <div class="steps-grid">
-                    <div class="step-card">
-                        <div class="step-number">01</div>
-                        <h4>Paste or Upload</h4>
-                        <p>Input your long URLs directly or upload an XLSX/CSV file for bulk processing.</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">02</div>
-                        <h4>Configure & Design</h4>
-                        <p>Add custom aliases, build UTM parameters, or style your QR codes to match your brand.</p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-number">03</div>
-                        <h4>Instant Export</h4>
-                        <p>Download your shortened links as a CSV or all your QR codes as a high-fidelity ZIP archive.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ADVANCED FEATURES -->
-        <section class="advanced-features-section" id="features">
-            <div class="section-container">
-                <center>
-                    <h2 class="section-title">Professional Mastery</h2>
-                </center>
-                <div class="advanced-features-grid">
-                    <div class="advanced-feature-item glass-card">
-                        <div class="feature-icon">⚡</div>
-                        <h4>High-Velocity Engine</h4>
-                        <p>Shorten up to 500 URLs in under 3 seconds with our highly optimized backend infrastructure.
-                        </p>
-                    </div>
-                    <div class="advanced-feature-item glass-card">
-                        <div class="feature-icon">🎨</div>
-                        <h4>Branded Customization</h4>
-                        <p>Stand out with custom aliases and brand-aligned QR codes that reflect your visual identity.
-                        </p>
-                    </div>
-                    <div class="advanced-feature-item glass-card">
-                        <div class="feature-icon">🛡️</div>
-                        <h4>Secure Redirect Gateway</h4>
-                        <p>Every link is protected by our secure HTTPS gateway, ensuring safety for you and your users.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- BLOG PREVIEW -->
-        <section class="blog-preview-section">
-            <div class="section-container">
-                <center>
-                    <h2 class="section-title">Insights & Strategy</h2>
-                </center>
-                <div class="blog-preview-grid">
-                    <a href="/blog/benefits-of-url-shortening" class="blog-card glass-card">
-                        <h4>Marketing Mastery</h4>
-                        <p>Discover the hidden psychological benefits of using shortened brand links in campaigns.</p>
-                        <span class="btn-link">Read Guide →</span>
-                    </a>
-                    <a href="/blog/qr-code-marketing-guide" class="blog-card glass-card">
-                        <h4>QR Code Strategy</h4>
-                        <p>The 2024 ultimate guide to maximizing engagement using modern QR code experiences.</p>
-                        <span class="btn-link">Read Guide →</span>
-                    </a>
-                    <a href="/blog/utm-tracking-mistakes" class="blog-card glass-card">
-                        <h4>Tracking Precision</h4>
-                        <p>Avoid these common UTM mistakes that are currently ruining your campaign data accuracy.</p>
-                        <span class="btn-link">Read Guide →</span>
-                    </a>
-                </div>
+        <!-- Simplified Footer Links / Explore -->
+        <section class="seo-content" id="instructions" style="margin-top: 4rem;">
+            <h2>Additional Tools</h2>
+            <div class="tools-grid" style="margin-top: 1.5rem;">
+                <a href="/tools/utm-ab" class="tool-card glass-card">
+                    <div class="tool-icon">📈</div>
+                    <h4>UTM Builder</h4>
+                    <p>Create professional campaign URLs.</p>
+                </a>
+                <a href="/tools/utm-ab#ab-test" class="tool-card glass-card">
+                    <div class="tool-icon">⚖️</div>
+                    <h4>A/B Testing</h4>
+                    <p>Split traffic & optimize conversions.</p>
+                </a>
             </div>
         </section>
     </main>
 
     {% include 'partials/_footer.html' %}
+
+    <!-- QR Modal -->
+    <div id="qrModal" class="hidden"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+        <div class="glass-card"
+            style="max-width: 400px; width: 90%; text-align: center; position: relative; padding: 2.5rem;">
+            <button onclick="closeModal()"
+                style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            <h3 id="modalGreeting" style="margin-bottom: 1rem; color: var(--accent-primary);"></h3>
+            <div id="modalQrContent"
+                style="background: white; padding: 1.5rem; border-radius: 12px; display: inline-block; margin-bottom: 1.5rem;">
+            </div>
+            <button id="modalDownloadBtn" class="btn btn-primary" style="width: 100%;">Download QR</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>
