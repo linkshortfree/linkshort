@@ -4,40 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkShort | Professional Bulk URL Shortener & QR Generator</title>
+    <title>LinkShort | The Professional Link Management Toolkit</title>
     <meta name="description"
-        content="Shorten multiple links instantly with custom aliases and generate branded QR codes. The free, transparent, and powerful tool for modern digital branding.">
-    <meta name="keywords"
-        content="bulk url shortener, bulk qr code generator, shorten multiple links, qr code for links, custom bulk url, branded qr codes, linkshort">
-    <meta property="og:title" content="LinkShort - Professional Bulk URL Shortener">
-    <meta property="og:description"
-        content="Shorten dozens of links instantly and generate branded QR codes with custom greetings.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://linkshort.live/">
-    <meta property="og:image" content="https://linkshort.live/static/favicon.png">
-
-    <link rel="canonical" href="https://linkshort.live/">
-    <script type="application/ld+json">
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "LinkShort",
-        "url": "https://linkshort.live/"
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "LinkShort",
-        "operatingSystem": "All",
-        "applicationCategory": "UtilitiesApplication"
-      }
-    ]
-    </script>
+        content="Shorten links, generate QR codes, and build UTM campaigns — in bulk, instantly. Free, no signup required.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
-    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5774199741984914"
         crossorigin="anonymous"></script>
 </head>
@@ -45,215 +17,130 @@
 <body>
     <div class="background-glow"></div>
 
-    <div class="main-grid">
-        <div class="container">
-            <header>
-                <div class="logo">Link<span>Short</span></div>
-            </header>
+    {% include 'partials/_navbar.html' %}
 
-            <main>
-                <div class="dashboard-layout">
-                    <!-- Left: Input Area -->
-                    <div class="glass-card">
-                        <h1 style="text-align: left;">Bulk URL Shortener</h1>
-                        <p class="subtitle" style="margin-left: 0; text-align: left;">Transform long links into
-                            powerful, branded assets in seconds.</p>
-
-                        <div class="input-group">
-                            <textarea id="urlInput" placeholder="Paste your long URLs here... (one per line for bulk)"
-                                autocomplete="off" oninput="updateLivePreview()"></textarea>
-                        </div>
-
-                        <div class="file-upload-section" style="text-align: left;">
-                            <label for="fileInput" class="file-label">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-                                </svg>
-                                <span>Upload Excel/CSV</span>
-                            </label>
-                            <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" style="display: none;"
-                                onchange="handleFileUpload(this)">
-                            <div id="fileStatus" class="file-status"></div>
-                            <div style="margin-top: 1rem;">
-                                <a href="#" onclick="downloadSampleTemplate(); return false;"
-                                    style="color: var(--text-sub); font-size: 0.85rem; text-decoration: none;">
-                                    📄 Download Sample Template
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="options-toggle" id="aliasToggle" onclick="toggleOptions()">
-                            <span>+ Add Custom Alias (Comma-separated for bulk)</span>
-                        </div>
-
-                        <div class="custom-options" id="customOptions">
-                            <div class="prefix">linkshort.live/</div>
-                            <input type="text" id="aliasInput" placeholder="e.g. link1, link2, link3" maxlength="100">
-                        </div>
-
-                        <div class="options-toggle" style="display: block;"
-                            onclick="document.getElementById('qrGreetingGroup').classList.toggle('show')">
-                            <span>+ Add QR Greeting (Comma-separated for bulk)</span>
-                        </div>
-
-                        <div class="custom-options" id="qrGreetingGroup">
-                            <input type="text" id="qrGreetingInput" placeholder="e.g. Hello, Welcome, Thanks"
-                                maxlength="150" oninput="updateLivePreview()">
-                        </div>
-
-                        <button id="shortenBtn" onclick="shortenUrl()">Shorten Now</button>
-
-                        <div id="errorArea" class="error-message hidden" style="margin-top: 1.5rem;"></div>
+    <main class="page-content">
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <h1>The Professional Link Management Toolkit</h1>
+                    <p class="hero-subtitle">Shorten links, generate QR codes, and build UTM campaigns — in bulk,
+                        instantly. No signup required.</p>
+                    <div class="hero-buttons">
+                        <a href="/tools/bulk" class="btn btn-primary">Open Bulk Shortener</a>
+                        <a href="/tools/utm" class="btn btn-secondary">Open UTM Builder</a>
                     </div>
-
-                    <!-- Right: Live Preview Sidebar -->
-                    <aside class="preview-sidebar">
-                        <div class="preview-card glass-card" id="livePreviewCard">
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-mockup glass-card">
+                        <div style="padding: 1.5rem; border-bottom: 1px solid var(--glass-border);">
+                            <div style="display: flex; gap: 6px;">
+                                <span
+                                    style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%;"></span>
+                                <span
+                                    style="width: 12px; height: 12px; background: #eab308; border-radius: 50%;"></span>
+                                <span
+                                    style="width: 12px; height: 12px; background: #22c55e; border-radius: 50%;"></span>
+                            </div>
+                        </div>
+                        <div style="padding: 2rem; text-align: left;">
                             <div
-                                style="margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center;">
-                                <span class="pulse-indicator"></span>
-                                <h3 style="font-size: 1.1rem; margin: 0;">Live QR Preview</h3>
-                            </div>
-
-                            <div id="liveQrContainer"
-                                style="background: white; padding: 1.5rem; border-radius: 16px; display: inline-block; min-width: 200px; min-height: 200px;">
-                                <!-- QR rendered here -->
-                                <div style="color: #64748b; font-size: 0.85rem; margin-top: 80px;">Design your link to
-                                    see preview</div>
-                            </div>
-
-                            <div id="liveQrGreeting"
-                                style="margin-top: 1rem; font-weight: 700; color: var(--text-primary); font-size: 1.1rem; min-height: 1.5rem;">
-                            </div>
-
-                            <button class="copy-btn" id="liveDownloadBtn"
-                                style="margin-top: 1.5rem; width: 100%; display: none;">Download Preview</button>
+                                style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-family: monospace; font-size: 0.85rem; color: var(--text-secondary);">
+                                https://example.com/very-long-url...</div>
+                            <div
+                                style="text-align: center; color: var(--accent-primary); font-size: 1.5rem; margin: 1rem 0;">
+                                ↓</div>
+                            <div
+                                style="background: var(--accent-primary); color: #fff; padding: 1rem; border-radius: 8px; font-weight: 700; text-align: center;">
+                                linkshort.live/brand</div>
                         </div>
-
-                        <div id="resultArea" class="result-area hidden">
-                            <div class="glass-card" style="padding: 2rem;">
-                                <div class="success-message"
-                                    style="color: var(--success); font-weight: 700; margin-bottom: 1.5rem; font-size: 1.1rem;">
-                                    ✨
-                                    Links Ready!</div>
-                                <div id="linksList" class="links-list"></div>
-                                <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 2rem;">
-                                    <button class="copy-btn" style="width: 100%; margin: 0;"
-                                        onclick="copyAllLinks()">Copy All Links</button>
-                                    <button id="downloadAllQrsBtn" class="copy-btn"
-                                        style="width: 100%; margin: 0; background: rgba(239, 68, 68, 0.1); color: var(--error); border: 1px solid rgba(239, 68, 68, 0.2);"
-                                        onclick="downloadAllQRs()">Download All QRs (ZIP)</button>
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
+                    </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="seo-content" style="margin-top: 8rem;">
-                    <h2>Advanced Bulk Features</h2>
-                    <div class="seo-grid">
-
-                        <!-- Ad Unit -->
-                        <div class="ad-banner-container">
-                            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-5774199741984914"
-                                data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-                        </div>
-
-                        <div class="seo-content">
-                            <h2>Advanced Bulk Features</h2>
-                            <div class="seo-grid">
-                                <div class="seo-item">
-                                    <h3>⚡️ Instant Processing</h3>
-                                    <p>Shorten hundreds of links simultaneously with our scalable backend. Perfect for
-                                        massive
-                                        social campaigns.</p>
-                                </div>
-                                <div class="seo-item">
-                                    <h3>🎨 Dynamic QR Codes</h3>
-                                    <p>Generate high-resolution QR codes with custom text greetings. Bridge the gap
-                                        between
-                                        print and digital.</p>
-                                </div>
-                                <div class="seo-item">
-                                    <h3>🛡️ Secure Redirects</h3>
-                                    <p>Every link is processed through our secure gateway, ensuring safe passage for
-                                        your
-                                        audience.</p>
-                                </div>
-                            </div>
-
-                            <div style="margin-top: 5rem;">
-                                <h2>Latest from our Blog</h2>
-                                <div
-                                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                                    <a href="/blog/benefits-of-url-shortening"
-                                        style="text-decoration: none; color: inherit;">
-                                        <div class="glass-card"
-                                            style="padding: 1.5rem; text-align: left; height: 100%;">
-                                            <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">Marketing
-                                                Insights
-                                            </h4>
-                                            <p style="font-size: 0.9rem; color: var(--text-secondary);">The Hidden
-                                                Benefits of
-                                                URL Shortening...</p>
-                                        </div>
-                                    </a>
-                                    <a href="/blog/qr-code-marketing-guide"
-                                        style="text-decoration: none; color: inherit;">
-                                        <div class="glass-card"
-                                            style="padding: 1.5rem; text-align: left; height: 100%;">
-                                            <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">QR Strategy
-                                            </h4>
-                                            <p style="font-size: 0.9rem; color: var(--text-secondary);">The Ultimate
-                                                Guide to QR
-                                                Code Marketing...</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-            </main>
-
-            <footer>
-                <div style="margin-bottom: 2rem;">
-                    <a href="/">Home</a>
-                    <a href="/utm-builder">UTM Builder</a>
-                    <a href="/blog">Blog</a>
-                    <a href="/about">About Us</a>
-                    <a href="/contact">Contact</a>
-                    <a href="/privacy">Privacy</a>
-                    <a href="/terms">Terms</a>
+        <!-- TOOL HUB SECTION -->
+        <section class="tools-section" id="tools">
+            <div class="section-container">
+                <h2 class="section-title">All Tools</h2>
+                <div class="tools-grid">
+                    <a href="/tools/bulk" class="tool-card glass-card">
+                        <div class="tool-icon">📦</div>
+                        <h3>Bulk URL Shortener</h3>
+                        <p>Shorten hundreds of links instantly. Download QR codes. Upload Excel.</p>
+                        <span class="tool-cta">Open Tool →</span>
+                    </a>
+                    <a href="/tools/utm" class="tool-card glass-card">
+                        <div class="tool-icon">📈</div>
+                        <h3>UTM Builder</h3>
+                        <p>Create trackable campaign links with source, medium, and name parameters.</p>
+                        <span class="tool-cta">Open Tool →</span>
+                    </a>
+                    <a href="/tools/qr" class="tool-card glass-card">
+                        <div class="tool-icon">📱</div>
+                        <h3>QR Generator</h3>
+                        <p>Generate high-resolution QR codes for any link. Download as PNG.</p>
+                        <span class="tool-cta">Open Tool →</span>
+                    </a>
+                    <a href="/tools/bulk-qr" class="tool-card glass-card">
+                        <div class="tool-icon">🗂️</div>
+                        <h3>Bulk QR Generator</h3>
+                        <p>Upload a CSV and download all QR codes as a single ZIP file.</p>
+                        <span class="tool-cta">Open Tool →</span>
+                    </a>
                 </div>
-                <p style="color: var(--text-sub); font-size: 0.85rem;">&copy; 2026 LinkShort. Built for transparency and
-                    trust.</p>
-            </footer>
-        </div>
-    </div>
-
-    <!-- QR Modal -->
-    <div id="qrModal" class="modal-overlay hidden" onclick="closeModal(event)">
-        <div class="modal-content glass-card" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <h3>QR Code Preview</h3>
-                <button class="close-modal-btn" onclick="closeModal()">×</button>
             </div>
-            <div id="modalGreeting" class="qr-greeting-text" style="color: var(--text-primary); margin-bottom: 1.5rem;">
-            </div>
-            <div id="modalQrContent" class="modal-qr-body"></div>
-            <button id="modalDownloadBtn" class="copy-btn" style="margin-top: 2rem; width: 100%;">Download
-                Image</button>
-        </div>
-    </div>
+        </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+        <!-- WHY LINKSHORT SECTION -->
+        <section class="features-section" id="features">
+            <div class="section-container">
+                <h2 class="section-title">Why LinkShort?</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <span class="feature-icon">⚡</span>
+                        <h4>Instant Processing</h4>
+                        <p>Shorten hundreds of links in seconds with our scalable backend.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🔐</span>
+                        <h4>Secure Redirects</h4>
+                        <p>Every link is processed through our secure gateway.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📦</span>
+                        <h4>Bulk Operations</h4>
+                        <p>Upload Excel/CSV files and process all links at once.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">🎯</span>
+                        <h4>Marketing Ready</h4>
+                        <p>Built-in UTM builder and QR code generator for campaigns.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOG PREVIEW SECTION -->
+        <section class="blog-preview-section">
+            <div class="section-container">
+                <h2 class="section-title">Latest from the Blog</h2>
+                <div class="blog-preview-grid">
+                    <a href="/blog/benefits-of-url-shortening" class="blog-card glass-card">
+                        <h4>Marketing Insights</h4>
+                        <p>The Hidden Benefits of URL Shortening...</p>
+                    </a>
+                    <a href="/blog/qr-code-marketing-guide" class="blog-card glass-card">
+                        <h4>QR Strategy</h4>
+                        <p>The Ultimate Guide to QR Code Marketing...</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {% include 'partials/_footer.html' %}
 </body>
 
 </html>

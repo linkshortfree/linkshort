@@ -60,8 +60,25 @@ def contact():
     return render_template('contact.html')
 
 @app.route('/utm-builder')
-def utm_builder():
-    return render_template('utm_builder.html')
+def utm_builder_redirect():
+    return redirect('/tools/utm', code=301)
+
+# --- TOOL ROUTES ---
+@app.route('/tools/bulk')
+def tools_bulk():
+    return render_template('tools/bulk.html')
+
+@app.route('/tools/utm')
+def tools_utm():
+    return render_template('tools/utm.html')
+
+@app.route('/tools/qr')
+def tools_qr():
+    return render_template('tools/qr.html')
+
+@app.route('/tools/bulk-qr')
+def tools_bulk_qr():
+    return render_template('tools/bulk_qr.html')
 
 @app.route('/blog')
 def blog():
@@ -171,12 +188,27 @@ def sitemap():
   </url>
   <url>
     <loc>https://linkshort.live/blog</loc>
-    <lastmod>2026-01-21</lastmod>
-    <priority>0.8</priority>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://linkshort.live/utm-builder</loc>
-    <lastmod>2026-01-21</lastmod>
+    <loc>https://linkshort.live/tools/bulk</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://linkshort.live/tools/utm</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://linkshort.live/tools/qr</loc>
+    <lastmod>2026-01-22</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://linkshort.live/tools/bulk-qr</loc>
+    <lastmod>2026-01-22</lastmod>
     <priority>0.9</priority>
   </url>
 </urlset>""", {'Content-Type': 'application/xml'}

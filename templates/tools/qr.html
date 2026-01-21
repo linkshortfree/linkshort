@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator | LinkShort</title>
+    <meta name="description"
+        content="Generate high-resolution QR codes for any link. Download as PNG. Free, no signup.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    {% include 'partials/_navbar.html' %}
+
+    <main class="page-content tool-page">
+        <section class="tool-header">
+            <h1>QR Code Generator</h1>
+            <p>Generate a high-resolution QR code for any link instantly.</p>
+        </section>
+
+        <section class="tool-ui-section">
+            <div class="dashboard-layout">
+                <div class="glass-card">
+                    <div class="input-group">
+                        <label class="input-label">Enter your link</label>
+                        <input type="text" id="qrLinkInput" placeholder="https://example.com"
+                            oninput="generateSingleQR()">
+                    </div>
+                    <div class="input-group" style="margin-top: 1.5rem;">
+                        <label class="input-label">QR Size</label>
+                        <select id="qrSizeSelect" onchange="generateSingleQR()"
+                            style="width: 100%; padding: 1rem; border-radius: 12px; background: rgba(15, 23, 42, 0.4); border: 1px solid var(--glass-border); color: var(--text-primary); font-size: 1rem;">
+                            <option value="200">Small (200px)</option>
+                            <option value="300" selected>Medium (300px)</option>
+                            <option value="400">Large (400px)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <aside class="preview-sidebar">
+                    <div class="preview-card glass-card" style="text-align: center;">
+                        <h3 style="margin-bottom: 1.5rem;">Your QR Code</h3>
+                        <div id="singleQrContainer"
+                            style="background: white; padding: 2rem; border-radius: 16px; display: inline-block; min-width: 250px; min-height: 250px;">
+                            <div style="color: #64748b; font-size: 0.9rem; margin-top: 100px;">Enter a link to generate
+                            </div>
+                        </div>
+                        <button id="downloadSingleQrBtn" class="btn btn-primary"
+                            style="width: 100%; margin-top: 1.5rem; display: none;"
+                            onclick="downloadSingleQR()">Download PNG</button>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Why Use QR Codes?</h2>
+            <p>QR codes bridge the gap between physical and digital media. They allow users to instantly access your
+                content by simply scanning with their phone camera.</p>
+            <h3>Common Use Cases</h3>
+            <ul>
+                <li>Business cards and flyers</li>
+                <li>Restaurant menus</li>
+                <li>Product packaging</li>
+                <li>Event check-ins</li>
+            </ul>
+        </section>
+    </main>
+
+    {% include 'partials/_footer.html' %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        let qrInstance = null;
+
+        function generateSingleQR() {
+            const link = document.getElementById('qrLinkInput').value.trim();
+            const size = parseInt(document.getElementById('qrSizeSelect').value);
+            const container = document.getElementById('singleQrContainer');
+            const downloadBtn = document.getElementById('downloadSingleQrBtn');
+
+            if (!link) {
+                container.innerHTML = '<div style="color: #64748b; font-size: 0.9rem; margin-top: 100px;">Enter a link to generate</div>';
+                downloadBtn.style.display = 'none';
+                return;
+            }
+
+            container.innerHTML = '';
+            qrInstance = new QRCode(container, {
+                text: link,
+                width: size,
+                height: size,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            downloadBtn.style.display = 'block';
+        }
+
+        function downloadSingleQR() {
+            const canvas = document.querySelector('#singleQrContainer canvas');
+            if (canvas) {
+                const link = document.createElement('a');
+                link.download = 'linkshort-qr.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }
+        }
+    </script>
+</body>
+
+</html>

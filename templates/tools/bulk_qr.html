@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk QR Generator | LinkShort</title>
+    <meta name="description"
+        content="Upload a CSV of links and download all QR codes as a ZIP file. Free bulk QR code generator.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    {% include 'partials/_navbar.html' %}
+
+    <main class="page-content tool-page">
+        <section class="tool-header">
+            <h1>Bulk QR Generator</h1>
+            <p>Upload a CSV of links and download all QR codes as a single ZIP file.</p>
+        </section>
+
+        <section class="tool-ui-section">
+            <div class="dashboard-layout">
+                <div class="glass-card">
+                    <div class="input-group">
+                        <label class="input-label">Upload CSV with links</label>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Your CSV should
+                            have a column named "url" or "link".</p>
+                        <label for="bulkQrFileInput" class="file-label" style="display: block; text-align: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                <path
+                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                            </svg>
+                            Choose CSV File
+                        </label>
+                        <input type="file" id="bulkQrFileInput" accept=".csv" style="display: none;"
+                            onchange="handleBulkQrUpload(this)">
+                        <div id="bulkQrFileStatus" style="margin-top: 1rem; color: var(--text-secondary);"></div>
+                    </div>
+                    <button id="generateBulkQrBtn" class="btn btn-primary" style="width: 100%; margin-top: 2rem;"
+                        onclick="generateBulkQRs()" disabled>Generate & Download ZIP</button>
+                </div>
+
+                <aside class="preview-sidebar">
+                    <div class="preview-card glass-card" style="text-align: center;">
+                        <h3 style="margin-bottom: 1rem;">How it Works</h3>
+                        <ol style="text-align: left; color: var(--text-secondary); line-height: 2;">
+                            <li>Upload a CSV file with URLs</li>
+                            <li>Click "Generate & Download ZIP"</li>
+                            <li>Get all QR codes in a single ZIP</li>
+                        </ol>
+                        <div id="bulkQrProgress"
+                            style="margin-top: 2rem; font-weight: 600; color: var(--accent-primary);"></div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="seo-content">
+            <h2>Bulk QR Code Generation</h2>
+            <p>Perfect for businesses that need to create QR codes for product catalogs, event check-ins, or marketing
+                campaigns with multiple offers.</p>
+        </section>
+    </main>
+
+    {% include 'partials/_footer.html' %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+        let bulkQrUrls = [];
+
+        function handleBulkQrUpload(input) {
+            const file = input.files[0];
+            const status = document.getElementById('bulkQrFileStatus');
+            const btn = document.getElementById('generateBulkQrBtn');
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const json = XLSX.utils.sheet_to_json(firstSheet);
+
+                    bulkQrUrls = json.map(row => {
+                        const urlKey = Object.keys(row).find(k => ['url', 'link', 'website'].includes(k.toLowerCase().trim()));
+                        return urlKey ? row[urlKey] : null;
+                    }).filter(u => u);
+
+                    status.innerText = `✅ Found ${bulkQrUrls.length} URLs. Ready to generate.`;
+                    status.style.color = '#22c55e';
+                    btn.disabled = false;
+                } catch (err) {
+                    status.innerText = "❌ Error reading file.";
+                    status.style.color = '#ef4444';
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        async function generateBulkQRs() {
+            if (bulkQrUrls.length === 0) return;
+            const btn = document.getElementById('generateBulkQrBtn');
+            const progress = document.getElementById('bulkQrProgress');
+
+            btn.disabled = true;
+            btn.innerText = "Generating...";
+            progress.innerText = "";
+
+            const zip = new JSZip();
+
+            for (let i = 0; i < bulkQrUrls.length; i++) {
+                progress.innerText = `Processing ${i + 1} of ${bulkQrUrls.length}...`;
+                const canvas = await generateQRCanvasInMemory(bulkQrUrls[i]);
+                const dataUrl = canvas.toDataURL('image/png').split(',')[1];
+                zip.file(`qr-${i + 1}.png`, dataUrl, { base64: true });
+            }
+
+            progress.innerText = "Creating ZIP...";
+            const content = await zip.generateAsync({ type: "blob" });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = "linkshort-bulk-qrs.zip";
+            link.click();
+
+            btn.disabled = false;
+            btn.innerText = "Generate & Download ZIP";
+            progress.innerText = "✅ Download started!";
+        }
+
+        function generateQRCanvasInMemory(url) {
+            return new Promise((resolve) => {
+                const div = document.createElement('div');
+                new QRCode(div, { text: url, width: 300, height: 300, correctLevel: QRCode.CorrectLevel.H });
+                setTimeout(() => {
+                    const canvas = div.querySelector('canvas');
+                    resolve(canvas);
+                }, 50);
+            });
+        }
+    </script>
+</body>
+
+</html>

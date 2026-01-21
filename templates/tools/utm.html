@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTM Builder | LinkShort</title>
+    <meta name="description"
+        content="Create trackable marketing URLs with UTM parameters. Add source, medium, campaign, and more. Free, no signup.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    {% include 'partials/_navbar.html' %}
+
+    <main class="page-content tool-page">
+        <section class="tool-header">
+            <h1>Campaign UTM Builder</h1>
+            <p>Generate trackable URLs for your marketing campaigns in seconds.</p>
+        </section>
+
+        <section class="tool-ui-section">
+            <div class="dashboard-layout">
+                <div class="glass-card">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div style="grid-column: span 2;">
+                            <label class="input-label">Website URL *</label>
+                            <input type="text" id="targetUrl" placeholder="https://example.com" oninput="generateUtm()">
+                        </div>
+                        <div>
+                            <label class="input-label">Campaign Source *</label>
+                            <input type="text" id="utmSource" placeholder="google, facebook" oninput="generateUtm()">
+                        </div>
+                        <div>
+                            <label class="input-label">Campaign Medium *</label>
+                            <input type="text" id="utmMedium" placeholder="cpc, social, email" oninput="generateUtm()">
+                        </div>
+                        <div>
+                            <label class="input-label">Campaign Name *</label>
+                            <input type="text" id="utmName" placeholder="summer_sale" oninput="generateUtm()">
+                        </div>
+                        <div>
+                            <label class="input-label">Campaign Term</label>
+                            <input type="text" id="utmTerm" placeholder="running+shoes" oninput="generateUtm()">
+                        </div>
+                        <div style="grid-column: span 2;">
+                            <label class="input-label">Campaign Content</label>
+                            <input type="text" id="utmContent" placeholder="logolink, textlink" oninput="generateUtm()">
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="preview-sidebar">
+                    <div class="preview-card glass-card">
+                        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <span class="pulse-indicator"></span>
+                            <h3 style="margin: 0;">Generated URL</h3>
+                        </div>
+                        <div id="finalUtmUrl"
+                            style="word-break: break-all; font-family: monospace; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; min-height: 5rem; margin-bottom: 1.5rem;">
+                            Fill in the fields on the left...
+                        </div>
+                        <button onclick="copyUtm()" class="copy-btn" style="width: 100%; margin-bottom: 0.5rem;">Copy
+                            URL</button>
+                        <button onclick="shortenUtm()" class="btn btn-primary" style="width: 100%;">Shorten this
+                            URL</button>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="seo-content">
+            <h2>What are UTM Parameters?</h2>
+            <p>UTM (Urchin Tracking Module) parameters are tags added to URLs that help you track the performance of
+                your marketing campaigns in analytics tools like Google Analytics.</p>
+            <h3>The Five UTM Parameters</h3>
+            <ul>
+                <li><strong>Source:</strong> Where the traffic is coming from (e.g., google, newsletter)</li>
+                <li><strong>Medium:</strong> The marketing medium (e.g., cpc, email, social)</li>
+                <li><strong>Campaign:</strong> The specific campaign name (e.g., spring_sale)</li>
+                <li><strong>Term:</strong> Keywords for paid search campaigns</li>
+                <li><strong>Content:</strong> Used for A/B testing or differentiating ads</li>
+            </ul>
+        </section>
+    </main>
+
+    {% include 'partials/_footer.html' %}
+
+    <script>
+        function generateUtm() {
+            const baseUrl = document.getElementById('targetUrl').value.trim();
+            const source = document.getElementById('utmSource').value.trim();
+            const medium = document.getElementById('utmMedium').value.trim();
+            const name = document.getElementById('utmName').value.trim();
+            const term = document.getElementById('utmTerm').value.trim();
+            const content = document.getElementById('utmContent').value.trim();
+
+            if (!baseUrl) {
+                document.getElementById('finalUtmUrl').innerText = "Enter a Website URL to begin...";
+                return;
+            }
+
+            try {
+                let url = new URL(baseUrl);
+                if (source) url.searchParams.set('utm_source', source);
+                if (medium) url.searchParams.set('utm_medium', medium);
+                if (name) url.searchParams.set('utm_campaign', name);
+                if (term) url.searchParams.set('utm_term', term);
+                if (content) url.searchParams.set('utm_content', content);
+                document.getElementById('finalUtmUrl').innerText = url.toString();
+            } catch (e) {
+                document.getElementById('finalUtmUrl').innerText = "Invalid Website URL";
+            }
+        }
+
+        async function copyUtm() {
+            const url = document.getElementById('finalUtmUrl').innerText;
+            if (url.startsWith('http')) {
+                await navigator.clipboard.writeText(url);
+                alert('Copied!');
+            }
+        }
+
+        function shortenUtm() {
+            const url = document.getElementById('finalUtmUrl').innerText;
+            if (url.startsWith('http')) {
+                localStorage.setItem('pendingShorten', url);
+                window.location.href = '/tools/bulk';
+            }
+        }
+    </script>
+</body>
+
+</html>

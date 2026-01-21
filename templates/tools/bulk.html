@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk URL Shortener | LinkShort</title>
+    <meta name="description"
+        content="Shorten hundreds of links in seconds. Upload Excel/CSV, add custom aliases, and download QR codes as a ZIP. No signup required.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5774199741984914"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    {% include 'partials/_navbar.html' %}
+
+    <main class="page-content tool-page">
+        <section class="tool-header">
+            <h1>Bulk URL Shortener</h1>
+            <p>Shorten hundreds of links in seconds. No signup required.</p>
+        </section>
+
+        <!-- TOOL UI -->
+        <section class="tool-ui-section">
+            <div class="dashboard-layout">
+                <div class="glass-card">
+                    <div class="input-group">
+                        <label>Paste URLs (one per line)</label>
+                        <textarea id="urlInput" placeholder="https://example.com/page1&#10;https://example.com/page2"
+                            autocomplete="off" oninput="updateLivePreview()"></textarea>
+                    </div>
+
+                    <div class="file-upload-section">
+                        <label for="fileInput" class="file-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                <path
+                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                            </svg>
+                            Upload Excel/CSV
+                        </label>
+                        <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" style="display: none;"
+                            onchange="handleFileUpload(this)">
+                        <div id="fileStatus" class="file-status"></div>
+                    </div>
+
+                    <div class="options-toggle" onclick="toggleOptions()">+ Add Custom Aliases</div>
+                    <div class="custom-options" id="customOptions">
+                        <div class="prefix">linkshort.live/</div>
+                        <input type="text" id="aliasInput" placeholder="alias1, alias2, alias3">
+                    </div>
+
+                    <div class="options-toggle"
+                        onclick="document.getElementById('qrGreetingGroup').classList.toggle('show')">+ Add QR Greetings
+                    </div>
+                    <div class="custom-options" id="qrGreetingGroup">
+                        <input type="text" id="qrGreetingInput" placeholder="Hello, Welcome"
+                            oninput="updateLivePreview()">
+                    </div>
+
+                    <button id="shortenBtn" onclick="shortenUrl()">Shorten All Links</button>
+                    <div id="errorArea" class="error-message hidden"></div>
+                </div>
+
+                <aside class="preview-sidebar">
+                    <div class="preview-card glass-card" id="livePreviewCard">
+                        <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                            <span class="pulse-indicator"></span>
+                            <h3 style="margin: 0;">Live QR Preview</h3>
+                        </div>
+                        <div id="liveQrContainer"
+                            style="background: white; padding: 1.5rem; border-radius: 12px; min-height: 200px;">
+                            <div style="color: #64748b; font-size: 0.85rem; margin-top: 80px;">Paste a link to preview
+                            </div>
+                        </div>
+                        <div id="liveQrGreeting" style="margin-top: 1rem; font-weight: 700;"></div>
+                        <button class="copy-btn" id="liveDownloadBtn"
+                            style="margin-top: 1rem; width: 100%; display: none;">Download Preview</button>
+                    </div>
+
+                    <div id="resultArea" class="result-area hidden">
+                        <div class="glass-card" style="padding: 2rem;">
+                            <div style="color: var(--success); font-weight: 700; margin-bottom: 1rem;">✨ Links Ready!
+                            </div>
+                            <div id="linksList" class="links-list"></div>
+                            <button class="copy-btn" style="width: 100%; margin-top: 1rem;"
+                                onclick="copyAllLinks()">Copy All</button>
+                            <button id="downloadAllQrsBtn" class="copy-btn"
+                                style="width: 100%; margin-top: 0.5rem; background: rgba(239, 68, 68, 0.1); color: var(--error);"
+                                onclick="downloadAllQRs()">Download All QRs (ZIP)</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- SEO CONTENT BELOW TOOL -->
+        <section class="seo-content">
+            <h2>What is Bulk URL Shortening?</h2>
+            <p>Bulk URL shortening allows you to convert multiple long URLs into short, branded links in a single
+                operation. This is essential for marketers running campaigns across multiple channels.</p>
+            <h3>Use Cases</h3>
+            <ul>
+                <li>Social media managers sharing multiple links</li>
+                <li>Email marketers tracking campaign performance</li>
+                <li>Agencies managing client link portfolios</li>
+            </ul>
+        </section>
+    </main>
+
+    {% include 'partials/_footer.html' %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
