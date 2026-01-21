@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | LinkShort</title>
+    <meta name="description" content="Review how LinkShort collects and uses data, and how we respect your privacy.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    {% include 'partials/_navbar.html' %}
+
+    <main class="page-content">
+        <section class="static-page-header">
+            <h1>Privacy Policy</h1>
+        </section>
+
+        <section class="static-page-content glass-card legal-content">
+            <p><strong>Last Updated:</strong> January 22, 2026</p>
+
+            <h2>1. Introduction</h2>
+            <p>LinkShort ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains
+                how we collect, use, and safeguard your information when you use our website and tools.</p>
+
+            <h2>2. Information We Collect</h2>
+            <h3>2.1 Information You Provide</h3>
+            <ul>
+                <li>URLs you submit for shortening</li>
+                <li>Contact form submissions (name, email, message)</li>
+            </ul>
+
+            <h3>2.2 Automatically Collected Information</h3>
+            <ul>
+                <li>IP address and browser type</li>
+                <li>Pages visited and time spent</li>
+                <li>Referring website</li>
+            </ul>
+
+            <h2>3. How We Use Your Information</h2>
+            <ul>
+                <li>To provide and maintain our services</li>
+                <li>To respond to your inquiries</li>
+                <li>To improve our tools and user experience</li>
+                <li>To display relevant advertisements</li>
+            </ul>
+
+            <h2>4. Cookies and Tracking</h2>
+            <p>We use cookies and similar tracking technologies to enhance your experience. Third-party advertisers
+                (Google AdSense) may also use cookies to display personalized ads.</p>
+
+            <h2>5. Data Retention</h2>
+            <p>Shortened URLs are stored indefinitely to ensure redirects continue to work. You may request deletion of
+                specific links by contacting us.</p>
+
+            <h2>6. Third-Party Services</h2>
+            <p>We use Google AdSense for advertising. Google's use of cookies is governed by their own privacy policy.
+            </p>
+
+            <h2>7. Your Rights</h2>
+            <p>You have the right to access, correct, or delete your personal information. Contact us at <a
+                    href="mailto:support@linkshort.live"
+                    style="color: var(--accent-primary);">support@linkshort.live</a> for any requests.</p>
+
+            <h2>8. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Changes will be posted on this page with an updated
+                date.</p>
+
+            <h2>9. Contact Us</h2>
+            <p>If you have questions about this Privacy Policy, please contact us at <a
+                    href="mailto:support@linkshort.live"
+                    style="color: var(--accent-primary);">support@linkshort.live</a>.</p>
+
+            <div style="margin-top: 3rem;">
+                <a href="/" class="btn btn-secondary">← Back to Home</a>
+            </div>
+        </section>
+    </main>
+
+    {% include 'partials/_footer.html' %}
+</body>
+
+</html>

@@ -4,62 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us | LinkShort - Bulk URL Shortener</title>
-    <meta name="description"
-        content="Contact the LinkShort team for support, feedback, or advertising inquiries. We're here to help you with your URL shortening needs.">
+    <title>Contact Us | LinkShort</title>
+    <meta name="description" content="Contact the LinkShort team with questions or feedback — we're here to help.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="background-glow"></div>
-    <div class="main-grid">
-        <div class="container" style="text-align: left; max-width: 600px;">
-            <header style="text-align: center;">
-                <div class="logo"><a href="/" style="text-decoration: none; color: inherit;">Link<span>Short</span></a>
-                </div>
-            </header>
+    {% include 'partials/_navbar.html' %}
 
-            <main class="glass-card" style="padding: 3rem;">
-                <h1 style="font-size: 2.5rem; margin-bottom: 1.5rem; text-align: center;">Contact Us</h1>
-                <p style="margin-bottom: 2rem; line-height: 1.6; color: var(--text-secondary); text-align: center;">
-                    Have questions, feedback, or need assistance? We're here to help!
-                </p>
+    <main class="page-content">
+        <section class="static-page-header">
+            <h1>Contact Us</h1>
+        </section>
 
-                <div style="margin-bottom: 2.5rem;">
-                    <h2 style="color: var(--accent-secondary); font-size: 1.2rem; margin-bottom: 0.5rem;">Email Us</h2>
-                    <p style="color: var(--text-primary); font-size: 1.1rem;">support@linkshort.live</p>
-                </div>
+        <section class="static-page-content glass-card">
+            <p style="margin-bottom: 2rem;">Have questions, feedback, or need support? Fill out the form below and we'll
+                get back to you as soon as possible.</p>
 
-                <div style="margin-bottom: 2.5rem;">
-                    <h2 style="color: var(--accent-secondary); font-size: 1.2rem; margin-bottom: 0.5rem;">Advertising
-                        Inquiries</h2>
-                    <p style="color: var(--text-primary); font-size: 1.1rem;">ads@linkshort.live</p>
+            <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                <div class="input-group">
+                    <label class="input-label">Name *</label>
+                    <input type="text" id="contactName" placeholder="Your name" required>
                 </div>
+                <div class="input-group">
+                    <label class="input-label">Email *</label>
+                    <input type="email" id="contactEmail" placeholder="your@email.com" required>
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Subject *</label>
+                    <input type="text" id="contactSubject" placeholder="How can we help?">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Message *</label>
+                    <textarea id="contactMessage" placeholder="Your message..." rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
 
-                <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; font-style: italic;">
-                        Note: We aim to respond to all inquiries within 24-48 hours. Thank you for your patience.
-                    </p>
-                </div>
-            </main>
+            <div id="contactSuccess" class="hidden"
+                style="margin-top: 2rem; padding: 1.5rem; background: rgba(16, 185, 129, 0.1); border-radius: 12px; color: var(--success); text-align: center;">
+                ✅ Thank you! Your message has been sent.
+            </div>
 
-            <footer style="margin-top: 3rem; text-align: center;">
-                <p>&copy; 2026 LinkShort. All rights reserved.</p>
-                <div style="margin-top: 10px; font-size: 0.8rem;">
-                    <a href="/" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Home</a>
-                    <a href="/about" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">About Us</a>
-                    <a href="/contact"
-                        style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Contact</a>
-                    <a href="/privacy" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Privacy
-                        Policy</a>
-                    <a href="/terms" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Terms of
-                        Service</a>
-                </div>
-            </footer>
-        </div>
-    </div>
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--glass-border);">
+                <h3>Prefer email?</h3>
+                <p style="color: var(--text-secondary);">Reach us directly at <a href="mailto:support@linkshort.live"
+                        style="color: var(--accent-primary);">support@linkshort.live</a></p>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <a href="/" class="btn btn-secondary">← Back to Home</a>
+            </div>
+        </section>
+    </main>
+
+    {% include 'partials/_footer.html' %}
+
+    <script>
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            // In production, this would send to a backend or service like Formspree
+            document.getElementById('contactForm').style.display = 'none';
+            document.getElementById('contactSuccess').classList.remove('hidden');
+        }
+    </script>
 </body>
 
 </html>

@@ -386,6 +386,97 @@ body {
     padding-bottom: 5rem;
 }
 
+/* === HOW IT WORKS === */
+.how-it-works-section {
+    padding: 4rem 0;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+
+.step-item {
+    padding: 2rem;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: var(--accent-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 auto 1.5rem;
+}
+
+.step-item h4 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.step-item p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === STATIC PAGES === */
+.static-page-header {
+    text-align: center;
+    padding: 4rem 0 2rem;
+}
+
+.static-page-header h1 {
+    font-size: 2.75rem;
+}
+
+.static-page-content {
+    max-width: 800px;
+    margin: 0 auto 4rem;
+}
+
+.static-page-content h2 {
+    font-size: 1.75rem;
+    margin: 2.5rem 0 1rem;
+    color: var(--accent-primary);
+}
+
+.static-page-content h3 {
+    font-size: 1.25rem;
+    margin: 2rem 0 0.75rem;
+}
+
+.static-page-content p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.static-page-content ul,
+.static-page-content ol {
+    color: var(--text-secondary);
+    line-height: 2;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.legal-content h2:first-of-type {
+    margin-top: 1.5rem;
+}
+
+
 .blog-preview-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

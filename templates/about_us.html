@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | LinkShort</title>
+    <meta name="description"
+        content="Learn about LinkShort — our mission to build powerful free tools for marketers and creators.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    {% include 'partials/_navbar.html' %}
+
+    <main class="page-content">
+        <section class="static-page-header">
+            <h1>About Us</h1>
+        </section>
+
+        <section class="static-page-content glass-card">
+            <h2>Our Mission</h2>
+            <p>LinkShort was built with a simple goal: to provide enterprise-grade link management tools that are
+                <strong>free, fast, and accessible to everyone</strong>. No signups, no paywalls, no hidden fees.</p>
+
+            <h2>What We Offer</h2>
+            <p>We offer a suite of professional tools designed for marketers, creators, and businesses:</p>
+            <ul>
+                <li><strong>Bulk URL Shortener:</strong> Shorten hundreds of links at once</li>
+                <li><strong>QR Code Designer:</strong> Create custom QR codes with your brand colors</li>
+                <li><strong>UTM Builder:</strong> Generate trackable campaign links</li>
+                <li><strong>A/B Link Testing:</strong> Test multiple link variants</li>
+            </ul>
+
+            <h2>Why Free?</h2>
+            <p>We believe essential marketing tools should be accessible to everyone — from solo creators to large
+                agencies. Our platform is supported by non-intrusive advertising, allowing us to keep all features free.
+            </p>
+
+            <h2>Our Values</h2>
+            <ul>
+                <li><strong>Transparency:</strong> No tracking beyond what's necessary for functionality</li>
+                <li><strong>Speed:</strong> Optimized for instant results</li>
+                <li><strong>Simplicity:</strong> Clean, intuitive interfaces</li>
+                <li><strong>Privacy:</strong> Your data stays yours</li>
+            </ul>
+
+            <div style="margin-top: 3rem;">
+                <a href="/" class="btn btn-secondary">← Back to Home</a>
+            </div>
+        </section>
+    </main>
+
+    {% include 'partials/_footer.html' %}
+</body>
+
+</html>

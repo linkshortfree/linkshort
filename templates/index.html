@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkShort | The Professional Link Management Toolkit</title>
+    <title>Home | LinkShort Tools</title>
     <meta name="description"
-        content="Shorten links, generate QR codes, and build UTM campaigns — in bulk, instantly. Free, no signup required.">
+        content="LinkShort offers professional bulk URL shortener, custom QR codes, UTM builder, A/B link testing, and more — no signup required.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
@@ -16,25 +16,24 @@
 
 <body>
     <div class="background-glow"></div>
-
     {% include 'partials/_navbar.html' %}
 
     <main class="page-content">
-        <!-- HERO SECTION -->
+        <!-- HERO -->
         <section class="hero-section">
             <div class="hero-container">
                 <div class="hero-text">
                     <h1>The Professional Link Management Toolkit</h1>
-                    <p class="hero-subtitle">Shorten links, generate QR codes, and build UTM campaigns — in bulk,
+                    <p class="hero-subtitle">Shorten links, generate custom QR codes, and build UTM campaigns — in bulk,
                         instantly. No signup required.</p>
                     <div class="hero-buttons">
-                        <a href="/tools/bulk" class="btn btn-primary">Open Bulk Shortener</a>
-                        <a href="/tools/utm" class="btn btn-secondary">Open UTM Builder</a>
+                        <a href="/tools/bulk" class="btn btn-primary">Try Bulk Link + QR</a>
+                        <a href="#tools" class="btn btn-secondary">Explore Tools</a>
                     </div>
                 </div>
                 <div class="hero-visual">
                     <div class="hero-mockup glass-card">
-                        <div style="padding: 1.5rem; border-bottom: 1px solid var(--glass-border);">
+                        <div style="padding: 1.25rem; border-bottom: 1px solid var(--glass-border);">
                             <div style="display: flex; gap: 6px;">
                                 <span
                                     style="width: 12px; height: 12px; background: #ef4444; border-radius: 50%;"></span>
@@ -46,13 +45,13 @@
                         </div>
                         <div style="padding: 2rem; text-align: left;">
                             <div
-                                style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-family: monospace; font-size: 0.85rem; color: var(--text-secondary);">
+                                style="background: rgba(0,0,0,0.2); padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; font-family: monospace; font-size: 0.8rem; color: var(--text-secondary);">
                                 https://example.com/very-long-url...</div>
                             <div
-                                style="text-align: center; color: var(--accent-primary); font-size: 1.5rem; margin: 1rem 0;">
+                                style="text-align: center; color: var(--accent-primary); font-size: 1.25rem; margin: 0.75rem 0;">
                                 ↓</div>
                             <div
-                                style="background: var(--accent-primary); color: #fff; padding: 1rem; border-radius: 8px; font-weight: 700; text-align: center;">
+                                style="background: var(--accent-primary); color: #fff; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 700; text-align: center; font-size: 0.95rem;">
                                 linkshort.live/brand</div>
                         </div>
                     </div>
@@ -60,69 +59,79 @@
             </div>
         </section>
 
-        <!-- TOOL HUB SECTION -->
+        <!-- FEATURED TOOLS -->
         <section class="tools-section" id="tools">
             <div class="section-container">
-                <h2 class="section-title">All Tools</h2>
-                <div class="tools-grid">
+                <h2 class="section-title">Featured Tools</h2>
+                <div class="tools-grid" style="grid-template-columns: repeat(2, 1fr);">
                     <a href="/tools/bulk" class="tool-card glass-card">
                         <div class="tool-icon">📦</div>
-                        <h3>Bulk URL Shortener</h3>
-                        <p>Shorten hundreds of links instantly. Download QR codes. Upload Excel.</p>
+                        <h3>Bulk Link + QR Designer</h3>
+                        <p>Shorten hundreds of links instantly. Generate custom QR codes with color, logo, and size
+                            options. Download as ZIP.</p>
                         <span class="tool-cta">Open Tool →</span>
                     </a>
-                    <a href="/tools/utm" class="tool-card glass-card">
+                    <a href="/tools/utm-ab" class="tool-card glass-card">
                         <div class="tool-icon">📈</div>
-                        <h3>UTM Builder</h3>
-                        <p>Create trackable campaign links with source, medium, and name parameters.</p>
-                        <span class="tool-cta">Open Tool →</span>
-                    </a>
-                    <a href="/tools/qr" class="tool-card glass-card">
-                        <div class="tool-icon">📱</div>
-                        <h3>QR Generator</h3>
-                        <p>Generate high-resolution QR codes for any link. Download as PNG.</p>
-                        <span class="tool-cta">Open Tool →</span>
-                    </a>
-                    <a href="/tools/bulk-qr" class="tool-card glass-card">
-                        <div class="tool-icon">🗂️</div>
-                        <h3>Bulk QR Generator</h3>
-                        <p>Upload a CSV and download all QR codes as a single ZIP file.</p>
+                        <h3>UTM Builder & A/B Testing</h3>
+                        <p>Create trackable campaign links with UTM parameters. Test multiple link variants with A/B
+                            testing.</p>
                         <span class="tool-cta">Open Tool →</span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- WHY LINKSHORT SECTION -->
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works-section">
+            <div class="section-container">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps-grid">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <h4>Paste or Upload</h4>
+                        <p>Paste your links or upload a CSV/Excel file with your URLs.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <h4>Customize</h4>
+                        <p>Add custom aliases, QR colors, logos, and UTM parameters.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <h4>Download</h4>
+                        <p>Get your shortened links and QR codes as a ZIP or CSV file.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY LINKSHORT -->
         <section class="features-section" id="features">
             <div class="section-container">
                 <h2 class="section-title">Why LinkShort?</h2>
                 <div class="features-grid">
-                    <div class="feature-item">
-                        <span class="feature-icon">⚡</span>
+                    <div class="feature-item"><span class="feature-icon">⚡</span>
                         <h4>Instant Processing</h4>
-                        <p>Shorten hundreds of links in seconds with our scalable backend.</p>
+                        <p>Shorten hundreds of links in seconds.</p>
                     </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">🔐</span>
+                    <div class="feature-item"><span class="feature-icon">🔐</span>
                         <h4>Secure Redirects</h4>
-                        <p>Every link is processed through our secure gateway.</p>
+                        <p>Every link goes through our secure gateway.</p>
                     </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">📦</span>
+                    <div class="feature-item"><span class="feature-icon">📦</span>
                         <h4>Bulk Operations</h4>
-                        <p>Upload Excel/CSV files and process all links at once.</p>
+                        <p>Upload Excel/CSV and process all at once.</p>
                     </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">🎯</span>
+                    <div class="feature-item"><span class="feature-icon">🎯</span>
                         <h4>Marketing Ready</h4>
-                        <p>Built-in UTM builder and QR code generator for campaigns.</p>
+                        <p>UTM builder and A/B testing included.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- BLOG PREVIEW SECTION -->
+        <!-- BLOG PREVIEW -->
         <section class="blog-preview-section">
             <div class="section-container">
                 <h2 class="section-title">Latest from the Blog</h2>
@@ -135,6 +144,9 @@
                         <h4>QR Strategy</h4>
                         <p>The Ultimate Guide to QR Code Marketing...</p>
                     </a>
+                </div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="/blog" class="btn btn-secondary">View All Blog →</a>
                 </div>
             </div>
         </section>
