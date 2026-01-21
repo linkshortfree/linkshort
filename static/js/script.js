@@ -643,6 +643,32 @@ function setUtmPreset(inputId, value) {
     }
 }
 
+// === DYNAMIC UI LOGIC ===
+function revealResultArea(elementId) {
+    const el = document.getElementById(elementId);
+    if (el && el.classList.contains('hidden-initially')) {
+        el.classList.remove('hidden-initially');
+        el.classList.add('fade-in-up');
+    }
+}
+
+// Master Designer Dynamic Reveal
+document.addEventListener('DOMContentLoaded', () => {
+    const bulkInputs = ['urlInput', 'qrData']; // IDs to watch
+    bulkInputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => revealResultArea('masterResultArea'));
+        }
+    });
+
+    // UTM Builder Dynamic Reveal
+    const utmInputs = document.querySelectorAll('#utm-builder input');
+    utmInputs.forEach(input => {
+        input.addEventListener('input', () => revealResultArea('utmResultArea'));
+    });
+});
+
 async function generateBulkQRs() {
     if (bulkQrUrls.length === 0) return;
     if (bulkQrUrls.length > 500) {
