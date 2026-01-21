@@ -5,6 +5,8 @@ from flask_limiter.util import get_remote_address
 import os
 import random
 import markdown
+import json
+import urllib.request
 
 app = Flask(__name__)
 limiter = Limiter(
@@ -16,6 +18,42 @@ limiter = Limiter(
 
 with app.app_context():
     init_db()
+
+def ping_index_now():
+    if os.environ.get('FLASK_ENV') == 'development':
+        return
+    
+    url = "https://www.bing.com/indexnow" # Primary IndexNow endpoint
+    host = "linkshort.live"
+    key = "45c58908f0a24765961d10271034f89d"
+    
+    data = {
+        "host": host,
+        "key": key,
+        "keyLocation": f"https://{host}/{key}.txt",
+        "urlList": [
+            f"https://{host}/",
+            f"https://{host}/tools/bulk",
+            f"https://{host}/tools/utm",
+            f"https://{host}/tools/qr",
+            f"https://{host}/tools/bulk-qr",
+            f"https://{host}/blog"
+        ]
+    }
+    
+    try:
+        req = urllib.request.Request(
+            url, 
+            data=json.dumps(data).encode('utf-8'), 
+            headers={'Content-Type': 'application/json'}
+        )
+        with urllib.request.urlopen(req) as response:
+            print(f"IndexNow Ping Success: {response.status}")
+    except Exception as e:
+        print(f"IndexNow Ping Failed: {e}")
+
+# Ping on startup
+ping_index_now()
 
 @app.before_request
 def redirect_to_https_and_non_www():
@@ -245,19 +283,38 @@ def ads_txt():
 
 @app.route('/sitemap.xml')
 def sitemap():
-    return """<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://linkshort.live/</loc><lastmod>2026-01-22</lastmod><priority>1.0</priority></url>
-  <url><loc>https://linkshort.live/tools/bulk</loc><lastmod>2026-01-22</lastmod><priority>1.0</priority></url>
-  <url><loc>https://linkshort.live/tools/utm</loc><lastmod>2026-01-22</lastmod><priority>0.9</priority></url>
-  <url><loc>https://linkshort.live/tools/qr</loc><lastmod>2026-01-22</lastmod><priority>0.9</priority></url>
-  <url><loc>https://linkshort.live/tools/bulk-qr</loc><lastmod>2026-01-22</lastmod><priority>0.9</priority></url>
-  <url><loc>https://linkshort.live/blog</loc><lastmod>2026-01-22</lastmod><priority>0.8</priority></url>
-  <url><loc>https://linkshort.live/about-us</loc><lastmod>2026-01-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://linkshort.live/contact</loc><lastmod>2026-01-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://linkshort.live/privacy-policy</loc><lastmod>2026-01-22</lastmod><priority>0.4</priority></url>
-  <url><loc>https://linkshort.live/terms-of-service</loc><lastmod>2026-01-22</lastmod><priority>0.4</priority></url>
-</urlset>""", {'Content-Type': 'application/xml'}
+    base_url = "https://linkshort.live"
+    static_pages = [
+        {'loc': '/', 'priority': '1.0'},
+        {'loc': '/tools/bulk', 'priority': '1.0'},
+        {'loc': '/tools/utm', 'priority': '0.9'},
+        {'loc': '/tools/qr', 'priority': '0.9'},
+        {'loc': '/tools/bulk-qr', 'priority': '0.9'},
+        {'loc': '/blog', 'priority': '0.8'},
+        {'loc': '/about-us', 'priority': '0.6'},
+        {'loc': '/contact', 'priority': '0.6'},
+        {'loc': '/privacy-policy', 'priority': '0.4'},
+        {'loc': '/terms-of-service', 'priority': '0.4'},
+    ]
+    
+    # Dynamic blog posts
+    posts_dir = os.path.join(app.root_path, 'posts')
+    blog_pages = []
+    if os.path.exists(posts_dir):
+        for filename in os.listdir(posts_dir):
+            if filename.endswith('.md'):
+                slug = filename[:-3]
+                blog_pages.append({'loc': f'/blog/{slug}', 'priority': '0.7'})
+
+    all_pages = static_pages + blog_pages
+    
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for page in all_pages:
+        xml += f'  <url><loc>{base_url}{page["loc"]}</loc><lastmod>2026-01-22</lastmod><priority>{page["priority"]}</priority></url>\n'
+    xml += '</urlset>'
+    
+    return xml, {'Content-Type': 'application/xml'}
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5001))
