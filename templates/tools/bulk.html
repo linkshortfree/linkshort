@@ -42,45 +42,71 @@
 
     <main class="page-content tool-page">
         <section class="tool-header">
+            <div class="breadcrumb">
+                <a href="/">Home</a> <span>→</span> <a href="/">Tools</a> <span>→</span> <span>Bulk Shortener</span>
+            </div>
             <h1>Bulk URL Shortener + QR Designer</h1>
-            <p>Shorten hundreds of links and generate custom QR codes. No signup required.</p>
-            <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <p>Shorten hundreds of links and generate custom QR codes.</p>
+            <div class="pill">✨ No signup required</div>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <a href="/" class="btn btn-secondary">← Back to Home</a>
                 <a href="#" onclick="downloadSampleTemplate(); return false;" class="btn btn-secondary">Download Sample
                     CSV</a>
-                <a href="#instructions" class="btn btn-secondary">How to Use</a>
             </div>
         </section>
 
         <section class="tool-ui-section">
-            <div class="dashboard-layout">
-                <div class="glass-card">
-                    <div class="input-group">
-                        <label class="input-label">
-                            Paste URLs (one per line)
-                            <span class="tooltip-container">ⓘ
-                                <span class="tooltip-text">Enter one URL per line. We'll shorten all of them at
-                                    once.</span>
-                            </span>
-                        </label>
-                        <textarea id="urlInput" placeholder="https://example.com/page1&#10;https://example.com/page2"
-                            rows="6" oninput="updateLivePreview()"></textarea>
+            <div class="glass-card" style="max-width: 1000px; margin: 0 auto;">
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="switchTab('bulk')">📦 Bulk Mode</button>
+                    <button class="tab-btn" onclick="switchTab('single')">🔗 Single Mode</button>
+                </div>
+
+                <div class="dashboard-layout">
+                    <!-- Bulk Mode Container -->
+                    <div id="bulkContainer">
+                        <div class="input-group">
+                            <label class="input-label">
+                                Paste URLs (one per line)
+                                <span class="tooltip-container">ⓘ
+                                    <span class="tooltip-text">Enter one URL per line. We'll shorten all of them at
+                                        once.</span>
+                                </span>
+                            </label>
+                            <textarea id="urlInput"
+                                placeholder="https://example.com/page1&#10;https://example.com/page2" rows="6"
+                                oninput="updateLivePreview()"></textarea>
+                        </div>
+
+                        <div class="file-upload-section">
+                            <label for="fileInput" class="file-label">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                    <path
+                                        d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                                </svg>
+                                Upload CSV / Excel
+                            </label>
+                            <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;"
+                                onchange="handleFileUpload(this)">
+                            <div id="fileStatus" class="file-status"></div>
+                        </div>
                     </div>
 
-                    <div class="file-upload-section">
-                        <label for="fileInput" class="file-label">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                viewBox="0 0 16 16">
-                                <path
-                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                <path
-                                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-                            </svg>
-                            Upload CSV / Excel
-                        </label>
-                        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;"
-                            onchange="handleFileUpload(this)">
-                        <div id="fileStatus" class="file-status"></div>
+                    <!-- Single Mode Container (Hidden by default on large screens) -->
+                    <div id="singleContainer" class="hidden">
+                        <div class="input-group">
+                            <label class="input-label">Enter Long URL</label>
+                            <input type="url" id="singleUrlInput" placeholder="https://example.com/very-long-link..."
+                                oninput="updateLivePreview()">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Custom Alias (Optional)</label>
+                            <input type="text" id="singleAliasInput" placeholder="my-custom-link">
+                        </div>
                     </div>
 
                     <div class="options-toggle" onclick="toggleOptions()">+ Custom Aliases
@@ -133,15 +159,11 @@
                     <button id="shortenBtn" onclick="shortenUrl()">Process & Generate</button>
 
                     <!-- Progress Bar for Bulk Ops -->
-                    <div id="bulkProgressContainer" class="hidden" style="margin-top: 1.5rem;">
-                        <div class="progress-bar-bg"
-                            style="height: 8px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden;">
-                            <div id="bulkProgressBar"
-                                style="width: 0%; height: 100%; background: var(--accent-primary); transition: width 0.3s ease;">
-                            </div>
+                    <div id="bulkProgressContainer" class="hidden">
+                        <div class="progress-container">
+                            <div id="bulkProgressBar" class="progress-bar"></div>
                         </div>
-                        <p id="bulkProgressText"
-                            style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem; text-align: center;">
+                        <p id="bulkProgressText" style="font-size: 13px; color: var(--text-muted); text-align: center;">
                             Processing...</p>
                     </div>
 
@@ -167,16 +189,16 @@
 
             <div id="resultArea" class="result-area hidden">
                 <div class="glass-card" style="padding: 1.5rem;">
-                    <div style="color: var(--success); font-weight: 700; margin-bottom: 1rem;">✨ Links Ready!
-                    </div>
+                    <h4
+                        style="color: var(--success); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
+                        ✨ Links Ready!
+                    </h4>
                     <div id="linksList" class="links-list"></div>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem;">
-                        <button class="copy-btn" onclick="copyAllLinks()">Copy All Links</button>
-                        <button id="downloadAllQrsBtn" class="copy-btn" onclick="downloadAllQRs()"
-                            style="background: rgba(239, 68, 68, 0.1); color: var(--error);">Download All QR
-                            (ZIP)</button>
-                        <button id="downloadCsvBtn" class="copy-btn" onclick="downloadResultsCSV()"
-                            style="background: rgba(16, 185, 129, 0.1); color: var(--accent-primary);">Download
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem;">
+                        <button class="btn btn-secondary" onclick="copyAllLinks()">📋 Copy All Links</button>
+                        <button id="downloadAllQrsBtn" class="btn btn-secondary" onclick="downloadAllQRs()">🖼️ Download
+                            All QR (ZIP)</button>
+                        <button id="downloadCsvBtn" class="btn btn-secondary" onclick="downloadResultsCSV()">📊 Download
                             CSV</button>
                     </div>
                 </div>

@@ -18,10 +18,16 @@
 
     <main class="page-content tool-page">
         <section class="tool-header">
+            <div class="breadcrumb">
+                <a href="/">Home</a> <span>→</span> <a href="/">Tools</a> <span>→</span> <span>Bulk QR Generator</span>
+            </div>
             <h1>Bulk QR Generator</h1>
             <p>Upload a CSV of links and download all QR codes as a single ZIP file.</p>
-            <div style="margin-top: 1rem;">
+            <div class="pill">✨ No signup required</div>
+
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                 <a href="/" class="btn btn-secondary">← Back to Home</a>
+                <a href="/tools/qr" class="btn btn-secondary">Single QR Mode</a>
             </div>
         </section>
 
@@ -60,16 +66,13 @@
                             <li>Click "Generate & Download ZIP"</li>
                             <li>Get all QR codes in a single ZIP</li>
                         </ol>
+                        <!-- Progress Bar -->
                         <div id="bulkQrProgressContainer" class="hidden" style="margin-top: 1.5rem;">
-                            <div class="progress-bar-bg"
-                                style="height: 8px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden;">
-                                <div id="bulkQrProgressBar"
-                                    style="width: 0%; height: 100%; background: var(--accent-primary); transition: width 0.3s ease;">
-                                </div>
+                            <div class="progress-container">
+                                <div id="bulkQrProgressBar" class="progress-bar"></div>
                             </div>
                             <p id="bulkQrProgressText"
-                                style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem; text-align: center;">
-                                Ready to process...</p>
+                                style="font-size: 13px; color: var(--text-muted); text-align: center;">Processing...</p>
                         </div>
                     </div>
                 </aside>

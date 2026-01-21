@@ -3,7 +3,49 @@ let lastResults = []; // Fixed: lastResults was not defined
 
 function toggleOptions() {
     const options = document.getElementById('customOptions');
-    options.classList.toggle('show');
+    if (options) options.classList.toggle('show');
+}
+
+function switchTab(mode) {
+    const bulkContainer = document.getElementById('bulkContainer');
+    const singleContainer = document.getElementById('singleContainer');
+    const tabBtns = document.querySelectorAll('.tab-btn');
+
+    tabBtns.forEach(btn => btn.classList.remove('active'));
+
+    if (mode === 'bulk') {
+        bulkContainer.classList.remove('hidden');
+        singleContainer.classList.add('hidden');
+        tabBtns[0].classList.add('active');
+    } else {
+        bulkContainer.classList.add('hidden');
+        singleContainer.classList.remove('hidden');
+        tabBtns[1].classList.add('active');
+    }
+}
+
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toastContainer');
+    if (!container) {
+        const div = document.createElement('div');
+        div.id = 'toastContainer';
+        div.className = 'toast-container';
+        document.body.appendChild(div);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `
+        <span>${message}</span>
+        <span onclick="this.parentElement.remove()" style="cursor:pointer; margin-left:12px;">&times;</span>
+    `;
+
+    document.getElementById('toastContainer').appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('toast-exit');
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
 }
 
 function handleFileUpload(input) {
@@ -54,22 +96,55 @@ document.addEventListener('DOMContentLoaded', () => {
     // Check if there's a pending URL from UTM Builder
     const pendingUrl = localStorage.getItem('pendingShorten');
     if (pendingUrl) {
-        document.getElementById('urlInput').value = pendingUrl;
-        localStorage.removeItem('pendingShorten');
-        updateLivePreview();
+        const urlInput = document.getElementById('urlInput');
+        if (urlInput) {
+            urlInput.value = pendingUrl;
+            localStorage.removeItem('pendingShorten');
+            updateLivePreview();
+        }
     }
 });
 
+function filterTools(category, btn) {
+    const grid = document.getElementById('toolsGrid');
+    if (!grid) return;
+
+    const cards = grid.querySelectorAll('.tool-card');
+    const buttons = document.querySelectorAll('.filter-btn');
+
+    // Update active button state
+    buttons.forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    // Filter cards
+    cards.forEach(card => {
+        const cat = card.getAttribute('data-category');
+        if (category === 'all' || cat === category) {
+            card.style.display = 'block';
+            card.style.animation = 'fadeInUp 0.4s ease forwards';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
 function updateLivePreview() {
     const urlInput = document.getElementById('urlInput');
+    const singleUrlInput = document.getElementById('singleUrlInput');
     const qrGreetingInput = document.getElementById('qrGreetingInput');
     const container = document.getElementById('liveQrContainer');
     const greetingDisplay = document.getElementById('liveQrGreeting');
     const downloadBtn = document.getElementById('liveDownloadBtn');
     const previewCard = document.getElementById('livePreviewCard');
 
-    const firstUrl = urlInput.value.split('\n')[0].trim();
-    const greeting = qrGreetingInput.value.split(',')[0].trim();
+    let firstUrl = "";
+    if (urlInput && !urlInput.closest('.hidden')) {
+        firstUrl = urlInput.value.split('\n')[0].trim();
+    } else if (singleUrlInput) {
+        firstUrl = singleUrlInput.value.trim();
+    }
+
+    const greeting = qrGreetingInput ? qrGreetingInput.value.split(',')[0].trim() : "";
 
     const qrColor = document.getElementById('qrColor').value || "#000000";
     const qrBgColor = document.getElementById('qrBgColor').value || "#ffffff";
@@ -100,45 +175,44 @@ function updateLivePreview() {
 }
 
 async function shortenUrl() {
-    const urlInput = document.getElementById('urlInput');
-    const aliasInput = document.getElementById('aliasInput');
-    const qrGreetingInput = document.getElementById('qrGreetingInput');
     const resultArea = document.getElementById('resultArea');
     const linksList = document.getElementById('linksList');
-    const errorArea = document.getElementById('errorArea');
     const shortenBtn = document.getElementById('shortenBtn');
 
-    // Get UI data
-    const uiUrls = urlInput.value.split('\n').map(u => u.trim()).filter(u => u !== '');
-    const uiAliases = aliasInput.value.split(',').map(a => a.trim()).filter(a => a !== '');
-    const uiGreetings = qrGreetingInput.value.split(',').map(g => g.trim()).filter(g => g !== '');
-
+    // Detect active mode
+    const isSingleMode = !document.getElementById('singleContainer').classList.contains('hidden');
     let finalProcessList = [];
 
-    if (uiUrls.length > 0) {
-        // UI has priority for URLs
-        finalProcessList = uiUrls.map((url, i) => ({
-            url: url,
-            alias: uiAliases[i] || "",
-            greeting: uiGreetings[i] || ""
-        }));
-    } else if (uploadedData.length > 0) {
-        // File data fallback
-        finalProcessList = uploadedData.map((item, i) => ({
-            url: item.url,
-            // Priority: UI Input > File Input
-            alias: uiAliases[i] || item.alias || "",
-            greeting: uiGreetings[i] || item.greeting || ""
-        }));
+    if (isSingleMode) {
+        const singleUrl = document.getElementById('singleUrlInput').value.trim();
+        const singleAlias = document.getElementById('singleAliasInput').value.trim();
+        const singleGreeting = document.getElementById('qrGreetingInput')?.value.trim() || "";
+        if (!singleUrl) {
+            showToast("Please enter a URL", "error");
+            return;
+        }
+        finalProcessList.push({ url: singleUrl, alias: singleAlias, greeting: singleGreeting });
+    } else {
+        // Bulk Mode
+        const pasteData = document.getElementById('urlInput').value.trim()
+            .split('\n')
+            .filter(u => u.trim())
+            .map((u, i) => ({
+                url: u.trim(),
+                alias: document.getElementById('aliasInput').value.split(',')[i]?.trim() || "",
+                greeting: document.getElementById('qrGreetingInput').value.split(',')[i]?.trim() || ""
+            }));
+
+        finalProcessList = uploadedData.length > 0 ? uploadedData : pasteData;
     }
 
     if (finalProcessList.length === 0) {
-        showError('Please paste links or upload an Excel file');
+        showToast("No URLs to process", "error");
         return;
     }
 
     if (finalProcessList.length > 500) {
-        showError('Max 500 links per request');
+        showToast("Max 500 links allowed at once.", "error");
         return;
     }
 
@@ -146,7 +220,6 @@ async function shortenUrl() {
     const progressBar = document.getElementById('bulkProgressBar');
     const progressText = document.getElementById('bulkProgressText');
 
-    errorArea.classList.add('hidden');
     shortenBtn.disabled = true;
     shortenBtn.innerHTML = '<span class="spinner"></span>Shortening...';
 
@@ -188,10 +261,10 @@ async function shortenUrl() {
                     index: index + 1
                 });
             } else {
-                addErrorToUI(data.error || "Error", item.url);
+                showToast(`Error shortening ${item.url}: ${data.error}`, "error");
             }
         } catch (error) {
-            addErrorToUI("Server error", item.url);
+            showToast("Server error", "error");
         }
     }
 
@@ -217,10 +290,13 @@ function addLinkToUI(shortUrl, originalUrl, qrGreeting) {
     const div = document.createElement('div');
     div.className = 'link-box';
     div.innerHTML = `
-        <span title="${originalUrl}" style="color: var(--accent-secondary); font-weight: 500;">${shortUrl}</span>
-        <div style="display: flex; gap: 8px; align-items: center;">
-            <button class="qr-toggle" style="background: rgba(61, 122, 77, 0.15); color: var(--accent-secondary); border: 1px solid rgba(61, 122, 77, 0.3);" onclick="openQrModal('${shortUrl}', '${qrGreeting}')">QR</button>
-            <button class="copy-btn" onclick="copyIndividualLink('${shortUrl}', this)">Copy</button>
+        <div class="link-info">
+            <span class="link-original" title="${originalUrl}">${originalUrl}</span>
+            <span class="link-short">${shortUrl}</span>
+        </div>
+        <div class="link-actions">
+            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" onclick="openQrModal('${shortUrl}', '${qrGreeting}')">🖼️ QR</button>
+            <button class="btn btn-primary" style="padding: 6px 12px; font-size: 13px;" onclick="copyIndividualLink('${shortUrl}', this)">📋 Copy</button>
         </div>
     `;
     linksList.appendChild(div);
@@ -301,34 +377,37 @@ function downloadQR(url, greeting) {
 
 function addErrorToUI(error, originalUrl) {
     const linksList = document.getElementById('linksList');
+    if (!linksList) return;
     const div = document.createElement('div');
     div.className = 'link-box';
-    div.style.borderColor = 'rgba(239, 68, 68, 0.2)';
-    div.style.background = 'rgba(239, 68, 68, 0.05)';
-    div.innerHTML = `<span style="color: var(--error); font-size: 0.9rem; font-weight: 500;">${error}:</span><small style="color: var(--text-secondary); margin-left: 8px; overflow: hidden; text-overflow: ellipsis;">${originalUrl.substring(0, 20)}...</small>`;
+    div.style.borderLeft = '4px solid var(--error)';
+    div.innerHTML = `
+        <div class="link-info">
+            <span class="link-original" title="${originalUrl}">${originalUrl}</span>
+            <span class="link-short" style="color: var(--error)">Failed: ${error}</span>
+        </div>
+    `;
     linksList.appendChild(div);
-}
-
-function showError(msg) {
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerText = msg;
-    errorArea.classList.remove('hidden');
 }
 
 function copyIndividualLink(text, btn) {
     navigator.clipboard.writeText(text);
+    showToast("Link copied!");
     const oldText = btn.innerText;
-    btn.innerText = 'Copied!';
+    btn.innerText = '✅ Copied';
     setTimeout(() => btn.innerText = oldText, 2000);
 }
 
 function copyAllLinks() {
-    const spans = Array.from(document.querySelectorAll('.link-box span'));
+    const spans = Array.from(document.querySelectorAll('.link-short'));
     const links = spans
-        .filter(s => !s.style.color.includes('rgb(255, 123, 114)')) // exclude error text
+        .filter(s => !s.innerText.includes('Failed:'))
         .map(s => s.innerText)
         .join('\n');
-    if (links) { navigator.clipboard.writeText(links); alert('Copied all links!'); }
+    if (links) {
+        navigator.clipboard.writeText(links);
+        showToast(`Copied ${spans.length} links!`);
+    }
 }
 
 function downloadSampleTemplate() {
@@ -514,13 +593,12 @@ async function createABTest() {
     const btn = document.getElementById('startAbBtn');
 
     if (!name || !urlA || !urlB) {
-        alert('Please fill in all fields');
+        showToast('Please fill in all fields', 'error');
         return;
     }
 
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>Creating...';
-
     try {
         const response = await fetch('/api/ab/create', {
             method: 'POST',
