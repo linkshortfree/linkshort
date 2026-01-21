@@ -859,6 +859,91 @@ small {
     letter-spacing: 0.01em;
 }
 
+/* === DASHBOARD LAYOUT (Redesign) === */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.control-panel {
+    background: rgba(17, 24, 38, 0.4);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid var(--glass-border);
+}
+
+/* Compact Controls */
+.compact-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.compact-control {
+    height: 36px !important;
+    padding: 0 0.5rem !important;
+    font-size: 0.9rem !important;
+}
+
+.color-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+.color-input-wrapper input[type="color"] {
+    width: 24px;
+    height: 24px;
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+/* Minimal Dropzone */
+.dropzone-minimal {
+    border: 1px dashed var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.dropzone-minimal:hover {
+    border-color: var(--accent-primary);
+    background: rgba(16, 185, 129, 0.05);
+    color: var(--accent-primary);
+}
+
+/* Action Bar */
+.action-bar {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    justify-content: flex-end;
+}
+
+
 /* === TABS === */
 .tab-container {
     display: flex;

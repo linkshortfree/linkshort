@@ -56,156 +56,164 @@
             </div>
         </section>
 
-        <section class="tool-ui-section">
-            <div class="glass-card" style="max-width: 1000px; margin: 0 auto;">
-                <div class="tab-container">
+        <section class="tool-ui-section" style="padding-top: 1rem;">
+            <div class="glass-card-premium" style="max-width: 1100px; margin: 0 auto; padding: 0;">
+
+                <!-- Header Tabs -->
+                <div class="tab-container"
+                    style="padding: 0 1.5rem; margin-top: 1.5rem; margin-bottom: 0; border: none;">
                     <button class="tab-btn active" onclick="switchTab('bulk')">📦 Bulk Designer</button>
                     <button class="tab-btn" onclick="switchTab('single')">🔗 Single Designer</button>
                 </div>
 
-                <div class="dashboard-layout">
-                    <!-- Step 1: Links -->
-                    <div class="design-step">
-                        <h3 class="step-title">Step 1: Configure Links</h3>
+                <div class="dashboard-layout" style="padding: 2rem;">
+                    <div class="dashboard-grid">
 
-                        <!-- Bulk Mode Container -->
-                        <div id="bulkContainer">
-                            <div class="input-group">
-                                <label class="input-label">
-                                    Paste URLs (one per line)
-                                    <span class="tooltip-container">ⓘ
-                                        <span class="tooltip-text">Enter one URL per line. We'll shorten all of them at
-                                            once.</span>
-                                    </span>
-                                </label>
-                                <textarea id="urlInput"
-                                    placeholder="https://example.com/page1&#10;https://example.com/page2" rows="5"
-                                    oninput="updateLivePreview()"></textarea>
-                            </div>
-
-                            <div class="file-upload-section">
-                                <label for="fileInput" class="file-label">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        viewBox="0 0 16 16">
-                                        <path
-                                            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                        <path
-                                            d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
-                                    </svg>
-                                    Upload CSV / Excel
+                        <!-- LEFT COLUMN: INPUTS -->
+                        <div class="left-config-panel">
+                            <!-- File Upload Area -->
+                            <div id="bulkContainer">
+                                <label for="fileInput" class="dropzone-minimal">
+                                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📂</div>
+                                    <span style="font-weight: 500;">Click to upload CSV / Excel</span>
+                                    <div style="font-size: 0.8rem; margin-top: 0.25rem; opacity: 0.7;">or drag and drop
+                                        here</div>
                                 </label>
                                 <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display:none;"
                                     onchange="handleFileUpload(this)">
                                 <div id="fileStatus" class="file-status"></div>
+
+                                <div class="input-group" style="margin-top: 1.5rem;">
+                                    <label class="input-label">Paste URLs (One per line)</label>
+                                    <textarea id="urlInput" class="input-focus-ring"
+                                        placeholder="https://example.com/page1&#10;https://example.com/page2" rows="6"
+                                        oninput="updateLivePreview()"
+                                        style="background: rgba(0,0,0,0.2); border-color: var(--glass-border);"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Single Mode Input -->
+                            <div id="singleContainer" class="hidden">
+                                <div class="input-group">
+                                    <label class="input-label">Enter Long URL</label>
+                                    <input type="url" id="singleUrlInput" class="input-focus-ring"
+                                        placeholder="https://example.com/very-long-link..."
+                                        oninput="updateLivePreview()">
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-label">Custom Alias (Optional)</label>
+                                    <input type="text" id="singleAliasInput" class="input-focus-ring"
+                                        placeholder="my-custom-link">
+                                </div>
+                            </div>
+
+                            <!-- Alias Toggle -->
+                            <div style="margin-top: 1.5rem;">
+                                <div class="options-toggle" onclick="toggleOptions()">+ Add Custom Aliases (Bulk)</div>
+                                <div class="custom-options" id="customOptions">
+                                    <span class="prefix">linkshort.live/</span>
+                                    <input type="text" id="aliasInput" class="input-focus-ring"
+                                        placeholder="alias1, alias2">
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Single Mode Container -->
-                        <div id="singleContainer" class="hidden">
-                            <div class="input-group">
-                                <label class="input-label">Enter Long URL</label>
-                                <input type="url" id="singleUrlInput"
-                                    placeholder="https://example.com/very-long-link..." oninput="updateLivePreview()">
-                            </div>
-                            <div class="input-group">
-                                <label class="input-label">Custom Alias (Optional)</label>
-                                <input type="text" id="singleAliasInput" placeholder="my-custom-link">
-                            </div>
-                        </div>
+                        <!-- RIGHT COLUMN: DESIGN & PREVIEW -->
+                        <div class="right-design-panel">
+                            <!-- QR Customization Card -->
+                            <div class="control-panel" style="margin-bottom: 1.5rem;">
+                                <h4 style="margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-primary);">🎨 QR
+                                    Customization</h4>
 
-                        <div class="options-toggle" onclick="toggleOptions()">+ Custom Aliases (Bulk)</div>
-                        <div class="custom-options" id="customOptions">
-                            <span class="prefix">linkshort.live/</span>
-                            <input type="text" id="aliasInput" placeholder="alias1, alias2">
+                                <div class="compact-row">
+                                    <div>
+                                        <label class="input-label" style="font-size: 0.8rem;">Color</label>
+                                        <div class="color-input-wrapper">
+                                            <input type="color" id="qrColor" value="#000000"
+                                                onchange="updateLivePreview()">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="input-label" style="font-size: 0.8rem;">Background</label>
+                                        <div class="color-input-wrapper">
+                                            <input type="color" id="qrBgColor" value="#ffffff"
+                                                onchange="updateLivePreview()">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="compact-row">
+                                    <div>
+                                        <label class="input-label" style="font-size: 0.8rem;">Size</label>
+                                        <select id="qrSizeSelect" class="compact-control input-focus-ring"
+                                            onchange="updateLivePreview()">
+                                            <option value="200">Small</option>
+                                            <option value="300" selected>Medium</option>
+                                            <option value="400">Large</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="input-label" style="font-size: 0.8rem;">Greeting Top</label>
+                                        <input type="text" id="qrGreetingInput" class="compact-control input-focus-ring"
+                                            placeholder="Scan Me!" oninput="updateLivePreview()">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dynamic Live Preview -->
+                            <aside class="preview-sidebar hidden-initially" id="masterResultArea">
+                                <div id="singlePreviewSide" class="preview-card glass-card"
+                                    style="border: 1px solid var(--accent-primary);">
+                                    <h4
+                                        style="font-size: 0.9rem; color: var(--accent-primary); margin-bottom: 0.75rem; text-align: center;">
+                                        Live Preview</h4>
+                                    <div id="liveQrContainer"
+                                        style="background: white; padding: 1rem; border-radius: 12px; min-height: 180px; display: flex; align-items: center; justify-content: center;">
+                                        <div style="color: #cbd5e1; font-size: 0.8rem;">Preview loads here...</div>
+                                    </div>
+                                    <div id="liveQrGreeting"
+                                        style="margin-top: 0.5rem; font-weight: 700; text-align: center; font-size: 0.9rem;">
+                                    </div>
+                                </div>
+                            </aside>
                         </div>
                     </div>
 
-                    <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 2rem 0;">
+                    <!-- Floating Action Bar -->
+                    <div class="action-bar">
+                        <button id="shortenBtn" class="btn btn-primary" onclick="shortenUrl()"
+                            style="min-width: 200px;">
+                            🚀 Generate Links & QR
+                        </button>
+                    </div>
 
-                    <!-- Step 2: QR Design -->
-                    <div class="design-step">
-                        <h3 class="step-title">Step 2: Brand with QR (Optional)</h3>
+                    <!-- Results Area (Hidden Initially) -->
+                    <div id="resultArea" class="result-area hidden" style="margin-top: 2rem;">
+                        <div class="glass-card" style="padding: 1.5rem; border: 1px solid var(--success);">
+                            <h4 style="color: var(--success); margin-bottom: 1.5rem;">✨ Success! Your links are ready.
+                            </h4>
+                            <div id="linksList" class="links-list" style="max-height: 300px; overflow-y: auto;"></div>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div>
-                                <label class="input-label">QR Color</label>
-                                <input type="color" id="qrColor" value="#000000" onchange="updateLivePreview()"
-                                    style="width: 100%; height: 40px; border: none; border-radius: 8px;">
+                            <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                                <button class="btn btn-secondary" onclick="copyAllLinks()">📋 Copy Links</button>
+                                <button id="downloadAllQrsBtn" class="btn btn-secondary" onclick="downloadAllQRs()">🖼️
+                                    ZIP Download</button>
+                                <button id="downloadCsvBtn" class="btn btn-secondary" onclick="downloadResultsCSV()">📊
+                                    CSV Download</button>
                             </div>
-                            <div>
-                                <label class="input-label">Background</label>
-                                <input type="color" id="qrBgColor" value="#ffffff" onchange="updateLivePreview()"
-                                    style="width: 100%; height: 40px; border: none; border-radius: 8px;">
-                            </div>
-                        </div>
-
-                        <div style="margin-top: 1.5rem;">
-                            <label class="input-label">QR Size</label>
-                            <select id="qrSizeSelect" onchange="updateLivePreview()"
-                                style="width: 100%; padding: 0.75rem; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--glass-border); color: var(--text-primary);">
-                                <option value="200">Small (200px)</option>
-                                <option value="300" selected>Medium (300px)</option>
-                                <option value="400">Large (400px)</option>
-                            </select>
-                        </div>
-
-                        <div style="margin-top: 1.5rem;">
-                            <label class="input-label">QR Greeting (Appears below QR)</label>
-                            <input type="text" id="qrGreetingInput" placeholder="Hello!, Welcome!"
-                                oninput="updateLivePreview()">
                         </div>
                     </div>
 
-                    <button id="shortenBtn" class="btn btn-primary" onclick="shortenUrl()"
-                        style="margin-top: 2rem;">Process Link & Generate Branding</button>
-
-                    <!-- Progress Bar -->
-                    <div id="bulkProgressContainer" class="hidden">
+                    <div id="bulkProgressContainer" class="hidden" style="margin-top: 2rem;">
                         <div class="progress-container">
                             <div id="bulkProgressBar" class="progress-bar"></div>
                         </div>
-                        <p id="bulkProgressText" style="font-size: 13px; color: var(--text-muted); text-align: center;">
+                        <p id="bulkProgressText" style="text-align: center; margin-top: 0.5rem; font-size: 0.9rem;">
                             Processing...</p>
                     </div>
+                    <div id="errorArea" class="error-message hidden" style="margin-top: 1rem;"></div>
 
-                    <div id="errorArea" class="error-message hidden"></div>
                 </div>
-
-                <aside class="preview-sidebar hidden-initially" id="masterResultArea">
-                    <!-- Live Preview for Single Mode -->
-                    <div id="singlePreviewSide" class="preview-card glass-card">
-                        <h3 style="margin: 0;">Live QR Preview</h3>
-                        <span class="tooltip-container">ⓘ
-                            <span class="tooltip-text">Showing preview for the first link in your list.</span>
-                        </span>
-                    </div>
-                    <div id="liveQrContainer"
-                        style="background: white; padding: 1.5rem; border-radius: 12px; min-height: 200px;">
-                        <div style="color: #64748b; font-size: 0.85rem; margin-top: 80px;">Paste a link to preview
-                        </div>
-                    </div>
-                    <div id="liveQrGreeting" style="margin-top: 1rem; font-weight: 700;"></div>
-                    <button class="copy-btn" id="liveDownloadBtn"
-                        style="margin-top: 1rem; width: 100%; display: none;">Download Preview</button>
-            </div>
-
-            <div id="resultArea" class="result-area hidden">
-                <div class="glass-card" style="padding: 1.5rem;">
-                    <h4
-                        style="color: var(--success); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 8px;">
-                        ✨ Links Ready!
-                    </h4>
-                    <div id="linksList" class="links-list"></div>
-                    <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem;">
-                        <button class="btn btn-secondary" onclick="copyAllLinks()">📋 Copy All Links</button>
-                        <button id="downloadAllQrsBtn" class="btn btn-secondary" onclick="downloadAllQRs()">🖼️ Download
-                            All QR (ZIP)</button>
-                        <button id="downloadCsvBtn" class="btn btn-secondary" onclick="downloadResultsCSV()">📊 Download
-                            CSV</button>
-                    </div>
-                </div>
-            </div>
-            </aside>
             </div>
         </section>
 
