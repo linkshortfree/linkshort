@@ -142,13 +142,8 @@
                                 enter comma-separated values.</p>
                         </div>
 
-                    </div>
-
-                    <!-- RIGHT: Preview & Settings -->
-                    <div class="settings-panel">
-
-                        <!-- Custom Alias Input (New Position) -->
-                        <div style="margin-bottom: 1.5rem;">
+                        <!-- BULK ONLY: Custom Alias -->
+                        <div id="bulkAliasContainer" style="margin-top: 1.5rem;">
                             <label class="saas-label">Custom Alias (Optional)</label>
                             <div
                                 style="display: flex; align-items: center; background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); overflow: hidden;">
@@ -156,11 +151,18 @@
                                     style="padding: 0 1rem; color: var(--text-tertiary); font-size: 0.9rem; background: var(--surface-card); border-right: 1px solid var(--border-subtle); height: 42px; display: flex; align-items: center;">linkshort.live/</span>
                                 <input type="text" id="aliasInput"
                                     style="border: none; background: transparent; padding: 0 1rem; height: 42px; width: 100%; color: var(--text-primary); outline: none;"
-                                    placeholder="custom-name">
+                                    placeholder="alias1, alias2">
                             </div>
-                            <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 0.25rem;">For bulk,
-                                enter comma-separated values (e.g. alias1, alias2)</p>
+                            <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 0.25rem;">
+                                Comma-separated values for bulk generation.</p>
                         </div>
+
+                    </div>
+
+                    <!-- RIGHT: Preview & Settings -->
+                    <div class="settings-panel">
+
+
 
                         <!-- QR Preview Section -->
                         <div
@@ -371,15 +373,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="saas-footer">
-        <div class="footer-links">
-            <a href="/about-us">About</a>
-            <a href="/contact">Contact</a>
-            <a href="/privacy-policy">Privacy</a>
-            <a href="/terms-of-service">Terms</a>
-        </div>
-        <p>&copy; 2026 LinkShort. Built for professionals.</p>
-    </footer>
+    {% include 'partials/_footer.html' %}
 
     <!-- QR Modal -->
     <div id="qrModal" class="hidden"
