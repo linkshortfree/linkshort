@@ -13,14 +13,7 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="saas-navbar">
-        <a href="/" class="nav-brand">Link<span>Short</span></a>
-        <div class="nav-items">
-            <a href="/" class="nav-item">Link & QR Designer</a>
-            <a href="/tools/utm-ab" class="nav-item">UTM Builder / AB Testing</a>
-            <a href="/blog" class="nav-item active">Blog</a>
-        </div>
-    </nav>
+    {% include 'partials/_navbar.html' %}
 
     <div class="page-wrapper">
         <header style="margin-bottom: 3rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 2rem;">
@@ -49,14 +42,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="saas-footer">
-        <div class="footer-links">
-            <a href="/about-us">About</a>
-            <a href="/contact">Contact</a>
-            <a href="/privacy-policy">Privacy</a>
-        </div>
-        <p>&copy; 2026 LinkShort.</p>
-    </footer>
+    {% include 'partials/_footer.html' %}
 
 </body>
 
