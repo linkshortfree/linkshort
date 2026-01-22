@@ -4,32 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} | Blog | LinkShort</title>
-    <meta name="description"
-        content="Read {{ title }} on LinkShort Blog. Marketing tips, link management, and QR code guides.">
+    <title>{{ title }} | LinkShort Blog</title>
+    <meta name="description" content="Read our latest guide on {{ title }}.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "{{ title }}",
+      "author": {
+        "@type": "Organization",
+        "name": "LinkShort Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "LinkShort",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://linkshort.live/static/favicon.png"
+        }
+      }
+    }
+    </script>
 </head>
 
 <body>
-    <div class="background-glow"></div>
-    {% include 'partials/_navbar.html' %}
 
-    <main class="page-content static-page">
-        <article class="glass-card" style="padding: 3rem; max-width: 800px; margin: 0 auto;">
-            <div class="blog-content">
-                {{ content | safe }}
-            </div>
+    <!-- Navbar -->
+    <nav class="saas-navbar">
+        <a href="/" class="nav-brand">Link<span>Short</span></a>
+        <div class="nav-items">
+            <a href="/" class="nav-item">Link & QR Designer</a>
+            <a href="/tools/utm-ab" class="nav-item">UTM Builder / AB Testing</a>
+            <a href="/blog" class="nav-item active">Blog</a>
+        </div>
+    </nav>
 
-            <div style="margin-top: 3rem; display: flex; gap: 1rem;">
-                <a href="/blog" class="btn btn-secondary">← Back to Blog</a>
-                <a href="/" class="btn btn-secondary">Back to Home</a>
-            </div>
-        </article>
-    </main>
+    <div class="page-wrapper" style="max-width: 1000px;">
 
-    {% include 'partials/_footer.html' %}
+        <a href="/blog"
+            style="display: inline-flex; align-items: center; gap: 6px; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem; font-weight: 500;">
+            ← Back to Insights
+        </a>
+
+        <div class="dashboard-grid" style="grid-template-columns: 2fr 1fr; align-items: start;">
+
+            <!-- Main Content -->
+            <article class="saas-card"
+                style="padding: 2.5rem; background: var(--bg-primary); border: none; box-shadow: none; padding-left: 0;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 1.5rem; letter-spacing: -0.03em; line-height: 1.2;">{{
+                    title }}</h1>
+                <div style="line-height: 1.8; color: var(--text-primary); font-size: 1.05rem;">
+                    {{ content | safe }}
+                </div>
+            </article>
+
+            <!-- Sidebar -->
+            <aside style="position: sticky; top: 100px;">
+                <!-- URL Anatomy Widget -->
+                <div class="saas-card" style="margin-bottom: 2rem;">
+                    <div class="saas-card-header">
+                        <span style="font-weight: 600;">🧠 Anatomy of a URL</span>
+                    </div>
+                    <div class="saas-card-body" style="font-size: 0.9rem; line-height: 1.6;">
+                        <p style="margin-bottom: 1rem;"><code
+                                style="background: rgba(44, 167, 115, 0.1); color: var(--accent-primary); padding: 2px 4px; border-radius: 4px;">https://</code><br><strong>Protocol:</strong>
+                            Defines how data is exchanged.</p>
+                        <p style="margin-bottom: 1rem;"><code
+                                style="background: rgba(44, 167, 115, 0.1); color: var(--accent-primary); padding: 2px 4px; border-radius: 4px;">example.com</code><br><strong>Domain:</strong>
+                            The address of the website.</p>
+                        <p><code
+                                style="background: rgba(44, 167, 115, 0.1); color: var(--accent-primary); padding: 2px 4px; border-radius: 4px;">/path?utm=abc</code><br><strong>Path
+                                & Query:</strong> Specific page and tracking parameters.</p>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="saas-card" style="background: var(--bg-secondary);">
+                    <div class="saas-card-body" style="text-align: center;">
+                        <h4 style="margin-bottom: 0.5rem; font-size: 1.1rem;">Ready to optimize?</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.25rem;">Create a
+                            cleaner, shorter version of this link instantly.</p>
+                        <a href="/" class="saas-btn saas-btn-primary" style="width: 100%; text-decoration: none;">Launch
+                            Designer</a>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="saas-footer">
+        <div class="footer-links">
+            <a href="/about-us">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy-policy">Privacy</a>
+        </div>
+        <p>&copy; 2026 LinkShort.</p>
+    </footer>
+
 </body>
 
 </html>

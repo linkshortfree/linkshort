@@ -164,8 +164,9 @@ function updateLivePreview() {
     const qrGreetingInput = document.getElementById('qrGreetingInput');
     const container = document.getElementById('liveQrContainer');
     const greetingDisplay = document.getElementById('liveQrGreeting');
-    const downloadBtn = document.getElementById('liveDownloadBtn');
-    const previewCard = document.getElementById('livePreviewCard');
+    // We don't have a download button in the preview box anymore in the new design, 
+    // but the modal has one. 
+    // The main "Generate" button handles the real action.
 
     let firstUrl = "";
     if (urlInput && !urlInput.closest('.hidden')) {
@@ -175,35 +176,98 @@ function updateLivePreview() {
     }
 
     const greeting = qrGreetingInput ? qrGreetingInput.value.split(',')[0].trim() : "";
-
     const qrColor = document.getElementById('qrColor').value || "#000000";
     const qrBgColor = document.getElementById('qrBgColor').value || "#ffffff";
+    const size = parseInt(document.getElementById('qrSizeSelect')?.value || 300);
 
+    // DEMO MODE CHECK
+    let isDemo = false;
     if (!firstUrl) {
-        container.innerHTML = '<div style="color: #64748b; font-size: 0.85rem; margin-top: 80px;">Design your link to see preview</div>';
-        greetingDisplay.innerText = '';
-        downloadBtn.style.display = 'none';
-        previewCard.classList.add('empty');
-        return;
+        firstUrl = "https://linkshort.live"; // Demo URL
+        isDemo = true;
     }
 
     container.innerHTML = '';
     greetingDisplay.innerText = greeting;
-    downloadBtn.style.display = 'block';
-    previewCard.classList.remove('empty');
 
+    // Visual cue for demo mode
+    if (isDemo) {
+        container.style.opacity = '0.7';
+        greetingDisplay.style.opacity = '0.7';
+        // Optional: Add a "Demo" overlay
+    } else {
+        container.style.opacity = '1';
+        greetingDisplay.style.opacity = '1';
+    }
+
+    // Render using QRCode lib
     new QRCode(container, {
         text: firstUrl,
-        width: 200,
+        width: 200, // Preview is always fixed size roughly
         height: 200,
         colorDark: qrColor,
         colorLight: qrBgColor,
         correctLevel: QRCode.CorrectLevel.H
     });
-
-    downloadBtn.onclick = () => downloadQR(firstUrl, greeting);
 }
 
+// Fixed Bulk QR Generator logic
+async function generateQRCanvasInMemory(url, greeting) {
+    const selectedSize = parseInt(document.getElementById('qrSizeSelect')?.value || 300);
+    const qrColor = document.getElementById('qrColor').value || "#000000";
+    const qrBgColor = document.getElementById('qrBgColor').value || "#ffffff";
+
+    return new Promise((resolve) => {
+        const wrapper = document.createElement('div');
+
+        // render
+        new QRCode(wrapper, {
+            text: url,
+            width: selectedSize,
+            height: selectedSize,
+            colorDark: qrColor,
+            colorLight: qrBgColor,
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // Wait for canvas to be generated
+        const checkCanvas = setInterval(() => {
+            const srcCanvas = wrapper.querySelector('canvas');
+            if (srcCanvas) {
+                clearInterval(checkCanvas);
+
+                // Create final export canvas with padding/greeting
+                const exportCanvas = document.createElement('canvas');
+                const ctx = exportCanvas.getContext('2d');
+                const padding = Math.round(selectedSize * 0.05);
+                const textHeight = greeting ? Math.round(selectedSize * 0.15) : 0;
+
+                exportCanvas.width = selectedSize + (padding * 2);
+                exportCanvas.height = selectedSize + textHeight + (padding * 2);
+
+                // Fill background
+                ctx.fillStyle = "#ffffff"; // Always white bg for the card itself? 
+                // Actually user might want transparent, but let's stick to white for safety 
+                // OR use the user selected bg color for the whole card
+                ctx.fillStyle = qrBgColor;
+                ctx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+
+                // Draw Greeting
+                if (greeting) {
+                    ctx.fillStyle = qrColor; // Match QR color for text
+                    ctx.font = `bold ${Math.round(selectedSize * 0.06)}px sans-serif`;
+                    ctx.textAlign = "center";
+                    ctx.fillText(greeting, exportCanvas.width / 2, padding + (textHeight / 1.5));
+                }
+
+                // Draw QR
+                ctx.drawImage(srcCanvas, padding, padding + textHeight, selectedSize, selectedSize);
+
+                resolve(exportCanvas);
+            }
+        }, 50);
+    });
+}
 async function shortenUrl() {
     const resultArea = document.getElementById('resultArea');
     const linksList = document.getElementById('linksList');

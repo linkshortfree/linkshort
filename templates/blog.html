@@ -4,64 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | LinkShort - Insights on URL Shortening & QR Codes</title>
-    <meta name="description"
-        content="Read the latest articles on URL shortening, digital marketing, and branded QR codes from the LinkShort team.">
+    <title>Blog & Insights | LinkShort</title>
+    <meta name="description" content="Expert insights on link management, QR code marketing, and campaign tracking.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5774199741984914"
-        crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="background-glow"></div>
-    <div class="main-grid">
-        <div class="container" style="text-align: left; max-width: 800px;">
-            <header style="text-align: center;">
-                <div class="logo"><a href="/" style="text-decoration: none; color: inherit;">Link<span>Short</span></a>
-                </div>
-            </header>
 
-            <main>
-                <h1 style="font-size: 2.75rem; margin-bottom: 2rem; text-align: center;">LinkShort Insights</h1>
+    <!-- Navbar -->
+    <nav class="saas-navbar">
+        <a href="/" class="nav-brand">Link<span>Short</span></a>
+        <div class="nav-items">
+            <a href="/" class="nav-item">Link & QR Designer</a>
+            <a href="/tools/utm-ab" class="nav-item">UTM Builder / AB Testing</a>
+            <a href="/blog" class="nav-item active">Blog</a>
+        </div>
+    </nav>
 
-                <div style="display: flex; flex-direction: column; gap: 2rem;">
-                    {% for post in posts %}
-                    <article class="glass-card" style="padding: 2.5rem; transition: transform 0.3s ease;">
-                        <div style="font-size: 0.85rem; color: var(--accent-secondary); margin-bottom: 0.5rem;">{{
-                            post.date }}</div>
-                        <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">
-                            <a href="/blog/{{ post.slug }}" style="color: inherit; text-decoration: none;">{{ post.title
-                                }}</a>
-                        </h2>
-                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">
-                            {{ post.excerpt }}
-                        </p>
-                        <a href="/blog/{{ post.slug }}" class="copy-btn"
-                            style="display: inline-block; text-decoration: none; text-align: center; margin-left: 0;">Read
-                            More</a>
-                    </article>
-                    {% endfor %}
-                </div>
-            </main>
+    <div class="page-wrapper">
+        <header style="margin-bottom: 3rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 2rem;">
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem; letter-spacing: -0.02em;">Latest Insights</h1>
+            <p style="color: var(--text-secondary); max-width: 600px;">Guides and strategies for modern link management.
+            </p>
+        </header>
 
-            <footer style="margin-top: 3rem; text-align: center;">
-                <p>&copy; 2026 LinkShort. All rights reserved.</p>
-                <div style="margin-top: 10px; font-size: 0.8rem;">
-                    <a href="/" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Home</a>
-                    <a href="/blog" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Blog</a>
-                    <a href="/about" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">About Us</a>
-                    <a href="/contact"
-                        style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Contact</a>
-                    <a href="/privacy" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Privacy
-                        Policy</a>
-                    <a href="/terms" style="color: var(--text-sub); text-decoration: none; margin: 0 10px;">Terms of
-                        Service</a>
+        <div class="blog-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+            {% for post in posts %}
+            <a href="{{ url_for('blog_post', slug=post.slug) }}" class="saas-card"
+                style="text-decoration: none; transition: transform 0.2s;">
+                <div class="saas-card-body">
+                    <div
+                        style="font-size: 0.8rem; color: var(--accent-primary); margin-bottom: 0.5rem; text-transform: uppercase; font-weight: 600;">
+                        Article</div>
+                    <h2 style="font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.4;">{{ post.title }}</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; line-height: 1.6;">
+                        {{ post.excerpt }}...</p>
+                    <div style="font-size: 0.8rem; color: var(--text-tertiary);">{{ post.date }}</div>
                 </div>
-            </footer>
+            </a>
+            {% endfor %}
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="saas-footer">
+        <div class="footer-links">
+            <a href="/about-us">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy-policy">Privacy</a>
+        </div>
+        <p>&copy; 2026 LinkShort.</p>
+    </footer>
+
 </body>
 
 </html>

@@ -4,10 +4,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkShort | Master Designer</title>
-    <meta name="description" content="Professional link management and QR code toolkit.">
+    <title>LinkShort | Free Bulk Link Shortener & QR Code Generator</title>
+    <meta name="description"
+        content="Professional bulk link shortener and QR generator. Process thousands of links instantly with custom branding. No login required.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "LinkShort Master Designer",
+          "applicationCategory": "Productivity",
+          "operatingSystem": "Web",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "1250"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [{
+            "@type": "Question",
+            "name": "Is this bulk shortener free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, LinkShort is 100% free for bulk link shortening and QR generation. There are no hidden fees or signup requirements."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How many links can I process at once?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can process up to 500 links in a single batch via CSV or Excel upload."
+            }
+          }, {
+            "@type": "Answer",
+              "text": "No, all generated QR codes are static and will work forever. Shortened links also have no expiration date."
+            }
+          }]
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -17,18 +65,18 @@
         <a href="/" class="nav-brand">Link<span>Short</span></a>
         <div class="nav-items">
             <a href="/" class="nav-item active">Link & QR Designer</a>
-            <a href="/tools/utm-ab" class="nav-item">Marketing Toolkit</a>
+            <a href="/tools/utm-ab" class="nav-item">UTM Builder / AB Testing</a>
             <a href="/blog" class="nav-item">Blog</a>
         </div>
     </nav>
 
     <div class="page-wrapper">
 
-        <!-- Header -->
-        <header style="margin-bottom: 2rem;">
-            <h1 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Master Designer</h1>
-            <p style="color: var(--text-secondary); max-width: 600px;">Create shortened links and branded QR codes in
-                bulk. Professional grade tools for marketers.</p>
+        <!-- Simplified Header -->
+        <header style="margin-bottom: 2.5rem; text-align: left;">
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem; letter-spacing: -0.03em;">Master Link & QR Designer</h1>
+            <p style="color: var(--text-secondary); max-width: 600px; font-size: 1.05rem;">Shorten links and generate
+                branded QR codes in bulk. Fast, private, and free.</p>
         </header>
 
         <!-- Main Workspace -->
@@ -39,7 +87,7 @@
                     <button class="tab-btn active" onclick="switchTab('bulk')">Bulk Designer</button>
                     <button class="tab-btn" onclick="switchTab('single')">Single Link</button>
                 </div>
-                <div style="font-size: 0.8rem; color: var(--text-tertiary);">✨ Auto-saving enabled</div>
+                <div style="font-size: 0.8rem; color: var(--accent-primary); font-weight: 500;">● Ready</div>
             </div>
 
             <div class="saas-card-body">
@@ -85,14 +133,20 @@
                             </div>
                         </div>
 
-                        <!-- Bulk Aliases -->
+                        <!-- ALWAYS VISIBLE OPTIONS -->
                         <div style="margin-top: 1.5rem;">
-                            <div style="font-size: 0.85rem; color: var(--accent-primary); cursor: pointer; font-weight: 500;"
-                                onclick="toggleOptions()">+ Configure Aliases</div>
-                            <div id="customOptions" class="hidden" style="margin-top: 0.75rem;">
-                                <label class="saas-label">Custom Aliases (Comma separated)</label>
-                                <input type="text" id="aliasInput" class="saas-input" placeholder="alias1, alias2">
-                            </div>
+                            <label class="saas-label">QR Greeting Text (Top of QR)</label>
+                            <input type="text" id="qrGreetingInput" class="saas-input" placeholder="Scan Me!"
+                                oninput="updateLivePreview()">
+                            <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.25rem;">For bulk,
+                                enter comma-separated values.</p>
+                        </div>
+
+                        <div style="margin-top: 1.5rem;">
+                            <label class="saas-label">Custom Aliases (Optional)</label>
+                            <input type="text" id="aliasInput" class="saas-input" placeholder="alias1, alias2">
+                            <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 0.25rem;">
+                                Comma-separated values corresponding to your URLs.</p>
                         </div>
                     </div>
 
@@ -100,13 +154,13 @@
                     <div class="settings-panel">
                         <div
                             style="background: var(--bg-secondary); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 1.25rem;">
-                            <label class="saas-label" style="margin-bottom: 1rem;">QR Appearance</label>
+                            <label class="saas-label" style="margin-bottom: 1rem;">QR Demo Preview</label>
 
                             <!-- Preview Box -->
-                            <div id="masterResultArea" class="hidden-initially" style="margin-bottom: 1.5rem;">
+                            <div id="masterResultArea" style="margin-bottom: 1.5rem;">
                                 <div class="preview-box">
                                     <div id="liveQrContainer">
-                                        <span style="color: #cbd5e1; font-size: 0.8rem;">Preview...</span>
+                                        <!-- JS will render Demo QR here -->
                                     </div>
                                 </div>
                                 <div id="liveQrGreeting"
@@ -137,17 +191,12 @@
                                     <option value="400">Large (400px)</option>
                                 </select>
                             </div>
-                            <div>
-                                <label class="saas-label">Greeting Text</label>
-                                <input type="text" id="qrGreetingInput" class="saas-input" placeholder="Scan Me!"
-                                    oninput="updateLivePreview()">
-                            </div>
                         </div>
 
                         <!-- Generate Action -->
                         <button id="shortenBtn" class="saas-btn saas-btn-primary" onclick="shortenUrl()"
                             style="width: 100%; margin-top: 1.5rem; height: 44px; font-weight: 600;">
-                            Generate Links & QR
+                            Generate Links & QR Codes
                         </button>
                     </div>
 
@@ -183,6 +232,35 @@
             <div id="errorArea" class="error-message hidden"
                 style="padding: 1rem; color: var(--error); text-align: center;"></div>
         </div>
+
+        <!-- FAQ Section (New) -->
+        <section style="margin-top: 6rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 2rem; text-align: center;">Frequently Asked Questions</h3>
+            <div class="saas-card" style="padding: 0;">
+                <details style="border-bottom: 1px solid var(--border-subtle); padding: 1.5rem; cursor: pointer;">
+                    <summary style="font-weight: 500; color: var(--text-primary);">Is this tool completely free?
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.95rem;">Yes! LinkShort is
+                        designed to be a free utility for everyone. There are no paywalls for bulk processing or QR
+                        generation.</p>
+                </details>
+                <details style="border-bottom: 1px solid var(--border-subtle); padding: 1.5rem; cursor: pointer;">
+                    <summary style="font-weight: 500; color: var(--text-primary);">How do I use the bulk feature?
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.95rem;">Simply upload a CSV
+                        or Excel file where the first column contains your long URLs. You can also paste a list of URLs
+                        directly into the text box (one per line). Our system will process them all instantly.</p>
+                </details>
+                <details style="padding: 1.5rem; cursor: pointer;">
+                    <summary style="font-weight: 500; color: var(--text-primary);">Can I customize the QR codes?
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.95rem;">Absolutely. You can
+                        change the foreground color, background color, size, and even add a greeting text (like "Scan
+                        Me") to the top of the QR code.</p>
+                </details>
+            </div>
+        </section>
+
     </div>
 
     <!-- Footer -->

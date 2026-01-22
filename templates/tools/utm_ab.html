@@ -4,10 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinkShort | Marketing Toolkit</title>
-    <meta name="description" content="Professional UTM builder and A/B testing tools.">
+    <title>Marketing Toolkit | UTM Builder & A/B Link Testing</title>
+    <meta name="description"
+        content="Professional UTM campaign builder and A/B test link generator. Track marketing campaigns and optimize conversion rates. Free tools for marketers.">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "LinkShort Marketing Toolkit",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "offers": { "price": "0", "priceCurrency": "USD" }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [{
+            "@type": "Question",
+            "name": "What are UTM parameters?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "UTM parameters are tags added to the end of a URL that allow you to track the effectiveness of online marketing campaigns across traffic sources and publishing media."
+            }
+          }, {
+            "@type": "Question",
+            "name": "How does the A/B testing work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Our A/B testing tool creates a single 'split link'. When users click it, we randomly redirect them to either Variant A or Variant B based on your specified percentage split (e.g., 50/50), allowing you to test landing page performance."
+            }
+          }]
+        }
+      ]
+    }
+    </script>
 </head>
 
 <body>
@@ -17,7 +52,7 @@
         <a href="/" class="nav-brand">Link<span>Short</span></a>
         <div class="nav-items">
             <a href="/" class="nav-item">Link & QR Designer</a>
-            <a href="/tools/utm-ab" class="nav-item active">Marketing Toolkit</a>
+            <a href="/tools/utm-ab" class="nav-item active">UTM Builder / AB Testing</a>
             <a href="/blog" class="nav-item">Blog</a>
         </div>
     </nav>
@@ -169,6 +204,28 @@
 
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <!-- Marketing FAQs -->
+            <section style="margin-top: 6rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 2rem; text-align: center;">Common Questions</h3>
+                <div class="saas-card" style="padding: 0;">
+                    <details style="border-bottom: 1px solid var(--border-subtle); padding: 1.5rem; cursor: pointer;">
+                        <summary style="font-weight: 500; color: var(--text-primary);">Why should I use UTM parameters?
+                        </summary>
+                        <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.95rem;">Without UTM
+                            parameters, all traffic from a platform (like Facebook) looks the same in analytics. Adding
+                            UTMs lets you differentiate between specific ads, posts, or emails to see which one actually
+                            drives conversions.</p>
+                    </details>
+                    <details style="padding: 1.5rem; cursor: pointer;">
+                        <summary style="font-weight: 500; color: var(--text-primary);">What parameters are required?
+                        </summary>
+                        <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.95rem;">Generally,
+                            'Source' (e.g., google), 'Medium' (e.g., cpc), and 'Campaign' (e.g., summer_sale) are the
+                            big three. 'Term' and 'Content' are optional but useful for granular tracking.</p>
+                    </details>
                 </div>
             </section>
 
