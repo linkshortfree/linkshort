@@ -33,3 +33,35 @@
         <p>&copy; 2026 LinkShort. Built for transparency and trust.</p>
     </div>
 </footer>
+
+<!-- Cookie Consent Banner -->
+<div id="cookieBanner" class="cookie-banner hidden">
+    <div class="cookie-content">
+        <p>We use cookies to ensure you get the best experience on our website. <a href="/privacy-policy"
+                style="text-decoration: underline;">Learn more</a></p>
+        <button id="acceptCookiesBtn" class="saas-btn saas-btn-primary"
+            style="font-size: 0.8rem; padding: 4px 12px;">Got it!</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!localStorage.getItem('cookieConsent')) {
+            const banner = document.getElementById('cookieBanner');
+            if (banner) {
+                banner.classList.remove('hidden');
+                // Add slight delay for animation
+                setTimeout(() => banner.classList.add('visible'), 100);
+            }
+        }
+
+        document.getElementById('acceptCookiesBtn')?.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'true');
+            const banner = document.getElementById('cookieBanner');
+            if (banner) {
+                banner.classList.remove('visible');
+                setTimeout(() => banner.classList.add('hidden'), 300);
+            }
+        });
+    });
+</script>
