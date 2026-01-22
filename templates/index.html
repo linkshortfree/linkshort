@@ -205,13 +205,18 @@
 
             <!-- Results Section (Hidden) -->
             <div id="resultArea" class="hidden"
-                style="border-top: 1px solid var(--border-subtle); padding: 1.5rem; background: rgba(44, 167, 115, 0.05);">
+                style="border-top: 1px solid var(--border-subtle); padding: 1.5rem; background: var(--bg-secondary);">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-                    <h4 style="color: var(--success); font-size: 0.95rem;">🎉 Generation Complete</h4>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="saas-btn saas-btn-secondary" onclick="copyAllLinks()">Copy Links</button>
-                        <button class="saas-btn saas-btn-secondary" onclick="downloadAllQRs()">Download ZIP</button>
-                        <button class="saas-btn saas-btn-secondary" onclick="downloadResultsCSV()">Download CSV</button>
+                    <h4 style="color: var(--success); font-size: 0.95rem; font-weight: 600;">🎉 Generation Complete</h4>
+                    <div class="result-toolbar">
+                        <button class="saas-btn saas-btn-secondary" style="font-size: 0.85rem;"
+                            onclick="downloadResultsCSV()">Download CSV</button>
+                        <button class="saas-btn saas-btn-primary" onclick="copyAllLinks()">
+                            📋 Copy All
+                        </button>
+                        <button class="saas-btn saas-btn-primary" onclick="downloadAllQRs()">
+                            💾 Download ZIP
+                        </button>
                     </div>
                 </div>
                 <div id="linksList" class="links-list" style="max-height: 200px; overflow-y: auto;"></div>

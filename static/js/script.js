@@ -385,15 +385,21 @@ async function shortenUrl() {
 function addLinkToUI(shortUrl, originalUrl, qrGreeting) {
     const linksList = document.getElementById('linksList');
     const div = document.createElement('div');
-    div.className = 'link-box';
+    div.className = 'result-row'; // New class
     div.innerHTML = `
-        <div class="link-info">
-            <span class="link-original" title="${originalUrl}">${originalUrl}</span>
-            <span class="link-short">${shortUrl}</span>
+        <div class="result-info">
+            <div style="display:flex; flex-direction:column; gap:2px;">
+                <a href="${shortUrl}" target="_blank" class="result-short">${shortUrl.replace('https://', '')}</a>
+                <span class="result-original" title="${originalUrl}">${originalUrl}</span>
+            </div>
         </div>
-        <div class="link-actions">
-            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px;" onclick="openQrModal('${shortUrl}', '${qrGreeting}')">🖼️ QR</button>
-            <button class="saas-btn saas-btn-primary" style="padding: 6px 12px; font-size: 13px;" onclick="copyIndividualLink('${shortUrl}', this)">📋 Copy</button>
+        <div class="result-actions">
+            <button class="action-btn" title="View QR Code" onclick="openQrModal('${shortUrl}', '${qrGreeting}')">
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4h-4v-2h8v-2zm-6 3H8v2h4v-2zm-6-3H4v4h2v-4zm-2 0H0v4h2v-4zm15-11h-4v4h4V4zM6 4H2v4h4V4zm14 0h-4v4h4V4zm-9 6H9v2h2v-2zm5 0h-2v2h2v-2zM4 12H2v2h2v-2z" /></svg>
+            </button>
+            <button class="action-btn" title="Copy Link" onclick="copyIndividualLink('${shortUrl}', this)">
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+            </button>
         </div>
     `;
     linksList.appendChild(div);
