@@ -206,12 +206,35 @@ function updateLivePreview() {
     // Render using QRCode lib
     new QRCode(container, {
         text: firstUrl,
-        width: 200, // Preview is always fixed size roughly
+        width: 200,
         height: 200,
         colorDark: qrColor,
         colorLight: qrBgColor,
         correctLevel: QRCode.CorrectLevel.H
     });
+
+    // ALSO UPDATE MODAL IF OPEN
+    const modal = document.getElementById('qrModal');
+    if (modal && !modal.classList.contains('hidden')) {
+        // We need the URL being shown in the modal. 
+        // We can store it in a data attribute when opening.
+        const modalUrl = modal.dataset.currentUrl;
+        const modalGreeting = document.getElementById('modalGreeting').innerText;
+        if (modalUrl) {
+            const qrBody = document.getElementById('modalQrContent');
+            qrBody.innerHTML = '';
+            new QRCode(qrBody, {
+                text: modalUrl,
+                width: 200,
+                height: 200,
+                colorDark: qrColor,
+                colorLight: qrBgColor,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            // Update download button content closure if needed, 
+            // but downloadQR reads from canvas so it's fine.
+        }
+    }
 }
 
 // Fixed Bulk QR Generator logic
@@ -412,6 +435,9 @@ function openQrModal(url, greeting) {
     const qrBody = document.getElementById('modalQrContent');
     const downloadBtn = document.getElementById('modalDownloadBtn');
 
+    // Store URL for live updates
+    modal.dataset.currentUrl = url;
+
     const qrColor = document.getElementById('qrColor').value || "#000000";
     const qrBgColor = document.getElementById('qrBgColor').value || "#ffffff";
 
@@ -427,6 +453,7 @@ function openQrModal(url, greeting) {
         correctLevel: QRCode.CorrectLevel.H
     });
 
+    // Pass current greeting explicitly
     downloadBtn.onclick = () => downloadQR(url, greeting);
     modal.classList.remove('hidden');
 }
