@@ -291,12 +291,13 @@ async function shortenUrl() {
         finalProcessList.push({ url: singleUrl, alias: singleAlias, greeting: singleGreeting });
     } else {
         // Bulk Mode
+        const aliasInput = document.getElementById('aliasInput');
         const pasteData = document.getElementById('urlInput').value.trim()
             .split('\n')
             .filter(u => u.trim())
             .map((u, i) => ({
                 url: u.trim(),
-                alias: document.getElementById('aliasInput').value.split(',')[i]?.trim() || "",
+                alias: aliasInput ? (aliasInput.value.split(',')[i]?.trim() || "") : "",
                 greeting: document.getElementById('qrGreetingInput').value.split(',')[i]?.trim() || ""
             }));
 
@@ -318,7 +319,7 @@ async function shortenUrl() {
     const progressText = document.getElementById('bulkProgressText');
 
     shortenBtn.disabled = true;
-    shortenBtn.innerHTML = '<span class="spinner"></span>Shortening...';
+    shortenBtn.innerHTML = '<span class="spinner"></span>Generating...';
 
     if (progressContainer) {
         progressContainer.classList.remove('hidden');
@@ -370,7 +371,7 @@ async function shortenUrl() {
     }
 
     shortenBtn.disabled = false;
-    shortenBtn.innerText = 'Process & Generate';
+    shortenBtn.innerText = 'Generate';
     resultArea.classList.remove('hidden');
     resultArea.classList.add('visible');
 
