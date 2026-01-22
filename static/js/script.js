@@ -33,11 +33,15 @@ function switchTab(mode) {
     const singlePreview = document.getElementById('singlePreviewSide');
     const bulkProgress = document.getElementById('bulkProgressSide');
 
+    // New Bulk Alias Container (Phase 16 Refine)
+    const bulkAliasContainer = document.getElementById('bulkAliasContainer');
+
     tabBtns.forEach(btn => btn.classList.remove('active'));
 
     if (mode === 'bulk') {
         if (bulkContainer) bulkContainer.classList.remove('hidden');
         if (singleContainer) singleContainer.classList.add('hidden');
+        if (bulkAliasContainer) bulkAliasContainer.classList.remove('hidden'); // Show in Bulk
 
         if (bulkProgress) bulkProgress.classList.remove('hidden');
         if (singlePreview) singlePreview.classList.add('hidden');
@@ -46,6 +50,7 @@ function switchTab(mode) {
     } else {
         if (bulkContainer) bulkContainer.classList.add('hidden');
         if (singleContainer) singleContainer.classList.remove('hidden');
+        if (bulkAliasContainer) bulkAliasContainer.classList.add('hidden'); // Hide in Single
 
         if (bulkProgress) bulkProgress.classList.add('hidden');
         if (singlePreview) singlePreview.classList.remove('hidden');
