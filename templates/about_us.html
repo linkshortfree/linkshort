@@ -17,41 +17,58 @@
     <div class="background-glow"></div>
     {% include 'partials/_navbar.html' %}
 
-    <main class="page-content">
-        <section class="static-page-header">
-            <h1>About Us</h1>
+    <main class="page-content" style="max-width: 800px; margin: 4rem auto; padding: 0 1.5rem;">
+        <section class="static-page-header" style="text-align: center; margin-bottom: 3rem;">
+            <h1
+                style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                About Us</h1>
+            <p style="color: var(--text-secondary); margin-top: 0.5rem;">Building the future of open link management.
+            </p>
         </section>
 
-        <section class="static-page-content glass-card">
-            <h2>Our Mission</h2>
-            <p>LinkShort was built with a simple goal: to provide enterprise-grade link management tools that are
-                <strong>free, fast, and accessible to everyone</strong>. No signups, no paywalls, no hidden fees.
-            </p>
+        <section class="saas-card">
+            <div class="saas-card-body" style="padding: 2.5rem;">
+                <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 1rem;">Our Mission</h2>
+                <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem;">
+                    LinkShort was built with a simple goal: to provide enterprise-grade link management tools that are
+                    <strong style="color: var(--accent-primary);">free, fast, and accessible to everyone</strong>. No
+                    signups, no paywalls, no hidden fees.
+                </p>
 
-            <h2>What We Offer</h2>
-            <p>We offer a suite of professional tools designed for marketers, creators, and businesses:</p>
-            <ul>
-                <li><strong>Bulk URL Shortener:</strong> Shorten hundreds of links at once</li>
-                <li><strong>QR Code Designer:</strong> Create custom QR codes with your brand colors</li>
-                <li><strong>UTM Builder:</strong> Generate trackable campaign links</li>
-                <li><strong>A/B Link Testing:</strong> Test multiple link variants</li>
-            </ul>
+                <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 1rem;">What We Offer</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">We offer a suite of professional tools
+                    designed for marketers, creators, and businesses:</p>
+                <ul style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 2rem; padding-left: 1.5rem;">
+                    <li><strong style="color: var(--text-primary);">Bulk URL Shortener:</strong> Shorten hundreds of
+                        links at once</li>
+                    <li><strong style="color: var(--text-primary);">QR Code Designer:</strong> Create custom QR codes
+                        with your brand colors</li>
+                    <li><strong style="color: var(--text-primary);">UTM Builder:</strong> Generate trackable campaign
+                        links</li>
+                    <li><strong style="color: var(--text-primary);">A/B Link Testing:</strong> Test multiple link
+                        variants</li>
+                </ul>
 
-            <h2>Why Free?</h2>
-            <p>We believe essential marketing tools should be accessible to everyone — from solo creators to large
-                agencies. Our platform is supported by non-intrusive advertising, allowing us to keep all features free.
-            </p>
+                <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 1rem;">Why Free?</h2>
+                <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 2rem;">
+                    We believe essential marketing tools should be accessible to everyone — from solo creators to large
+                    agencies. Our platform is supported by non-intrusive advertising, allowing us to keep all features
+                    free.
+                </p>
 
-            <h2>Our Values</h2>
-            <ul>
-                <li><strong>Transparency:</strong> No tracking beyond what's necessary for functionality</li>
-                <li><strong>Speed:</strong> Optimized for instant results</li>
-                <li><strong>Simplicity:</strong> Clean, intuitive interfaces</li>
-                <li><strong>Privacy:</strong> Your data stays yours</li>
-            </ul>
+                <h2 style="color: var(--text-primary); font-size: 1.5rem; margin-bottom: 1rem;">Our Values</h2>
+                <ul style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.5rem;">
+                    <li><strong style="color: var(--text-primary);">Transparency:</strong> No tracking beyond what's
+                        necessary for functionality</li>
+                    <li><strong style="color: var(--text-primary);">Speed:</strong> Optimized for instant results</li>
+                    <li><strong style="color: var(--text-primary);">Simplicity:</strong> Clean, intuitive interfaces
+                    </li>
+                    <li><strong style="color: var(--text-primary);">Privacy:</strong> Your data stays yours</li>
+                </ul>
 
-            <div style="margin-top: 3rem;">
-                <a href="/" class="btn btn-secondary">← Back to Home</a>
+                <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle);">
+                    <a href="/" class="saas-btn saas-btn-secondary">← Back to Home</a>
+                </div>
             </div>
         </section>
     </main>
