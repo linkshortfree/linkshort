@@ -256,8 +256,9 @@ a {
 }
 
 .preview-box {
-    background: #FFFFFF;
-    /* QR needs white */
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    /* QR needs contrast against this dark bg */
     padding: 1.5rem;
     border-radius: var(--radius-md);
     display: flex;

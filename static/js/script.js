@@ -130,8 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (urlInput) {
             urlInput.value = pendingUrl;
             localStorage.removeItem('pendingShorten');
-            updateLivePreview();
         }
+    }
+    // Always init preview (triggers Demo Mode if empty)
+    if (typeof updateLivePreview === 'function') {
+        updateLivePreview();
     }
 });
 
