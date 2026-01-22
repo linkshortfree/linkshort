@@ -508,10 +508,11 @@ padding: 0 1.5rem;
 
 /* === FOOTER === */
 .main-footer {
+    background: var(--bg-secondary);
     border-top: 1px solid var(--border-subtle);
-    background: var(--bg-primary);
     padding: 4rem 0 2rem;
     margin-top: auto;
+    color: var(--text-secondary);
 }
 
 .footer-container {
@@ -519,21 +520,18 @@ padding: 0 1.5rem;
     margin: 0 auto;
     padding: 0 1.5rem;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 3rem;
-}
-
-.footer-brand {
-    max-width: 300px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2.5rem;
 }
 
 .footer-brand .logo {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
 }
 
 .footer-brand .logo span {
@@ -541,36 +539,29 @@ padding: 0 1.5rem;
 }
 
 .footer-brand p {
-    color: var(--text-tertiary);
     font-size: 0.9rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-.social-links a {
     color: var(--text-tertiary);
-    transition: color 0.2s;
-    display: inline-block;
-}
-
-.social-links a:hover {
-    color: var(--text-primary);
+    max-width: 300px;
+    margin: 0 auto 1rem;
 }
 
 .footer-links {
     display: flex;
-    gap: 4rem;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .footer-col {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    text-align: left;
 }
 
 .footer-col a {
-    color: var(--text-secondary);
     font-size: 0.9rem;
+    color: var(--text-secondary);
     transition: color 0.2s;
 }
 
@@ -579,25 +570,25 @@ padding: 0 1.5rem;
 }
 
 .footer-bottom {
-    max-width: 1200px;
-    margin: 3rem auto 0;
-    padding: 2rem 1.5rem 0;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
     border-top: 1px solid var(--border-subtle);
     text-align: center;
+    font-size: 0.8rem;
     color: var(--text-tertiary);
-    font-size: 0.85rem;
 }
 
+/* Mobile Footer */
 @media (max-width: 768px) {
-    .footer-container {
+    .footer-links {
         flex-direction: column;
         gap: 2rem;
+        text-align: center;
     }
 
-    .footer-links {
-        width: 100%;
-        justify-content: space-between;
-        gap: 2rem;
+    .footer-col {
+        align-items: center;
+        text-align: center;
     }
 }
 
